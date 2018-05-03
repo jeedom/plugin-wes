@@ -1,0 +1,23 @@
+WARNING: Detail complet des mises à jour sur https://github.com/guenneguezt/plugin-wes/commits/master[Historique Commit]
+
+Liste des évolutions majeures de la version courante :
+
+- Modification pour compatibilité Jeedom V3
+- Plus de suivi de version
+
+Anciennes évolutions :
+
+- - Correction de la gestion des entrées analogiques.
+- Ajout de bouton pour paramétrer le retour des changements d'état par push.
+- Prise en charge des extensions 8 relais 1-Wire
+- Mise a jour des entrées analogiques, sonde, téléinfo, même si la valeur ne change pas pour les graphiques.
+- Compatibilité Wes 2
+- Prise en charge des entrées analogiques
+- Compatibilité Jeedom 2.0
+- Modification de l'extension du logo.
+- Compatibilité Imperihome
+- Retrait de la suppression des équipements lors de la désactivation du plugin
+- Correction par rapport au nouveau core.
+- Possibilité d'augmenter la frequence de rafraichissement
+- Correction pour l'activation/modification des relais.
+- Création du plugin

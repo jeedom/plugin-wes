@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<info>
+    <id>wes</id>
+    <name>Wes</name>
+    <description>Plugin pour gerer les cartes WES</description>
+    <icon>fa fa-sitemap</icon>
+    <licence>AGPL</licence>
+    <author>Thomas Guenneguez</author>
+    <installation>Nécessite firmware 0.50 minimum</installation>
+    <require>2.0</require>
+    <version>1.8</version>
+    <category>automation protocol</category>
+    <hasOwnDeamon>1</hasOwnDeamon>
+</info>

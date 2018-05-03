@@ -1,0 +1,36 @@
+[panel,primary]
+.Je n'arrive pas a accéder aux sous indicateurs ?
+--
+Il faut dans le menu gauche cliquer sur l'icône suivant pour y avoir accès : image:../images/acces_sous_indicateur.jpg[la]
+--
+
+.Lorsqu'une entrée/sortie change, la mise à jour dans jeedom n'est pas instantané ?
+--
+Non pas encore.
+--
+
+.A quelle fréquence les données sont-elles mise à jour ?
+--
+Les données sont mises à jour en permanence pour les entrées numériques et les relais.
+Elles sont mises à jour une fois par minutes pour les entrées analogiques et les compteurs.
+--
+
+.Ce plugin ne génère pas de log, comment en avoir ?
+--
+Il est nécessaire au préalable d'activer temporairement le debug de Jeedom (menu Configuration => Configuration des logs & messages => Activer + Niveau de log = Debug).
+--
+
+.Pourquoi le plugin est gratuit ?
+--
+Ce plugin est gratuit pour que chacun puisse en profiter simplement. Si vous souhaitez tout de même faire un don au développeur du plugin, merci de me faire un MP sur le forum.
+--
+
+.Le plugin ne voit pas ma carte 1-Wire de relai ?
+--
+Il est nécessaire de sauvegarder de nouveau la carte wes dans jeedom.
+--
+
+.J'aimerai remonter des erreurs/modifications directement dans le code ?
+--
+C'est tout à fait possible via https://github.com/guenneguezt/plugin-wes[github]
+--
