@@ -1,0 +1,82 @@
+{
+    "plugins\/wes\/plugin_info\/configuration.php": {
+        "401 - Accès non autorisé": "401 - Acesso não autorizado",
+        "Temporisation minumum entre deux lectures en secondes": "Atraso mínimo entre duas leituras em segundos",
+        "Trop diminuer cette valeur peut rendre instable votre serveur": "Diminuir muito esse valor pode tornar seu servidor instável"
+    },
+    "plugins\/wes\/desktop\/modal\/wes.configpush.php": {
+        "401 - Accès non autorisé": "401 - Acesso não autorizado",
+        "EqLogic ID ne peut etre vide": "O ID do EqLogic não pode estar vazio",
+        "EqLogic non trouvé": "EqLogic não encontrado",
+        "Relai": "Relé",
+        "Relai 1-Wire \".$compteurId.": "Relé de 1 fio \". $ CounterId.",
+        "Entrée numérique": "Entrada digital",
+        "Appliquer": "Aplicar",
+        "Tout décocher": "Desmarque todas",
+        "Tout cocher": "Verificar todos"
+    },
+    "plugins\/wes\/desktop\/php\/wes.php": {
+        "401 - Accès non autorisé": "401 - Acesso não autorizado",
+        "Gestion": "Gestão",
+        "Ajouter": "Adicionar",
+        "Configuration": "Configuração",
+        "Général": "Geral",
+        ".$eqLogic->getConfiguration('type').": ". $ eqLogic-> getConfiguration ('tipo').",
+        "Vous n'avez pas encore de Wes, cliquez sur Ajouter pour commencer": "Você ainda não tem um Wes, clique em Adicionar para começar",
+        "Configuration avancée": "Configuração avançada",
+        "Dupliquer": "Duplicar",
+        "Sauvegarder": "Salvar",
+        "Supprimer": "Remover",
+        "Equipement": "Equipamento",
+        "Commandes": "Comandos",
+        "Nom de votre WES": "Nome do seu WES",
+        "Nom de l'équipement": "Nome de equipamentos",
+        "Objet parent": "Objeto pai",
+        "Aucun": "Nemhum",
+        "Catégorie": "Categoria",
+        "Activer": "Ativar",
+        "Visible": "Visivél",
+        "IP du Wes": "Wes IP",
+        "Dossier du Wes": "Wes File",
+        "Port du Wes": "Porto de Wes",
+        "Compte du Wes": "Wes conta",
+        "Password du Wes": "Senha do Wes",
+        "Configurer push": "Configurar push",
+        "Accéder à la carte": "Acesse o mapa",
+        "Nom": "Nome",
+        "Sous-Type": "Subtipo",
+        "Valeur": "Valor",
+        "Unité": "Unidade",
+        "Paramètres": "Configurações"
+    },
+    "plugins\/wes\/desktop\/js\/wes.js": {
+        "Nom": "Nome",
+        "Unite": "Unidade",
+        "Historiser": "Historicizar",
+        "Afficher": "Display",
+        "Inverser": "Inverter",
+        "Url push": "Push de URL",
+        "Min": "Baixo",
+        "Max": "Máx.",
+        "Tester": "Teste",
+        "Configurer la Wes pour avoir le retour des etats": "Configure o Wes para ter o retorno de estados",
+        "Accèder à l'interface de la Wes": "Acesse a interface Wes",
+        "Application de la configuration Push correcte": "Aplique a configuração de envio correta"
+    },
+    "plugins\/wes\/core\/ajax\/wes.ajax.php": {
+        "401 - Accès non autorisé": "401 - Acesso não autorizado",
+        "wes eqLogic non trouvé : ": "wes eqLogic não encontrado:",
+        "Url de push sur wes configuré": "Enviar URL nos wes configurados",
+        "Url de push a configurer est ": "Push URL para configurar é",
+        "Aucune methode correspondante à : ": "Aucune methode correspondante à : "
+    },
+    "plugins\/wes\/core\/class\/wes.class.php": {
+        "Veuillez vérifier la configuration": "Por favor, verifique a configuração",
+        "Tâche cron introuvable": "Tarefa Cron não encontrada",
+        "Le wes ne repond pas.": "O wes não responde.",
+        "L\\'adresse IP ou le port local de jeedom ne sont pas définit (Administration => Configuration réseaux => Accès interne).": "O endereço IP da jeedom ou a porta local não está definida (Administração => Configuração da rede => Acesso interno).",
+        "Impossible de trouver l\\'équipement : ": "Não foi possível encontrar o equipamento:",
+        "L\\'adresse IP du serveur Jeedom doit être renseignée.": "O endereço IP do servidor Jeedom deve ser inserido.",
+        "Equipement desactivé impossible d\\éxecuter la commande : ' . $this->getHumanName()": "Equipamento desativado impossível de executar o comando: '. $ this-> getHumanName ()"
+    }
+}

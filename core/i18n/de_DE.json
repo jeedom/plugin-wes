@@ -1,0 +1,82 @@
+{
+    "plugins\/wes\/plugin_info\/configuration.php": {
+        "401 - Accès non autorisé": "401 - Nicht autorisierter Zugriff",
+        "Temporisation minumum entre deux lectures en secondes": "Minimale Verzögerung zwischen zwei Ablesungen in Sekunden",
+        "Trop diminuer cette valeur peut rendre instable votre serveur": "Wenn Sie diesen Wert zu stark verringern, kann Ihr Server instabil werden"
+    },
+    "plugins\/wes\/desktop\/modal\/wes.configpush.php": {
+        "401 - Accès non autorisé": "401 - Nicht autorisierter Zugriff",
+        "EqLogic ID ne peut etre vide": "Die EqLogic-ID darf nicht leer sein",
+        "EqLogic non trouvé": "EqLogic nicht gefunden",
+        "Relai": "Relais",
+        "Relai 1-Wire \".$compteurId.": "1-Draht-Relais \". $ CounterId.",
+        "Entrée numérique": "Digitaleingang",
+        "Appliquer": "Anwenden",
+        "Tout décocher": "Auswahl aufheben",
+        "Tout cocher": "Alle auswählen"
+    },
+    "plugins\/wes\/desktop\/php\/wes.php": {
+        "401 - Accès non autorisé": "401 - Nicht autorisierter Zugriff",
+        "Gestion": "Verwaltung",
+        "Ajouter": "Hinzufügen",
+        "Configuration": "Konfiguration",
+        "Général": "Allgemein",
+        ".$eqLogic->getConfiguration('type').": "$ eqLogic-> getConfiguration ('Typ').",
+        "Vous n'avez pas encore de Wes, cliquez sur Ajouter pour commencer": "Sie haben noch keine Wes, klicken Sie auf Hinzufügen, um zu beginnen",
+        "Configuration avancée": "Erweiterte Konfiguration",
+        "Dupliquer": "Duplikat",
+        "Sauvegarder": "Speichern",
+        "Supprimer": "Löschen",
+        "Equipement": "Gerät",
+        "Commandes": "Befehle",
+        "Nom de votre WES": "Name Ihres WES",
+        "Nom de l'équipement": "Name der Ausrüstung",
+        "Objet parent": "Übergeordnetes Objekt",
+        "Aucun": "Ohne",
+        "Catégorie": "Kategorie",
+        "Activer": "Aktivieren",
+        "Visible": "Sichtbar",
+        "IP du Wes": "Wes IP",
+        "Dossier du Wes": "Wes-Datei",
+        "Port du Wes": "Hafen von Wes",
+        "Compte du Wes": "Wes Konto",
+        "Password du Wes": "Wes Passwort",
+        "Configurer push": "Konfigurieren drücken",
+        "Accéder à la carte": "Auf die Karte zugreifen",
+        "Nom": "Name",
+        "Sous-Type": "Untertyp",
+        "Valeur": "Wert",
+        "Unité": "Unit",
+        "Paramètres": "Einstellungen"
+    },
+    "plugins\/wes\/desktop\/js\/wes.js": {
+        "Nom": "Name",
+        "Unite": "Unit",
+        "Historiser": "Chronik",
+        "Afficher": "Anzeige",
+        "Inverser": "Umgekehrt",
+        "Url push": "URL drücken",
+        "Min": "Niedrig",
+        "Max": "Max",
+        "Tester": "Test",
+        "Configurer la Wes pour avoir le retour des etats": "Konfigurieren Sie die Wes für die Rückkehr von Staaten",
+        "Accèder à l'interface de la Wes": "Greifen Sie auf die Wes-Schnittstelle zu",
+        "Application de la configuration Push correcte": "Die Anwendung der richtigen Konfiguration Push"
+    },
+    "plugins\/wes\/core\/ajax\/wes.ajax.php": {
+        "401 - Accès non autorisé": "401 - Nicht autorisierter Zugriff",
+        "wes eqLogic non trouvé : ": "wes eqLogic nicht gefunden:",
+        "Url de push sur wes configuré": "Push-URL auf wes konfiguriert",
+        "Url de push a configurer est ": "Push-URL zum Konfigurieren ist",
+        "Aucune methode correspondante à : ": "Keine Methode entsprechend:"
+    },
+    "plugins\/wes\/core\/class\/wes.class.php": {
+        "Veuillez vérifier la configuration": "Bitte überprüfen Sie die Konfiguration",
+        "Tâche cron introuvable": "Cron-Aufgabe nicht gefunden",
+        "Le wes ne repond pas.": "Der Wes antwortet nicht.",
+        "L\\'adresse IP ou le port local de jeedom ne sont pas définit (Administration => Configuration réseaux => Accès interne).": "Die jeedom IP-Adresse oder der lokale Port ist nicht definiert (Administration => Netzwerkkonfiguration => Interner Zugriff).",
+        "Impossible de trouver l\\'équipement : ": "Die Ausrüstung konnte nicht gefunden werden:",
+        "L\\'adresse IP du serveur Jeedom doit être renseignée.": "Die IP-Adresse des Jeedom-Servers muss eingegeben werden.",
+        "Equipement desactivé impossible d\\éxecuter la commande : ' . $this->getHumanName()": "Geräte deaktiviert unmöglich, um den Befehl auszuführen: '. $ this-> getHumanName ()"
+    }
+}

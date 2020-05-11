@@ -1,0 +1,82 @@
+{
+    "plugins\/wes\/plugin_info\/configuration.php": {
+        "401 - Accès non autorisé": "401 - Unauthorized access",
+        "Temporisation minumum entre deux lectures en secondes": "Minimum delay between two readings in seconds",
+        "Trop diminuer cette valeur peut rendre instable votre serveur": "Decreasing this value too much can make your server unstable"
+    },
+    "plugins\/wes\/desktop\/modal\/wes.configpush.php": {
+        "401 - Accès non autorisé": "401 - Unauthorized access",
+        "EqLogic ID ne peut etre vide": "EqLogic ID cannot be empty",
+        "EqLogic non trouvé": "EqLogic not found",
+        "Relai": "Relay",
+        "Relai 1-Wire \".$compteurId.": "1-Wire Relay \". $ CounterId.",
+        "Entrée numérique": "Digital input",
+        "Appliquer": "Apply",
+        "Tout décocher": "Uncheck all",
+        "Tout cocher": "Check all"
+    },
+    "plugins\/wes\/desktop\/php\/wes.php": {
+        "401 - Accès non autorisé": "401 - Unauthorized access",
+        "Gestion": "Management",
+        "Ajouter": "Add",
+        "Configuration": "Setup",
+        "Général": "Main",
+        ".$eqLogic->getConfiguration('type').": ". $ eqLogic-> getConfiguration ('type').",
+        "Vous n'avez pas encore de Wes, cliquez sur Ajouter pour commencer": "You don't have a Wes yet, click Add to start",
+        "Configuration avancée": "Advanced configuration",
+        "Dupliquer": "Duplicate",
+        "Sauvegarder": "Save",
+        "Supprimer": "Delete",
+        "Equipement": "Equipment",
+        "Commandes": "Commands",
+        "Nom de votre WES": "Name of your WES",
+        "Nom de l'équipement": "Name of equipment",
+        "Objet parent": "Parent object",
+        "Aucun": "None",
+        "Catégorie": "Category",
+        "Activer": "Activate",
+        "Visible": "Visible",
+        "IP du Wes": "Wes IP",
+        "Dossier du Wes": "Wes File",
+        "Port du Wes": "Port of Wes",
+        "Compte du Wes": "Wes account",
+        "Password du Wes": "Wes password",
+        "Configurer push": "Configure push",
+        "Accéder à la carte": "Access the map",
+        "Nom": "Name",
+        "Sous-Type": "Sub-type",
+        "Valeur": "Value",
+        "Unité": "Unit",
+        "Paramètres": "Settings"
+    },
+    "plugins\/wes\/desktop\/js\/wes.js": {
+        "Nom": "Name",
+        "Unite": "Unit",
+        "Historiser": "Historize",
+        "Afficher": "Show",
+        "Inverser": "Invert",
+        "Url push": "Push Url",
+        "Min": "Min",
+        "Max": "Max",
+        "Tester": "Test",
+        "Configurer la Wes pour avoir le retour des etats": "Configure the Wes to have the return of states",
+        "Accèder à l'interface de la Wes": "Access the Wes interface",
+        "Application de la configuration Push correcte": "Apply right  Push configuration "
+    },
+    "plugins\/wes\/core\/ajax\/wes.ajax.php": {
+        "401 - Accès non autorisé": "401 - Unauthorized access",
+        "wes eqLogic non trouvé : ": "wes eqLogic not found:",
+        "Url de push sur wes configuré": "Push url on wes configured",
+        "Url de push a configurer est ": "Push url to configure is",
+        "Aucune methode correspondante à : ": "No method corresponding to:"
+    },
+    "plugins\/wes\/core\/class\/wes.class.php": {
+        "Veuillez vérifier la configuration": "Please check the configuration",
+        "Tâche cron introuvable": "Cron task not found",
+        "Le wes ne repond pas.": "The wes does not respond.",
+        "L\\'adresse IP ou le port local de jeedom ne sont pas définit (Administration => Configuration réseaux => Accès interne).": "The jeedom IP address or local port is not defined (Administration => Network configuration => Internal access).",
+        "Impossible de trouver l\\'équipement : ": "Unable to find the equipment:",
+        "L\\'adresse IP du serveur Jeedom doit être renseignée.": "The Jeedom server IP address must be entered.",
+        "Equipement desactivé impossible d\\éxecuter la commande : ' . $this->getHumanName()": "Equipment deactivated impossible to execute the command: '. $ this-> getHumanName ()"
+    }
+}
