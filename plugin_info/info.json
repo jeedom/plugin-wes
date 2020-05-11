@@ -2,8 +2,8 @@
 	"id" : "wes",
 	"name" : "Wes",
 	"licence" : "AGPL",
-	"author" : "Jeedom Legacyz",
-	"require" : "2.0",
+	"author" : "Jeedom SAS",
+	"require" : "3.3",
 	"category" : "automation protocol",
 	"hasOwnDeamon" : true
 }
