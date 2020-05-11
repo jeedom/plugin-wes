@@ -9,7 +9,7 @@
         "EqLogic ID ne peut etre vide": "Die EqLogic-ID darf nicht leer sein",
         "EqLogic non trouvé": "EqLogic nicht gefunden",
         "Relai": "Relais",
-        "Relai 1-Wire \".$compteurId.": "1-Draht-Relais \". $ CounterId.",
+        "Relai 1-Wire \".$compteurId.": "1-Draht-Relais \". $ CounterId",
         "Entrée numérique": "Digitaleingang",
         "Appliquer": "Anwenden",
         "Tout décocher": "Auswahl aufheben",
@@ -21,7 +21,7 @@
         "Ajouter": "Hinzufügen",
         "Configuration": "Konfiguration",
         "Général": "Allgemein",
-        ".$eqLogic->getConfiguration('type').": "$ eqLogic-> getConfiguration ('Typ').",
+        ".$eqLogic->getConfiguration('type').": "$ eqLogic-> getConfiguration ('Typ')",
         "Vous n'avez pas encore de Wes, cliquez sur Ajouter pour commencer": "Sie haben noch keine Wes, klicken Sie auf Hinzufügen, um zu beginnen",
         "Configuration avancée": "Erweiterte Konfiguration",
         "Dupliquer": "Duplikat",
@@ -73,10 +73,10 @@
     "plugins\/wes\/core\/class\/wes.class.php": {
         "Veuillez vérifier la configuration": "Bitte überprüfen Sie die Konfiguration",
         "Tâche cron introuvable": "Cron-Aufgabe nicht gefunden",
-        "Le wes ne repond pas.": "Der Wes antwortet nicht.",
-        "L\\'adresse IP ou le port local de jeedom ne sont pas définit (Administration => Configuration réseaux => Accès interne).": "Die jeedom IP-Adresse oder der lokale Port ist nicht definiert (Administration => Netzwerkkonfiguration => Interner Zugriff).",
+        "Le wes ne repond pas.": "Der Wes antwortet nicht",
+        "L\\'adresse IP ou le port local de jeedom ne sont pas définit (Administration => Configuration réseaux => Accès interne).": "Die jeedom IP-Adresse oder der lokale Port ist nicht definiert (Administration => Netzwerkkonfiguration => Interner Zugriff)",
         "Impossible de trouver l\\'équipement : ": "Die Ausrüstung konnte nicht gefunden werden:",
-        "L\\'adresse IP du serveur Jeedom doit être renseignée.": "Die IP-Adresse des Jeedom-Servers muss eingegeben werden.",
+        "L\\'adresse IP du serveur Jeedom doit être renseignée.": "Die IP-Adresse des Jeedom-Servers muss eingegeben werden",
         "Equipement desactivé impossible d\\éxecuter la commande : ' . $this->getHumanName()": "Geräte deaktiviert unmöglich, um den Befehl auszuführen: '. $ this-> getHumanName ()"
     }
 }
