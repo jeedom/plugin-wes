@@ -26,15 +26,12 @@ if (!is_object($eqLogic)) {
     throw new Exception('{{EqLogic non trouvé}}');
 }
 ?>
-<script>
-	var eqLogicIdGlobal = <?php echo init('id'); ?>;  
-</script>
 <fieldset>
 <legend>{{Relai}}</legend>
 <?php
 echo '<ul id="ul_eqLogic" class="nav nav-list bs-sidenav sub-nav-list" data-eqLogic_id="relai_' . $eqLogic->getId() . '">';
 	for ($compteurId = 1; $compteurId <= 2; $compteurId++) {
-		$SubeqLogic = eqLogic::byLogicalId($eqLogic->getId()."_R".$compteurId, 'wes');
+		$SubeqLogic = eqLogic::byLogicalId($eqLogic->getId()."_R".$compteurId, 'wes_relai');
 		if ( is_object($SubeqLogic) ) {
 			echo '<label class="checkbox-inline">';
 			echo '<input type="checkbox" class="configPusheqLogic" data-configPusheqLogic_id="' . $SubeqLogic->getId() . '" checked/>' . $SubeqLogic->getName();
@@ -46,13 +43,13 @@ echo '</ul>';
 </fieldset>
 <?php
 for ($compteurId = 1; $compteurId <= 9; $compteurId++) {
-	$SubeqLogic = eqLogic::byLogicalId($eqLogic->getId()."_R".$compteurId."01", 'wes');
+	$SubeqLogic = eqLogic::byLogicalId($eqLogic->getId()."_R".$compteurId."01", 'wes_relai');
 	if ( is_object($SubeqLogic) ) {
 		echo "<fieldset>
 			<legend>{{Relai 1-Wire ".$compteurId."}}</legend>
 			<ul id='ul_eqLogic' class='nav nav-list bs-sidenav sub-nav-list' data-eqLogic_id='relai_" . $eqLogic->getId() . "'>";
 			for ($souscompteurId = 1; $souscompteurId <= 8; $souscompteurId++) {
-				$SubeqLogic = eqLogic::byLogicalId($eqLogic->getId()."_R".$compteurId.sprintf("%02d", $souscompteurId), 'wes');
+				$SubeqLogic = eqLogic::byLogicalId($eqLogic->getId()."_R".$compteurId.sprintf("%02d", $souscompteurId), 'wes_relai');
 				if ( is_object($SubeqLogic) ) {
 					echo '<label class="checkbox-inline">';
 					echo '<input type="checkbox" class="configPusheqLogic" data-configPusheqLogic_id="' . $SubeqLogic->getId() . '" checked/>' . $SubeqLogic->getName();
@@ -69,7 +66,7 @@ for ($compteurId = 1; $compteurId <= 9; $compteurId++) {
 <?php
 echo '<ul id="ul_eqLogic" class="nav nav-list bs-sidenav sub-nav-list" data-eqLogic_id="bouton_' . $eqLogic->getId() . '">';
 	for ($compteurId = 1; $compteurId <= 2; $compteurId++) {
-		$SubeqLogic = eqLogic::byLogicalId($eqLogic->getId()."_B".$compteurId, 'wes');
+		$SubeqLogic = eqLogic::byLogicalId($eqLogic->getId()."_B".$compteurId, 'wes_bouton');
 		if ( is_object($SubeqLogic) ) {
 			echo '<label class="checkbox-inline">';
 			echo '<input type="checkbox" class="configPusheqLogic" data-configPusheqLogic_id="' . $SubeqLogic->getId() . '" checked/>' . $SubeqLogic->getName();

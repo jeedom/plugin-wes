@@ -167,15 +167,12 @@ $('#bt_ApplyconfigPush').on('click', function() {
 		list_object.push($(this).attr('data-configPusheqLogic_id'));
 		}
 	);
-  	console.log('EQ > '+JSON.stringify(list_object));
-  console.log('ID > '+eqLogicIdGlobal);
-  
     $.ajax({// fonction permettant de faire de l'ajax
         type: "POST", // methode de transmission des données au fichier php
         url: "plugins/wes/core/ajax/wes.ajax.php", // url du fichier php
         data: {
             action: "configPush",
-			id: eqLogicIdGlobal,
+			id: $('.li_eqLogic.active').attr('data-eqLogic_id'),
 			eqLogicPush_id: list_object.join(",")
         },
         dataType: 'json',
@@ -194,7 +191,7 @@ $('#bt_ApplyconfigPush').on('click', function() {
 });
 
 $("#table_cmd_wes_temperature").sortable({axis: "y", cursor: "move", items: ".cmd", placeholder: "ui-state-highlight", tolerance: "intersect", forcePlaceholderSize: true});
-$("#table_cmd_wes").sortable({axis: "y", cursor: "move", items: ".cmd", placeholder: "ui-state-highlight", tolerance: "intersect", forcePlaceholderSize: true});
+$("#table_cmd_wes_relai").sortable({axis: "y", cursor: "move", items: ".cmd", placeholder: "ui-state-highlight", tolerance: "intersect", forcePlaceholderSize: true});
 $("#table_cmd_wes_bouton").sortable({axis: "y", cursor: "move", items: ".cmd", placeholder: "ui-state-highlight", tolerance: "intersect", forcePlaceholderSize: true});
 $("#table_cmd_wes_compteur").sortable({axis: "y", cursor: "move", items: ".cmd", placeholder: "ui-state-highlight", tolerance: "intersect", forcePlaceholderSize: true});
 $("#table_cmd_wes_pince").sortable({axis: "y", cursor: "move", items: ".cmd", placeholder: "ui-state-highlight", tolerance: "intersect", forcePlaceholderSize: true});
