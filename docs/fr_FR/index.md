@@ -48,4 +48,4 @@ Après l’initialisation du Plugin Wes, vous pouvez cliquer sur la clé voir ci
 
 En cliquant sur cette clé une modal s'affiche selectionner les relais et bouton souhaiter et valider. ce qui entraine un scnéario sur le wes pour avoir en temps réél les retour d'information des boutons et des relais (pour les autre retour d'information il faut aller dans les paramettre generaux du plugin.)
 
-![mobile6](../images/wesGlobalRelais.png)
+![mobile6](../images/wesGlobalView.png)
