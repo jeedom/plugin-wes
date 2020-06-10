@@ -19,14 +19,6 @@
 /* * ***************************Includes********************************* */
 require_once dirname(__FILE__) . '/../../../../core/php/core.inc.php';
 
-/*include_file('core', 'wes_temperature', 'class', 'wes');
-include_file('core', 'wes_relai', 'class', 'wes');
-include_file('core', 'wes_bouton', 'class', 'wes');
-include_file('core', 'wes_compteur', 'class', 'wes');
-include_file('core', 'wes_teleinfo', 'class', 'wes');
-include_file('core', 'wes_pince', 'class', 'wes');
-include_file('core', 'wes_analogique', 'class', 'wes');*/
-
 class wes extends eqLogic {
     /*     * *************************Attributs****************************** */
 
@@ -1132,8 +1124,7 @@ class wesCmd extends cmd
 						$calcul = preg_replace("/#brut#/", "#".$brut->getId()."#", $calcul);
 					}
 					$calcul = scenarioExpression::setTags($calcul);
-					$test = new evaluate();
-					$result = $test->Evaluer($calcul);
+					$result = evaluate::Evaluer($calcul);
 					if (is_numeric($result)) {
 						$result = number_format($result, 2);
 					} else {
