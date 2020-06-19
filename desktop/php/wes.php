@@ -129,9 +129,9 @@ $forJSArrayType = '#generaltab';
 	            ?>
             </div>
         	</div>
-          <div class="form-group">
-          	<label class="col-sm-2 control-label" ></label>
-						<div class="col-sm-10">
+					<div class="form-group">
+          	<label class="col-sm-3 control-label" ></label>
+						<div class="col-sm-9">
 							<label class="checkbox-inline"><input type="checkbox" class="eqLogicAttr" data-label-text="{{Activer}}" data-l1key="isEnable" checked/>Activer</label>
 							<label class="checkbox-inline"><input type="checkbox" class="eqLogicAttr" data-label-text="{{Visible}}" data-l1key="isVisible" checked/>Visible</label>
             </div>
