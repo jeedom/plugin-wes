@@ -708,6 +708,7 @@ class wes extends eqLogic {
 					$compteurId++;
 					$this->getUrl('program.cgi?PRG='.$compteurId.','.($wesid+30).',0,0,0,0,1,2,0,1,4,0000,0000,9,0');
 					$this->getUrl('program.cgi?RQT'.$compteurId.'='.$pathjeedom.'core/api/jeeApi.php?api='.jeedom::getApiKey('wes').'%26type=wes%26id='.$cmd->getId().'%26value=$I'.$wesid.'00');
+					$compteurId++;
 				}elseif ($eqLogic->getConfiguration('type') == 'relai') {
 					$cmd = $eqLogic->getCmd(null, 'state');
 					$this->getUrl('program.cgi?PRG='.$compteurId.','.($wesid+100).',0,0,1,0,1,2,0,1,4,0000,0000,9,0');
@@ -717,6 +718,7 @@ class wes extends eqLogic {
 					$this->getUrl('program.cgi?PRG='.$compteurId.','.($wesid+100).',0,0,0,0,1,2,0,1,4,0000,0000,9,0');
 					$wesid = sprintf("%03d", $wesid);
 					$this->getUrl('program.cgi?RQT'.$compteurId.'='.$pathjeedom.'core/api/jeeApi.php?api='.jeedom::getApiKey('wes').'%26type=wes%26id='.$cmd->getId().'%26value=$R'.$wesid);
+					$compteurId++;
 				}elseif ($eqLogic->getConfiguration('type') == 'teleinfo') {
 					$url .= 'protect/settings/notif'.$wesid.'P.htm';
 					for ($compteur = 0; $compteur < 6; $compteur++) {
