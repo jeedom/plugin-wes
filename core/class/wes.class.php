@@ -182,6 +182,19 @@ class wes extends eqLogic {
 					$cmd->setConfiguration('type','general');
 					$cmd->save();
 				}
+				$firmware = $this->getCmd(null, 'firmware');
+				if ( ! is_object($firmware) ) {
+					$firmware = new wesCmd();
+					$firmware->setName('Firmware');
+					$firmware->setEqLogic_id($this->getId());
+					$firmware->setType('info');
+					$firmware->setSubType('string');
+					$firmware->setLogicalId('firmware');
+					$firmware->setIsVisible(1);
+					$firmware->setEventOnly(1);
+					$firmware->setConfiguration('type','general');
+					$firmware->save();
+				}
 				break;
 			case 'analogique':
 				$brut = $this->getCmd(null, 'brut');
@@ -536,6 +549,20 @@ class wes extends eqLogic {
 					$cmd->setConfiguration('type','general');
 					$cmd->save();
 				}
+
+				$firmware = $this->getCmd(null, 'firmware');
+				if ( ! is_object($firmware) ) {
+					$firmware = new wesCmd();
+					$firmware->setName('Firmware');
+					$firmware->setEqLogic_id($this->getId());
+					$firmware->setType('info');
+					$firmware->setSubType('string');
+					$firmware->setLogicalId('firmware');
+					$firmware->setIsVisible(1);
+					$firmware->setEventOnly(1);
+					$firmware->setConfiguration('type','general');
+					$firmware->save();
+				}
 				break;
 
 			case 'analogique':
@@ -797,6 +824,11 @@ class wes extends eqLogic {
 				$statuscmd->setCollectDate('');
 				$statuscmd->event(1);
 			}
+			$xpathModele = '//info/firmware';
+			$firmware = $this->xmlstatus->xpath($xpathModele);
+			$value = (string) $firmware[0];
+			$this->checkAndUpdateCmd('firmware', $value);
+			
 			foreach (self::byType('wes') as $eqLogicRelai) {
 				if ( $eqLogicRelai->getConfiguration('type') == "relai" && $eqLogicRelai->getIsEnable() && substr($eqLogicRelai->getLogicalId(), 0, strpos($eqLogicRelai->getLogicalId(),"_")) == $this->getId() ) {
 					$wesid = substr($eqLogicRelai->getLogicalId(), strpos($eqLogicRelai->getLogicalId(),"_")+2);
