@@ -402,6 +402,61 @@ class wes extends eqLogic {
 				}
 				break;
 
+			case 'switch':
+				$state = $this->getCmd(null, 'state');
+				if ( ! is_object($state) ) {
+						$state = new wesCmd();
+						$state->setName('Etat');
+						$state->setEqLogic_id($this->getId());
+						$state->setType('info');
+						$state->setSubType('binary');
+						$state->setLogicalId('state');
+						$state->setEventOnly(1);
+						$state->setIsVisible(1);
+						$state->setConfiguration('type','switch');
+						$state->save();
+				}
+				$btn_on = $this->getCmd(null, 'btn_on');
+				if ( ! is_object($btn_on) ) {
+						$btn_on = new wesCmd();
+						$btn_on->setName('On');
+						$btn_on->setEqLogic_id($this->getId());
+						$btn_on->setType('action');
+						$btn_on->setSubType('other');
+						$btn_on->setLogicalId('btn_on');
+						$btn_on->setEventOnly(1);
+						$btn_on->setIsVisible(1);
+						$btn_on->setConfiguration('type','switch');
+						$btn_on->save();
+				}
+				$btn_off = $this->getCmd(null, 'btn_off');
+				if ( ! is_object($btn_off) ) {
+						$btn_off = new wesCmd();
+						$btn_off->setName('Off');
+						$btn_off->setEqLogic_id($this->getId());
+						$btn_off->setType('action');
+						$btn_off->setSubType('other');
+						$btn_off->setLogicalId('btn_off');
+						$btn_off->setEventOnly(1);
+						$btn_off->setIsVisible(1);
+						$btn_off->setConfiguration('type','switch');
+						$btn_off->save();
+				}
+				$commute = $this->getCmd(null, 'commute');
+				if ( ! is_object($commute) ) {
+						$commute = new wesCmd();
+						$commute->setName('Commute');
+						$commute->setEqLogic_id($this->getId());
+						$commute->setType('action');
+						$commute->setSubType('other');
+						$commute->setLogicalId('commute');
+						$commute->setEventOnly(1);
+						$commute->setIsVisible(1);
+						$commute->setConfiguration('type','switch');
+						$commute->save();
+				}
+				break;
+
 			default:
 				break;
 		}
@@ -534,6 +589,18 @@ class wes extends eqLogic {
 					}
 					$compteurId ++;
 					$status = $this->xmlstatus->xpath('//analogique/AD'.$compteurId);
+				}
+
+				for ($compteurId = 1; $compteurId <= 8; $compteurId++) {
+					if ( ! is_object(self::byLogicalId($this->getId()."_S".$compteurId, 'wes')) ) {
+						log::add('wes','debug','Creation switch : '.$this->getId().'_S'.$compteurId);
+						$eqLogic = new wes();
+						$eqLogic->setEqType_name('wes');
+						$eqLogic->setLogicalId($this->getId().'_S'.$compteurId);
+						$eqLogic->setName('Switch ' . $compteurId);
+						$eqLogic->setConfiguration('type','switch');
+						$eqLogic->save();
+					}
 				}
 
 				$cmd = $this->getCmd(null, 'status');
@@ -686,6 +753,22 @@ class wes extends eqLogic {
 						$reel->save();
 					}
 				break;
+
+			case 'switch':
+				$commute = $this->getCmd(null, 'commute');
+				if ( ! is_object($commute) ) {
+						$commute = new wesCmd();
+						$commute->setName('Commute');
+						$commute->setEqLogic_id($this->getId());
+						$commute->setType('action');
+						$commute->setSubType('other');
+						$commute->setLogicalId('commute');
+						$commute->setEventOnly(1);
+						$commute->setConfiguration('type','switch');
+						$commute->save();
+					}
+				break;
+
 			default:
 				break;
 		}
@@ -745,6 +828,16 @@ class wes extends eqLogic {
 					$this->getUrl('program.cgi?PRG='.$compteurId.','.($wesid+100).',0,0,0,0,1,2,0,1,4,0000,0000,9,0');
 					$wesid = sprintf("%03d", $wesid);
 					$this->getUrl('program.cgi?RQT'.$compteurId.'='.$pathjeedom.'core/api/jeeApi.php?api='.jeedom::getApiKey('wes').'%26type=wes%26id='.$cmd->getId().'%26value=$R'.$wesid);
+					$compteurId++;
+				}elseif ($eqLogic->getConfiguration('type') == 'switch') {
+					$cmd = $eqLogic->getCmd(null, 'state');
+					$this->getUrl('program.cgi?PRG='.$compteurId.','.($wesid+500).',0,0,1,0,1,2,0,1,4,0000,0000,9,0');
+					$wesid = sprintf("%03d", $wesid);
+					$this->getUrl('program.cgi?RQT'.$compteurId.'='.$pathjeedom.'core/api/jeeApi.php?api='.jeedom::getApiKey('wes').'%26type=wes%26id='.$cmd->getId().'%26value=$V'.$wesid);
+					$compteurId++;
+					$this->getUrl('program.cgi?PRG='.$compteurId.','.($wesid+500).',0,0,0,0,1,2,0,1,4,0000,0000,9,0');
+					$wesid = sprintf("%03d", $wesid);
+					$this->getUrl('program.cgi?RQT'.$compteurId.'='.$pathjeedom.'core/api/jeeApi.php?api='.jeedom::getApiKey('wes').'%26type=wes%26id='.$cmd->getId().'%26value=$V'.$wesid);
 					$compteurId++;
 				}elseif ($eqLogic->getConfiguration('type') == 'teleinfo') {
 					$url .= 'protect/settings/notif'.$wesid.'P.htm';
@@ -1026,6 +1119,23 @@ class wes extends eqLogic {
 					}
 				}
 			}
+			foreach (self::byType('wes') as $eqLogicSwitch) {
+				if ( $eqLogicSwitch->getConfiguration('type') == "switch" && $eqLogicSwitch->getIsEnable() && substr($eqLogicSwitch->getLogicalId(), 0, strpos($eqLogicSwitch->getLogicalId(),"_")) == $this->getId() ) {
+					$wesid = substr($eqLogicSwitch->getLogicalId(), strpos($eqLogicSwitch->getLogicalId(),"_")+2);
+					$xpathModele = '//switch_virtuel/SWITCH'.$wesid;
+					$status = $this->xmlstatus->xpath($xpathModele);
+
+					if ( count($status) != 0 )
+					{
+						$eqLogic_cmd = $eqLogicSwitch->getCmd(null, 'state');
+						if ($eqLogic_cmd->execCmd() != $eqLogic_cmd->formatValue($status[0])) {
+							log::add('wes','debug',"Change state off ".$eqLogicSwitch->getName());
+							$eqLogic_cmd->setCollectDate('');
+							$eqLogic_cmd->event($status[0]);
+						}
+					}
+				}
+			}
 			log::add('wes','debug','pull end '.$this->getName());
 		}
 	}
@@ -1089,6 +1199,9 @@ class wesCmd extends cmd
 			}
 			if ( $this->getLogicalId() == 'state' && $this->getConfiguration('type') == 'relai' ) {
 				$url .= '$R'.$wesid.'00';
+			}
+			if ( $this->getLogicalId() == 'state' && $this->getConfiguration('type') == 'switch' ) {
+				$url .= '$V'.$wesid.'00';
 			}
 			if ( $this->getLogicalId() == 'debit' ) {
 				$url .= '$P'.$wesid.'00';
@@ -1223,6 +1336,24 @@ class wesCmd extends cmd
 				$file .= 'preset.htm?RLY'.($wesid+1).'=1';*/
 			else if ( $this->getLogicalId() == 'commute' )
 				$file .= 'RL.cgi?frl='.$wesid;
+			else
+				return false;
+			$weseqLogic->getUrl($file);
+			return false;
+		}elseif ($this->getConfiguration('type') == "switch") {
+			log::add('wes','debug','execute '.$_options);
+			$eqLogic = $this->getEqLogic();
+	        if (!is_object($eqLogic) || $eqLogic->getIsEnable() != 1) {
+	            throw new Exception(__('Equipement desactivé impossible d\éxecuter la commande : ' . $this->getHumanName(), __FILE__));
+	        }
+			$weseqLogic = eqLogic::byId(substr ($eqLogic->getLogicalId(), 0, strpos($eqLogic->getLogicalId(),"_")));
+			$wesid = substr($eqLogic->getLogicalId(), strpos($eqLogic->getLogicalId(),"_")+2);
+			if ( $this->getLogicalId() == 'btn_on' )
+				$file .= 'AJAX.cgx?sw'.($wesid).'=ON';
+			else if ( $this->getLogicalId() == 'btn_off' )
+				$file .= 'AJAX.cgx?sw'.($wesid).'=OFF';
+			else if ( $this->getLogicalId() == 'commute' )
+				$file .= 'AJAX.cgx?fsw='.$wesid;
 			else
 				return false;
 			$weseqLogic->getUrl($file);
