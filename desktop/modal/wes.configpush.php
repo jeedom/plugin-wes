@@ -79,6 +79,21 @@ echo '<ul id="ul_eqLogic" class="nav nav-list bs-sidenav sub-nav-list" data-eqLo
 echo '</ul>';
 ?>
 </fieldset>
+<fieldset>
+<legend>{{Switch Virtuel}}</legend>
+<?php
+echo '<ul id="ul_eqLogic" class="nav nav-list bs-sidenav sub-nav-list" data-eqLogic_id="switch_' . $eqLogic->getId() . '">';
+	for ($compteurId = 1; $compteurId <= 8; $compteurId++) {
+		$SubeqLogic = eqLogic::byLogicalId($eqLogic->getId()."_S".$compteurId, 'wes');
+		if ( is_object($SubeqLogic) ) {
+			echo '<label class="checkbox-inline">';
+			echo '<input type="checkbox" class="configPusheqLogic" data-configPusheqLogic_id="' . $SubeqLogic->getId() . '" checked/>' . $SubeqLogic->getName();
+			echo '</label><br>';
+		}
+	}
+echo '</ul>';
+?>
+</fieldset>
 <div class="form-group alert alert-warning">
 Attention, le serveur 5 renseigné dans le WES sera remplacé.
 Chaque case validée renseignera le Push settings concerné de la Wes et effacera la configuration existante.
