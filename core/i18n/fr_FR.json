@@ -11,6 +11,7 @@
         "Relai": "Relai",
         "Relai 1-Wire \".$compteurId.": "Relai 1-Wire \".$compteurId.",
         "Entrée numérique": "Entrée numérique",
+        "Switch Virtuel": "Switch Virtuel",
         "Appliquer": "Appliquer",
         "Tout décocher": "Tout décocher",
         "Tout cocher": "Tout cocher"

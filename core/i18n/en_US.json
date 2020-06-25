@@ -11,6 +11,7 @@
         "Relai": "Relay",
         "Relai 1-Wire \".$compteurId.": "1-Wire Relay \". $ CounterId",
         "Entrée numérique": "Digital input",
+        "Switch Virtuel": "Virtual Switch",
         "Appliquer": "Apply",
         "Tout décocher": "Uncheck all",
         "Tout cocher": "Check all"

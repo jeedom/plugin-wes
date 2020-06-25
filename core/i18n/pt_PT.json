@@ -11,6 +11,7 @@
         "Relai": "Relé",
         "Relai 1-Wire \".$compteurId.": "Relé de 1 fio \". $ CounterId",
         "Entrée numérique": "Entrada digital",
+        "Switch Virtuel": "Comutador virtual",
         "Appliquer": "Aplicar",
         "Tout décocher": "Desmarque todas",
         "Tout cocher": "Verificar todos"
