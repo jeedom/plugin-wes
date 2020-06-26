@@ -1,6 +1,6 @@
 # Complemento Wes
 
-Complemento para usar WES de CartElectronics
+Plugin que permite usar el servidor WES de CartElectronics, para seguir en particular su consumo de energía.
 
 # Configuración del Wes
 
@@ -10,7 +10,7 @@ Después de instalar el complemento, solo necesita activarlo :
 
 **Configuración**
 
-Para configurar el complemento, debe agregar el Wes.
+Para configurar el complemento, primero debe agregar el WES.
 
 Para agregar un wes : **Plugins** → **Protocolo de domótica** → **Wes** → **Añadir**
 
@@ -18,34 +18,34 @@ Para agregar un wes : **Plugins** → **Protocolo de domótica** → **Wes** →
 
 Aquí están los parámetros para ingresar :
 
--   **Nombre de tu WES** : Nombre de Wes
--   **Activar** : Wes activación
+-   **Nombre de tu WES** : Nombre del Wes que se mostrará
+-   **Activar** : Activación de los wes
 -   **Wes IP** : informar a la IP de acceso WES
 -   **Wes File** : tienes que poner "general" si es una configuración wes.
--   **Puerto de wes** : déjelo en blanco si no cambió esto en la configuración del Wes.
+-   **Puerto de wes** : déjelo en blanco si no ha cambiado esto en la configuración de WES.
 -   **Cuenta Wes** : poner el inicio de sesión de la cuenta de Wes (originalmente es "Admin").
 -   **Wes contraseña** : poner la contraseña de la cuenta de Wes (originalmente es "wes").
 
 > **Punta**
 >
-> Si desea cambiar su información, primero debe ir a la interfaz WES.
+> Si desea cambiar esta información, primero debe ir a la interfaz WES para modificarla.
 
 ![mobile3](../images/wesGlobal.png)
 
-Después de guardar, obtendrá una multitud de módulos, solo necesita activar los que desea.
+Después de guardar, obtendrá una multitud de módulos: solo necesitas activar los que quieras.
 
 ![mobile4](../images/wesGlobalView.png)
 
 > **Punta**
 >
-> los módulos en gris no son monitoreados por el complemento, debe activarlos para eso.
+> Los módulos en gris no son monitoreados por el complemento, deben estar activados para eso.
 
-# Configuración de relé
+# Configuración de relé WES
 
-Después de la inicialización de Wes Plugin, puede hacer clic en la tecla, ver a continuación.
+Después de inicializar el complemento WES, puede hacer clic en la tecla (ver más abajo)).
 
 ![mobile5](../images/wesGlobalRelais.png)
 
-Al hacer clic en esta tecla se muestra un modal, seleccione los relés y el botón deseo y valide. lo que lleva a un escenario en el oeste para tener comentarios en tiempo real de botones y relés (para otros comentarios, debe ir a la configuración general del complemento.)
+Al hacer clic en esta tecla, se muestra una ventana modal: seleccione los relés y botones deseados, luego valide. Los escenarios se crearán automáticamente en el WES para recibir comentarios en tiempo real de los botones y relés (para otros comentarios, vaya a la configuración general del complemento.)
 
 ![mobile6](../images/wesGlobalView.png)
