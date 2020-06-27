@@ -138,33 +138,33 @@ $forJSArrayType = '#generaltab';
 					</div>
           <br />
           <div class="form-group">
-          	<label class="col-sm-3 control-label">{{IP du Wes}}</label>
+		  <label class="col-sm-3 control-label">{{Dossier du Wes}}</label>
             <div class="col-sm-3">
-            	<input type="text" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="ip"/>
+            	<input id="typeEq" type="text" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="type" value="general" placeholder="general"/>
             </div>
           </div>
-          <div class="form-group">
-          	<label class="col-sm-3 control-label">{{Dossier du Wes}}</label>
-            <div class="col-sm-3">
-            	<input type="text" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="type" value="general" placeholder="general"/>
-            </div>
-          </div>
-          <div class="form-group">
-          	<label class="col-sm-3 control-label">{{Port du Wes}}</label>
-            <div class="col-sm-3">
-            	<input type="text" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="port"/>
-            </div>
-          </div>
-          <div class="form-group">
-          	<label class="col-sm-3 control-label">{{Compte du Wes}}</label>
-            <div class="col-sm-3">
-            	<input type="text" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="username"/>
-            </div>
-          </div>
-          <div class="form-group">
-          	<label class="col-sm-3 control-label">{{Password du Wes}}</label>
-          	<div class="col-sm-3">
-          		<input type="password" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="password"/>
+			<div class="form-group" style="display: none;" data-cmd_id="ipAddress">
+				<label class="col-sm-3 control-label">{{IP du Wes}}</label>
+				<div class="col-sm-3">
+					<input type="text" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="ip" data-cmd_id="ipAddress"/>
+				</div>
+			</div>
+			<div class="form-group" style="display: none;" data-cmd_id="port">
+				<label class="col-sm-3 control-label">{{Port du Wes}}</label>
+				<div class="col-sm-3">
+					<input type="text" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="port" data-cmd_id="port"/>
+				</div>
+			</div>
+			<div class="form-group" style="display: none;" data-cmd_id="username">
+				<label class="col-sm-3 control-label">{{Compte du Wes}}</label>
+				<div class="col-sm-3">
+					<input type="text" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="username" data-cmd_id="username"/>
+				</div>
+			</div>
+			<div class="form-group" style="display: none;" data-cmd_id="password">
+				<label class="col-sm-3 control-label">{{Password du Wes}}</label>
+				<div class="col-sm-3">
+					<input type="password" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="password" data-cmd_id="password"/>
           	</div>
         	</div>
         </fieldset>

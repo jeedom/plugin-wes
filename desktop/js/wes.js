@@ -123,6 +123,27 @@ function prePrintEqLogic() {
 	$('.eqLogic').hide();
 }
 
+$('.eqLogicAttr[data-l1key=configuration][data-l2key=type]').on('change',function(){
+    type = $(this).value()
+    if (type == 'general')
+    {
+        $("div[data-cmd_id='ipAddress']").show()
+        $("div[data-cmd_id='port']").show()
+        $("div[data-cmd_id='username']").show()
+        $("div[data-cmd_id='password']").show()
+        $("#bt_configPush").show()
+        $("#bt_goCarte").show()
+    }
+    else{
+        $("div[data-cmd_id='ipAddress']").hide()
+        $("div[data-cmd_id='port']").hide()
+        $("div[data-cmd_id='username']").hide()
+        $("div[data-cmd_id='password']").hide()
+        $("#bt_configPush").hide()
+        $("#bt_goCarte").hide()
+    }
+});
+
 $('body').delegate('.cmd .cmdAction[data-action=urlpush]', 'click', function (event) {
     $.hideAlert();
 	var id = $(this).closest('.cmd').attr('data-cmd_id');
