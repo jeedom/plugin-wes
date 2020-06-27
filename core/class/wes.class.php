@@ -1271,7 +1271,7 @@ class wesCmd extends cmd
 						$calcul = preg_replace("/#brut#/", "#".$brut->getId()."#", $calcul);
 					}
 					$calcul = scenarioExpression::setTags($calcul);
-					$result = evaluate::Evaluer($calcul);
+					$result = jeedom::evaluateExpression($calcul);
 					if (is_numeric($result)) {
 						$result = number_format($result, 2);
 					} else {
