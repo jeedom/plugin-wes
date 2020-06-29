@@ -84,7 +84,7 @@ $forJSArrayType = '#generaltab';
   <div class="col-xs-12 eqLogic" style="display: none;">
 		<div class="input-group pull-right" style="display:inline-flex">
 			<span class="input-group-btn">
-				<a class="btn btn-default btn-sm eqLogicAction roundedLeft" data-action="configure"><i class="fa fa-cogs"></i> {{Configuration avancée}}</a><a class="btn btn-default btn-sm eqLogicAction" data-action="copy"><i class="fas fa-copy"></i> {{Dupliquer}}</a><a class="btn btn-sm btn-success eqLogicAction" data-action="save"><i class="fas fa-check-circle"></i> {{Sauvegarder}}</a><a class="btn btn-danger btn-sm eqLogicAction roundedRight" data-action="remove"><i class="fas fa-minus-circle"></i> {{Supprimer}}</a>
+			<a class="btn btn-primary btn-sm eqLogicAction roundedLeft" id="bt_goCarte"><i class="fa fa-cogs"></i> {{Accéder à la carte}}</a><a class="btn btn-primary btn-sm eqLogicAction" id="bt_configPush"><i class="fa fa-wrench"></i> {{Configuration Push}}</a><a class="btn btn-default btn-sm eqLogicAction" data-action="configure"><i class="fa fa-cogs"></i> {{Configuration avancée}}</a><a class="btn btn-default btn-sm eqLogicAction" data-action="copy"><i class="fas fa-copy"></i> {{Dupliquer}}</a><a class="btn btn-sm btn-success eqLogicAction" data-action="save"><i class="fas fa-check-circle"></i> {{Sauvegarder}}</a><a class="btn btn-danger btn-sm eqLogicAction roundedRight" data-action="remove"><i class="fas fa-minus-circle"></i> {{Supprimer}}</a>
 			</span>
 		</div>
 	  <ul class="nav nav-tabs" role="tablist">
@@ -92,7 +92,7 @@ $forJSArrayType = '#generaltab';
 	    <li role="presentation" class="active"><a href="#eqlogictab" aria-controls="home" role="tab" data-toggle="tab"><i class="fas fa-tachometer-alt"></i> {{Equipement}}</a></li>
 	    <li role="presentation"><a href="#commandtab" aria-controls="profile" role="tab" data-toggle="tab"><i class="fa fa-list-alt"></i> {{Commandes}}</a></li>
 	  </ul>
-
+	<div class="tab-content" style="height:calc(100% - 50px);overflow:auto;overflow-x: hidden;">
   	<div role="tabpanel" class="tab-pane active" id="eqlogictab">
       <br/>
     	<form class="form-horizontal">
@@ -138,42 +138,35 @@ $forJSArrayType = '#generaltab';
 					</div>
           <br />
           <div class="form-group">
-          	<label class="col-sm-3 control-label">{{IP du Wes}}</label>
+		  <label class="col-sm-3 control-label">{{Dossier du Wes}}</label>
             <div class="col-sm-3">
-            	<input type="text" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="ip"/>
+            	<input id="typeEq" type="text" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="type" value="general" placeholder="general"/>
             </div>
           </div>
-          <div class="form-group">
-          	<label class="col-sm-3 control-label">{{Dossier du Wes}}</label>
-            <div class="col-sm-3">
-            	<input type="text" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="type" value="general" placeholder="general"/>
-            </div>
-          </div>
-          <div class="form-group">
-          	<label class="col-sm-3 control-label">{{Port du Wes}}</label>
-            <div class="col-sm-3">
-            	<input type="text" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="port"/>
-            </div>
-          </div>
-          <div class="form-group">
-          	<label class="col-sm-3 control-label">{{Compte du Wes}}</label>
-            <div class="col-sm-3">
-            	<input type="text" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="username"/>
-            </div>
-          </div>
-          <div class="form-group">
-          	<label class="col-sm-3 control-label">{{Password du Wes}}</label>
-          	<div class="col-sm-3">
-          		<input type="password" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="password"/>
+			<div class="form-group" style="display: none;" data-cmd_id="ipAddress">
+				<label class="col-sm-3 control-label">{{IP du Wes}}</label>
+				<div class="col-sm-3">
+					<input type="text" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="ip" data-cmd_id="ipAddress"/>
+				</div>
+			</div>
+			<div class="form-group" style="display: none;" data-cmd_id="port">
+				<label class="col-sm-3 control-label">{{Port du Wes}}</label>
+				<div class="col-sm-3">
+					<input type="text" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="port" data-cmd_id="port"/>
+				</div>
+			</div>
+			<div class="form-group" style="display: none;" data-cmd_id="username">
+				<label class="col-sm-3 control-label">{{Compte du Wes}}</label>
+				<div class="col-sm-3">
+					<input type="text" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="username" data-cmd_id="username"/>
+				</div>
+			</div>
+			<div class="form-group" style="display: none;" data-cmd_id="password">
+				<label class="col-sm-3 control-label">{{Password du Wes}}</label>
+				<div class="col-sm-3">
+					<input type="password" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="password" data-cmd_id="password"/>
           	</div>
         	</div>
-          <div class="form-group">
-          	<label class="col-sm-2 control-label" ></label>
-            <div class="col-sm-10">
-							<a class="btn btn-default" id="bt_configPush" title='{{Configurer push}}'><i class="fa fa-wrench"></i></a>
-							<a class="btn btn-default" id="bt_goCarte" title='{{Accéder à la carte}}'><i class="fa fa-cogs"></i></a>
-						</div>
-          </div>
         </fieldset>
       </form>
 		</div>
@@ -195,6 +188,7 @@ $forJSArrayType = '#generaltab';
         </tbody>
       </table>
 		</div>
+	</div>
 	</div>
 </div>
 

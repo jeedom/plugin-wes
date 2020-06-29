@@ -547,13 +547,18 @@ class wes extends eqLogic {
 					$status = $this->xmlstatus->xpath('//impulsion/INDEX'.$compteurId);
 				}
 
-				for ($compteurId = 1; $compteurId <= 2; $compteurId++) {
+				for ($compteurId = 1; $compteurId <= 3; $compteurId++) {
 					if ( ! is_object(self::byLogicalId($this->getId()."_T".$compteurId, 'wes')) ) {
 						log::add('wes','debug','Creation teleinfo : '.$this->getId().'_T'.$compteurId);
 						$eqLogic = new wes();
 						$eqLogic->setEqType_name('wes');
 						$eqLogic->setLogicalId($this->getId().'_T'.$compteurId);
-						$eqLogic->setName('Teleinfo ' . $compteurId);
+						if($compteurId == 3){
+							$eqLogic->setName('Teleinfo ' . $compteurId . ' Radio');
+						}
+						else{
+							$eqLogic->setName('Teleinfo ' . $compteurId);
+						}
 						$eqLogic->setConfiguration('type','teleinfo');
 						$eqLogic->save();
 					}
@@ -1271,7 +1276,7 @@ class wesCmd extends cmd
 						$calcul = preg_replace("/#brut#/", "#".$brut->getId()."#", $calcul);
 					}
 					$calcul = scenarioExpression::setTags($calcul);
-					$result = evaluate::Evaluer($calcul);
+					$result = jeedom::evaluateExpression($calcul);
 					if (is_numeric($result)) {
 						$result = number_format($result, 2);
 					} else {
