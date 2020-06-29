@@ -123,6 +123,27 @@ function prePrintEqLogic() {
 	$('.eqLogic').hide();
 }
 
+$('.eqLogicAttr[data-l1key=configuration][data-l2key=type]').on('change',function(){
+    type = $(this).value()
+    if (type == 'general')
+    {
+        $("div[data-cmd_id='ipAddress']").show()
+        $("div[data-cmd_id='port']").show()
+        $("div[data-cmd_id='username']").show()
+        $("div[data-cmd_id='password']").show()
+        $("#bt_configPush").show()
+        $("#bt_goCarte").show()
+    }
+    else{
+        $("div[data-cmd_id='ipAddress']").hide()
+        $("div[data-cmd_id='port']").hide()
+        $("div[data-cmd_id='username']").hide()
+        $("div[data-cmd_id='password']").hide()
+        $("#bt_configPush").hide()
+        $("#bt_goCarte").hide()
+    }
+});
+
 $('body').delegate('.cmd .cmdAction[data-action=urlpush]', 'click', function (event) {
     $.hideAlert();
 	var id = $(this).closest('.cmd').attr('data-cmd_id');
@@ -167,12 +188,15 @@ $('#bt_ApplyconfigPush').on('click', function() {
 		list_object.push($(this).attr('data-configPusheqLogic_id'));
 		}
 	);
+  	console.log('EQ > '+JSON.stringify(list_object));
+  console.log('ID > '+eqLogicIdGlobal);
+  
     $.ajax({// fonction permettant de faire de l'ajax
         type: "POST", // methode de transmission des données au fichier php
         url: "plugins/wes/core/ajax/wes.ajax.php", // url du fichier php
         data: {
             action: "configPush",
-			id: $('.li_eqLogic.active').attr('data-eqLogic_id'),
+			id: eqLogicIdGlobal,
 			eqLogicPush_id: list_object.join(",")
         },
         dataType: 'json',
@@ -190,10 +214,4 @@ $('#bt_ApplyconfigPush').on('click', function() {
     });
 });
 
-$("#table_cmd_wes_temperature").sortable({axis: "y", cursor: "move", items: ".cmd", placeholder: "ui-state-highlight", tolerance: "intersect", forcePlaceholderSize: true});
-$("#table_cmd_wes_relai").sortable({axis: "y", cursor: "move", items: ".cmd", placeholder: "ui-state-highlight", tolerance: "intersect", forcePlaceholderSize: true});
-$("#table_cmd_wes_bouton").sortable({axis: "y", cursor: "move", items: ".cmd", placeholder: "ui-state-highlight", tolerance: "intersect", forcePlaceholderSize: true});
-$("#table_cmd_wes_compteur").sortable({axis: "y", cursor: "move", items: ".cmd", placeholder: "ui-state-highlight", tolerance: "intersect", forcePlaceholderSize: true});
-$("#table_cmd_wes_pince").sortable({axis: "y", cursor: "move", items: ".cmd", placeholder: "ui-state-highlight", tolerance: "intersect", forcePlaceholderSize: true});
-$("#table_cmd_wes_teleinfo").sortable({axis: "y", cursor: "move", items: ".cmd", placeholder: "ui-state-highlight", tolerance: "intersect", forcePlaceholderSize: true});
 $("#table_cmd").sortable({axis: "y", cursor: "move", items: ".cmd", placeholder: "ui-state-highlight", tolerance: "intersect", forcePlaceholderSize: true});
