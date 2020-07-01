@@ -47,7 +47,7 @@ function wes_update() {
 	foreach ($wess as $wes){
 		if(isObject($wes)){
 			$wes->setEqType_name('wes');
-			if($wes-getConfiguration('type') == null || $wes-getConfiguration('type') == ""){
+			if($wes->getConfiguration('type') == null || $wes->getConfiguration('type') == ""){
 				$wes->setConfiguration('type','general');
 			}
 			$wes->save();
