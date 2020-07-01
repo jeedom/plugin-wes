@@ -35,6 +35,82 @@ function wes_install() {
 }
 
 function wes_update() {
+	$analogiques = eqLogic::byType('wes_analogique');
+	$boutons = eqLogic::byType('wes_bouton');
+	$compteurs = eqLogic::byType('wes_compteur');
+	$pinces = eqLogic::byType('wes_pince');
+	$relais = eqLogic::byType('wes_relai');
+	$teleinfos = eqLogic::byType('wes_teleinfo');
+	$temperatures = eqLogic::byType('wes_temperature');
+	$wess = eqLogic::byType('wes');
+	
+	foreach ($wess as $wes){
+		if(isObject($wes)){
+			$wes->setEqType_name('wes');
+			if($wes->getConfiguration('type') == null || $wes->getConfiguration('type') == ""){
+				$wes->setConfiguration('type','general');
+			}
+			$wes->save();
+		}
+	}
+	
+	
+	foreach ($analogiques as $analogique){
+		if(isObject($analogique)){
+			$analogique->setEqType_name('wes');
+			$analogique->setConfiguration('type','analogique');
+			$analogique->save();
+		}
+	}
+	
+	foreach ($boutons as $bouton){
+		if(isObject($bouton)){
+			$bouton->setEqType_name('wes');
+			$bouton->setConfiguration('type','bouton');
+			$bouton->save();
+		}
+	}
+	
+	foreach ($compteurs as $compteur){
+		if(isObject($compteur)){
+			$compteur->setEqType_name('wes');
+			$compteur->setConfiguration('type','compteur');
+			$compteur->save();
+		}
+	}
+	
+	foreach ($relais as $relai){
+		if(isObject($relai)){
+			$relai->setEqType_name('wes');
+			$relai->setConfiguration('type','relai');
+			$relai->save();
+		}
+	}
+	
+	foreach ($pinces as $pince){
+		if(isObject($pince)){
+			$pince->setEqType_name('wes');
+			$pince->setConfiguration('type','pince');
+			$pince->save();
+		}
+	}
+	
+	foreach ($teleinfos as $teleinfo){
+		if(isObject($teleinfo)){
+			$teleinfo->setEqType_name('wes');
+			$teleinfo->setConfiguration('type','teleinfo');
+			$teleinfo->save();
+		}
+	}
+	
+	foreach ($temperatures as $temperature){
+		if(isObject($temperature)){
+			$temperature->setEqType_name('wes');
+			$temperature->setConfiguration('type','temperature');
+			$temperature->save();
+		}
+	}
+	
     $cron = cron::byClassAndFunction('wes', 'pull');
 	if (is_object($cron)) {
 		$cron->stop();

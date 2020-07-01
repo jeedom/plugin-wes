@@ -940,7 +940,7 @@ class wes extends eqLogic {
 							if ($eqLogic_cmd->execCmd() != $eqLogic_cmd->formatValue($status[0])) {
 								log::add('wes','debug',"Change state off ".$eqLogicRelai->getName());
 								$eqLogic_cmd->setCollectDate('');
-								$eqLogic_cmd->event($status[0]);
+								$eqLogic_cmd->event((string) $status[0]);
 							}
 						}
 					} else {
@@ -953,7 +953,7 @@ class wes extends eqLogic {
 							if ($eqLogic_cmd->execCmd() != $eqLogic_cmd->formatValue($status[0])) {
 								log::add('wes','debug',"Change state off ".$eqLogicRelai->getName());
 								$eqLogic_cmd->setCollectDate('');
-								$eqLogic_cmd->event($status[0]);
+								$eqLogic_cmd->event((string) $status[0]);
 							}
 						}
 					}
@@ -1136,7 +1136,7 @@ class wes extends eqLogic {
 						if ($eqLogic_cmd->execCmd() != $eqLogic_cmd->formatValue($status[0])) {
 							log::add('wes','debug',"Change state off ".$eqLogicSwitch->getName());
 							$eqLogic_cmd->setCollectDate('');
-							$eqLogic_cmd->event($status[0]);
+							$eqLogic_cmd->event((boolean)(int)$status[0]);
 						}
 					}
 				}
