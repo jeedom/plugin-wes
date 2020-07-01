@@ -46,6 +46,7 @@ function wes_update() {
 	foreach ($analogiques as $analogique){
 		if(isObject($analogique)){
 			$analogique->setEqType_name('wes');
+			$analogique->setConfiguration('type','analogique');
 			$analogique->save();
 		}
 	}
@@ -53,6 +54,7 @@ function wes_update() {
 	foreach ($boutons as $bouton){
 		if(isObject($bouton)){
 			$bouton->setEqType_name('wes');
+			$bouton->setConfiguration('type','bouton');
 			$bouton->save();
 		}
 	}
@@ -60,6 +62,7 @@ function wes_update() {
 	foreach ($compteurs as $compteur){
 		if(isObject($compteur)){
 			$compteur->setEqType_name('wes');
+			$compteur->setConfiguration('type','compteur');
 			$compteur->save();
 		}
 	}
@@ -67,6 +70,7 @@ function wes_update() {
 	foreach ($relais as $relai){
 		if(isObject($relai)){
 			$relai->setEqType_name('wes');
+			$relai->setConfiguration('type','relai');
 			$relai->save();
 		}
 	}
@@ -74,6 +78,7 @@ function wes_update() {
 	foreach ($pinces as $pince){
 		if(isObject($pince)){
 			$pince->setEqType_name('wes');
+			$pince->setConfiguration('type','pince');
 			$pince->save();
 		}
 	}
@@ -81,6 +86,7 @@ function wes_update() {
 	foreach ($teleinfos as $teleinfo){
 		if(isObject($teleinfo)){
 			$teleinfo->setEqType_name('wes');
+			$teleinfo->setConfiguration('type','teleinfo');
 			$teleinfo->save();
 		}
 	}
@@ -88,12 +94,10 @@ function wes_update() {
 	foreach ($temperatures as $temperature){
 		if(isObject($temperature)){
 			$temperature->setEqType_name('wes');
+			$temperature->setConfiguration('type','temperature');
 			$temperature->save();
 		}
 	}
-	
-	
-	
 	
     $cron = cron::byClassAndFunction('wes', 'pull');
 	if (is_object($cron)) {
