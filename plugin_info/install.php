@@ -42,6 +42,18 @@ function wes_update() {
 	$relais = eqLogic::byType('wes_relai');
 	$teleinfos = eqLogic::byType('wes_teleinfo');
 	$temperatures = eqLogic::byType('wes_temperature');
+	$wess = eqLogic::byType('wes');
+	
+	foreach ($wess as $wes){
+		if(isObject($wes)){
+			$wes->setEqType_name('wes');
+			if($wes-getConfiguration('type') == null || $wes-getConfiguration('type') == ""){
+				$wes->setConfiguration('type','general');
+			}
+			$wes->save();
+		}
+	}
+	
 	
 	foreach ($analogiques as $analogique){
 		if(isObject($analogique)){
