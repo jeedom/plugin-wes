@@ -45,14 +45,14 @@ function wes_update() {
 	$wess = eqLogic::byType('wes');
 	
 	foreach ($wess as $wes){
-		if(isObject($wes)){
+		if(is_object($wes)){
 			if($wes->getConfiguration('type') == null || $wes->getConfiguration('type') == ""){
 				$wes->setConfiguration('type','general');
 				$wes->save();
 			}
 			$wessCmd = cmd::byEqLogicId($wes->getId());
 			foreach ($wessCmd as $wesCmd){
-				if(isObject($wesCmd)){
+				if(is_object($wesCmd)){
 					if($wesCmd->getConfiguration('type') == null || $wes->getConfiguration('type') == ""){
 						$wesCmd->setConfiguration('type','general');
 						$wesCmd->save();
@@ -64,13 +64,13 @@ function wes_update() {
 	
 	
 	foreach ($analogiques as $analogique){
-		if(isObject($analogique)){
+		if(is_object($analogique)){
 			$analogique->setEqType_name('wes');
 			$analogique->setConfiguration('type','analogique');
 			$analogique->save();
 			$analogiquesCmd = cmd::byEqLogicId($analogique->getId());
 			foreach ($analogiquesCmd as $analogiqueCmd){
-				if(isObject($analogiqueCmd)){
+				if(is_object($analogiqueCmd)){
 					$analogiqueCmd->setEqType('wes');
 					$analogiqueCmd->setConfiguration('type','analogique');
 					$analogiqueCmd->save();
@@ -80,13 +80,13 @@ function wes_update() {
 	}
 	
 	foreach ($boutons as $bouton){
-		if(isObject($bouton)){
+		if(is_object($bouton)){
 			$bouton->setEqType_name('wes');
 			$bouton->setConfiguration('type','bouton');
 			$bouton->save();
 			$boutonsCmd = cmd::byEqLogicId($bouton->getId());
 			foreach ($boutonsCmd as $boutonCmd){
-				if(isObject($boutonCmd)){
+				if(is_object($boutonCmd)){
 					$boutonCmd->setEqType('wes');
 					$boutonCmd->setConfiguration('type','bouton');
 					$boutonCmd->save();
@@ -96,13 +96,13 @@ function wes_update() {
 	}
 	
 	foreach ($compteurs as $compteur){
-		if(isObject($compteur)){
+		if(is_object($compteur)){
 			$compteur->setEqType_name('wes');
 			$compteur->setConfiguration('type','compteur');
 			$compteur->save();
 			$compteursCmd = cmd::byEqLogicId($compteur->getId());
 			foreach ($compteursCmd as $compteurCmd){
-				if(isObject($compteurCmd)){
+				if(is_object($compteurCmd)){
 					$compteurCmd->setEqType('wes');
 					$compteurCmd->setConfiguration('type','compteur');
 					$compteurCmd->save();
@@ -112,13 +112,13 @@ function wes_update() {
 	}
 	
 	foreach ($relais as $relai){
-		if(isObject($relai)){
+		if(is_object($relai)){
 			$relai->setEqType_name('wes');
 			$relai->setConfiguration('type','relai');
 			$relai->save();
 			$relaisCmd = cmd::byEqLogicId($relai->getId());
 			foreach ($relaisCmd as $relaiCmd){
-				if(isObject($relaiCmd)){
+				if(is_object($relaiCmd)){
 					$relaiCmd->setEqType('wes');
 					$relaiCmd->setConfiguration('type','relai');
 					$relaiCmd->save();
@@ -128,13 +128,13 @@ function wes_update() {
 	}
 	
 	foreach ($pinces as $pince){
-		if(isObject($pince)){
+		if(is_object($pince)){
 			$pince->setEqType_name('wes');
 			$pince->setConfiguration('type','pince');
 			$pince->save();
 			$pincesCmd = cmd::byEqLogicId($pince->getId());
 			foreach ($pincesCmd as $pinceCmd){
-				if(isObject($pinceCmd)){
+				if(is_object($pinceCmd)){
 					$pinceCmd->setEqType('wes');
 					$pinceCmd->setConfiguration('type','pince');
 					$pinceCmd->save();
@@ -144,13 +144,13 @@ function wes_update() {
 	}
 	
 	foreach ($teleinfos as $teleinfo){
-		if(isObject($teleinfo)){
+		if(is_object($teleinfo)){
 			$teleinfo->setEqType_name('wes');
 			$teleinfo->setConfiguration('type','teleinfo');
 			$teleinfo->save();
 			$teleinfosCmd = cmd::byEqLogicId($teleinfo->getId());
 			foreach ($teleinfosCmd as $teleinfoCmd){
-				if(isObject($teleinfoCmd)){
+				if(is_object($teleinfoCmd)){
 					$teleinfoCmd->setEqType('wes');
 					$teleinfoCmd->setConfiguration('type','teleinfo');
 					$teleinfoCmd->save();
@@ -160,13 +160,13 @@ function wes_update() {
 	}
 	
 	foreach ($temperatures as $temperature){
-		if(isObject($temperature)){
+		if(is_object($temperature)){
 			$temperature->setEqType_name('wes');
 			$temperature->setConfiguration('type','temperature');
 			$temperature->save();
 			$temperaturesCmd = cmd::byEqLogicId($temperature->getId());
 			foreach ($temperaturesCmd as $temperatureCmd){
-				if(isObject($temperatureCmd)){
+				if(is_object($temperatureCmd)){
 					$temperatureCmd->setEqType('wes');
 					$temperatureCmd->setConfiguration('type','temperature');
 					$temperatureCmd->save();
