@@ -793,7 +793,7 @@ class wes extends eqLogic {
 			return 'index.php?v=d&p=wes&m=wes&id=' . $this->getId();
 	}
 
-	public function configPush($url) {
+	public function configPush() {
 		if ( config::byKey("internalAddr") == "" || config::byKey("internalPort") == "" )
 		{
 			throw new Exception(__('L\'adresse IP ou le port local de jeedom ne sont pas définit (Administration => Configuration réseaux => Accès interne).', __FILE__));
