@@ -131,14 +131,25 @@ $('.eqLogicAttr[data-l1key=configuration][data-l2key=type]').on('change',functio
         $("div[data-cmd_id='port']").show()
         $("div[data-cmd_id='username']").show()
         $("div[data-cmd_id='password']").show()
+        $("div[data-cmd_id='tarification']").hide()
         $("#bt_configPush").show()
         $("#bt_goCarte").show()
+    }
+    else if (type == 'teleinfo'){
+        $("div[data-cmd_id='ipAddress']").hide()
+        $("div[data-cmd_id='port']").hide()
+        $("div[data-cmd_id='username']").hide()
+        $("div[data-cmd_id='password']").hide()
+        $("div[data-cmd_id='tarification']").show()
+        $("#bt_configPush").hide()
+        $("#bt_goCarte").hide()
     }
     else{
         $("div[data-cmd_id='ipAddress']").hide()
         $("div[data-cmd_id='port']").hide()
         $("div[data-cmd_id='username']").hide()
         $("div[data-cmd_id='password']").hide()
+        $("div[data-cmd_id='tarification']").hide()
         $("#bt_configPush").hide()
         $("#bt_goCarte").hide()
     }
