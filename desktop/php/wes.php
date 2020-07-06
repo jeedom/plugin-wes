@@ -167,6 +167,18 @@ $forJSArrayType = '#generaltab';
 					<input type="password" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="password" data-cmd_id="password"/>
           	</div>
         	</div>
+		<div class="form-group" style="display: none;" data-cmd_id="tarification">
+				<label class="col-sm-3 control-label">{{Tarification}}</label>
+				<div class="col-sm-3">
+				<select class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="tarification"  data-cmd_id="tarification">
+					<option value="">Sans</option>
+					<option value="BASE">Base</option>
+					<option value="HC">Heure creuse/Heure pleine</option>
+					<option value="BBRH">Tempo</option>
+					<option value="EJP">EJP</option>
+				</select>
+          	</div>
+        	</div>
         </fieldset>
       </form>
 		</div>
