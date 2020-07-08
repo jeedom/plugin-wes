@@ -44,25 +44,6 @@ function wes_update() {
 	$temperatures = eqLogic::byType('wes_temperature');
 	$wess = eqLogic::byType('wes');
 	
-	foreach ($wess as $wes){
-		if(is_object($wes)){
-			if($wes->getConfiguration('type') == null || $wes->getConfiguration('type') == ""){
-				$wes->setConfiguration('type','general');
-				$wes->save();
-			}
-			$wessCmd = cmd::byEqLogicId($wes->getId());
-			foreach ($wessCmd as $wesCmd){
-				if(is_object($wesCmd)){
-					if($wesCmd->getConfiguration('type') == null || $wes->getConfiguration('type') == ""){
-						$wesCmd->setConfiguration('type','general');
-						$wesCmd->save();
-					}
-				}
-			}
-		}
-	}
-	
-	
 	foreach ($analogiques as $analogique){
 		if(is_object($analogique)){
 			$analogique->setEqType_name('wes');
@@ -175,12 +156,30 @@ function wes_update() {
 		}
 	}
 	
-    $cron = cron::byClassAndFunction('wes', 'pull');
+	foreach ($wess as $wes){
+		if(is_object($wes)){
+			if($wes->getConfiguration('type') == null || $wes->getConfiguration('type') == ""){
+				$wes->setConfiguration('type','general');
+				$wes->save();
+			}
+			$wessCmd = cmd::byEqLogicId($wes->getId());
+			foreach ($wessCmd as $wesCmd){
+				if(is_object($wesCmd)){
+					if($wesCmd->getConfiguration('type') == null || $wes->getConfiguration('type') == ""){
+						$wesCmd->setConfiguration('type','general');
+						$wesCmd->save();
+					}
+				}
+			}
+		}
+	}
+	
+    	$cron = cron::byClassAndFunction('wes', 'pull');
 	if (is_object($cron)) {
 		$cron->stop();
 		$cron->remove();
 	}
-    $cron = cron::byClassAndFunction('wes', 'cron');
+    	$cron = cron::byClassAndFunction('wes', 'cron');
 	if (is_object($cron)) {
 		$cron->stop();
 		$cron->remove();
