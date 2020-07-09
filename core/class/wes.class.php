@@ -1080,7 +1080,8 @@ class wes extends eqLogic {
 
 					if ( count($status) != 0 )
 					{
-						foreach($status[0] as $item => $data) {
+						foreach($status[0] as $item => $datas) {
+						$data = (string) $datas;
 						log::add('wes','debug',"Trouve ".$item." => ".$data);
 							$eqLogic_cmd = $eqLogicTeleinfo->getCmd(null, $item);
 							if ( is_object($eqLogic_cmd) ) {
