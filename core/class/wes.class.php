@@ -285,6 +285,20 @@ class wes extends eqLogic {
 						$nbimpulsionminute->setConfiguration('type','compteur');
 						$nbimpulsionminute->save();
 				}
+				$nbimpulsionjour = $this->getCmd(null, 'nbimpulsionjour');
+				if ( ! is_object($nbimpulsionjour) ) {
+						$nbimpulsionjour = new wesCmd();
+						$nbimpulsionjour->setName('Nombre d impulsion pour la journée');
+						$nbimpulsionjour->setEqLogic_id($this->getId());
+						$nbimpulsionjour->setType('info');
+						$nbimpulsionjour->setSubType('numeric');
+						$nbimpulsionjour->setLogicalId('nbimpulsionjour');
+						$nbimpulsionjour->setUnite("Imp/jour");
+						$nbimpulsionjour->setEventOnly(1);
+						$nbimpulsionjour->setIsVisible(1);
+						$nbimpulsionjour->setConfiguration('type','compteur');
+						$nbimpulsionjour->save();
+				}
 				break;
 
 			case 'pince':
@@ -729,6 +743,20 @@ class wes extends eqLogic {
 						$nbimpulsionminute->setEventOnly(1);
 						$nbimpulsionminute->save();
 					}
+				$nbimpulsionjour = $this->getCmd(null, 'nbimpulsionjour');
+				if ( ! is_object($nbimpulsionjour) ) {
+						$nbimpulsionjour = new wesCmd();
+						$nbimpulsionjour->setName('Nombre d impulsion pour la journée');
+						$nbimpulsionjour->setEqLogic_id($this->getId());
+						$nbimpulsionjour->setType('info');
+						$nbimpulsionjour->setSubType('numeric');
+						$nbimpulsionjour->setLogicalId('nbimpulsionjour');
+						$nbimpulsionjour->setUnite("Imp/jour");
+						$nbimpulsionjour->setEventOnly(1);
+						$nbimpulsionjour->setIsVisible(1);
+						$nbimpulsionjour->setConfiguration('type','compteur');
+						$nbimpulsionjour->save();
+				}
 				break;
 
 			case 'relai':
@@ -1072,6 +1100,17 @@ class wes extends eqLogic {
 						$nbimpulsion_cmd->setCollectDate(date('Y-m-d H:i:s'));
 						$nbimpulsion_cmd->event($value);
 					}
+					$xpathModele = '//impulsion/PULSE'.$wesid;
+					$status = $this->xmlstatus->xpath($xpathModele);
+					$value = (string) $status[0];
+                  	if ( count($status) != 0 )
+					{
+						$eqLogic_cmd = $eqLogicCompteur->getCmd(null, 'nbimpulsionjour');
+						if ($eqLogic_cmd->execCmd() != $value) {
+							$eqLogic_cmd->setCollectDate('');
+							$eqLogic_cmd->event($value);
+						}
+                    }
 				}
 			}
 			foreach (self::byType('wes') as $eqLogicPince) {
