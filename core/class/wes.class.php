@@ -195,6 +195,20 @@ class wes extends eqLogic {
 					$firmware->setConfiguration('type','general');
 					$firmware->save();
 				}
+				$tension = $this->getCmd(null, 'tension');
+				if ( ! is_object($tension) ) {
+					$tension = new wesCmd();
+					$tension->setName('Tension');
+					$tension->setEqLogic_id($this->getId());
+					$tension->setType('info');
+					$tension->setSubType('numeric');
+					$tension->setLogicalId('tension');
+					$tension->setUnite("V");
+					$tension->setIsVisible(1);
+					$tension->setEventOnly(1);
+					$tension->setConfiguration('type','general');
+					$tension->save();
+				}
 				break;
 			case 'analogique':
 				$brut = $this->getCmd(null, 'brut');
@@ -635,6 +649,20 @@ class wes extends eqLogic {
 					$firmware->setConfiguration('type','general');
 					$firmware->save();
 				}
+				$tension = $this->getCmd(null, 'tension');
+				if ( ! is_object($tension) ) {
+					$tension = new wesCmd();
+					$tension->setName('Tension');
+					$tension->setEqLogic_id($this->getId());
+					$tension->setType('info');
+					$tension->setSubType('numeric');
+					$tension->setLogicalId('tension');
+					$tension->setUnite("V");
+					$tension->setIsVisible(1);
+					$tension->setEventOnly(1);
+					$tension->setConfiguration('type','general');
+					$tension->save();
+				}
 				break;
 
 			case 'analogique':
@@ -926,6 +954,11 @@ class wes extends eqLogic {
 			$firmware = $this->xmlstatus->xpath($xpathModele);
 			$value = (string) $firmware[0];
 			$this->checkAndUpdateCmd('firmware', $value);
+			
+			$xpathModele = '//pince/V';
+			$tension = $this->xmlstatus->xpath($xpathModele);
+			$value = (string) $tension[0];
+			$this->checkAndUpdateCmd('tension', $value);
 			
 			foreach (self::byType('wes') as $eqLogicRelai) {
 				if ( $eqLogicRelai->getConfiguration('type') == "relai" && $eqLogicRelai->getIsEnable() && substr($eqLogicRelai->getLogicalId(), 0, strpos($eqLogicRelai->getLogicalId(),"_")) == $this->getId() ) {
