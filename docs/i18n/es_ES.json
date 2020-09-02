@@ -2,6 +2,8 @@
     "changelog.md": {
         "Changelog Wes": "Registro de cambios Wes",
         "Pour rappel s'il n'y a pas d'information sur la mise à jour, c'est que celle-ci concerne uniquement de la mise à jour de documentation, de traduction ou de texte": "Como recordatorio si no hay información sobre la actualización, significa que solo se refiere a la actualización de documentación, traducción o texto",
+        "14\/07\/2020": "14\/07\/2020",
+        "Correction pour éviter le crash du daemon à cause des commandes \"Puissance\" des pinces qui ont été renommées en \"Consommation": "Se corrigió para evitar que el demonio se bloqueara debido a los comandos de \"Energía\" de las pinzas, que se han renombrado como \"Consumo\"",
         "08\/07\/2020": "07\/07\/2020",
         "Correction des remontées d'information pour les équipements Téléinfo": "Corrección de retroalimentación de información para equipos Téléinfo",
         "Correction pour éviter la duplication des équipements lors de l'upgrade du plugin de la version multiclass vers monoclass": "Corrección para evitar la duplicación de equipos durante la actualización del complemento de la versión multiclase a monoclase",

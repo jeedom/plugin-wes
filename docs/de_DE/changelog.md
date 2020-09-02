@@ -4,6 +4,10 @@
 >
 >Zur Erinnerung: Wenn keine Informationen zum Update vorhanden sind, bedeutet dies, dass es sich nur um die Aktualisierung von Dokumentation, Übersetzung oder Text handelt
 
+# 14.07.2020
+
+- Es wurde ein Fehler behoben, der verhinderte, dass der Dämon aufgrund der "Power" -Befehle der Greifer abstürzte, die in "Verbrauch" umbenannt wurden"
+
 # 07/07/2020
 
 - Korrektur des Informationsfeedbacks für Téléinfo-Geräte

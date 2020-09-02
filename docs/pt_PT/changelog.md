@@ -4,6 +4,10 @@
 >
 >Como lembrete, se não houver informações sobre a atualização, isso significa que se trata apenas da atualização da documentação, tradução ou texto
 
+# 14/07/2020
+
+- Corrigido para evitar que o daemon travasse devido aos comandos "Power" das garras que foram renomeadas para "Consumption"
+
 # 07/07/2020
 
 - Correção do feedback de informações para o equipamento Téléinfo

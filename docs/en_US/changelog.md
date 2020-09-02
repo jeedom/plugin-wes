@@ -4,6 +4,10 @@
 >
 >As a reminder if there is no information on the update, it means that it only concerns the updating of documentation, translation or text
 
+# 07/14/2020
+
+- Fixed to prevent the daemon from crashing due to the "Power" commands of the grippers which have been renamed to "Consumption"
+
 # 07/07/2020
 
 - Correction of information feedback for Téléinfo equipment

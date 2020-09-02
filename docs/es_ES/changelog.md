@@ -4,6 +4,10 @@
 >
 >Como recordatorio si no hay información sobre la actualización, significa que solo se refiere a la actualización de documentación, traducción o texto
 
+# 14/07/2020
+
+- Se corrigió para evitar que el demonio se bloqueara debido a los comandos de "Energía" de las pinzas, que se han renombrado como "Consumo""
+
 # 07/07/2020
 
 - Corrección de retroalimentación de información para equipos Téléinfo
