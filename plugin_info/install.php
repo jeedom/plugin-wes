@@ -118,6 +118,10 @@ function wes_update() {
 				if(is_object($pinceCmd)){
 					$pinceCmd->setEqType('wes');
 					$pinceCmd->setConfiguration('type','pince');
+					if($pinceCmd->getlogicalId() == 'puissance'){
+						$pinceCmd->setlogicalId('consommation');
+						$pinceCmd->setName('Consommation');
+					}
 					$pinceCmd->save();
 				}
 			}
