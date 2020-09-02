@@ -2,6 +2,9 @@
     "changelog.md": {
         "Changelog Wes": "Changelog Wes",
         "Pour rappel s'il n'y a pas d'information sur la mise à jour, c'est que celle-ci concerne uniquement de la mise à jour de documentation, de traduction ou de texte": "As a reminder if there is no information on the update, it means that it only concerns the updating of documentation, translation or text",
+        "08\/07\/2020": "07\/07\/2020",
+        "Correction des remontées d'information pour les équipements Téléinfo": "Correction of information feedback for Téléinfo equipment",
+        "Correction pour éviter la duplication des équipements lors de l'upgrade du plugin de la version multiclass vers monoclass": "Correction to avoid duplication of equipment when upgrading the plugin from the multiclass version to monoclass",
         "05\/07\/2020": "07\/05\/2020",
         "Merci à arnog23 pour l'aide": "Thanks to arnog23 for the help",
         "Correction passage ancien plugin à nouveau plugin WES": "Correction transition from old plugin to new WES plugin",

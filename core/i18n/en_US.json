@@ -80,5 +80,8 @@
         "Impossible de trouver l\\'équipement : ": "Unable to find the equipment:",
         "L\\'adresse IP du serveur Jeedom doit être renseignée.": "The Jeedom server IP address must be entered",
         "Equipement desactivé impossible d\\éxecuter la commande : ' . $this->getHumanName()": "Equipment deactivated impossible to execute the command: '. $ this-> getHumanName ()"
+    },
+    "info.json": {
+        "Ce plugin va vous permettre d'intégrer un wes de CartElectronics": "This plugin will allow you to integrate a CartElectronics wes"
     }
 }
