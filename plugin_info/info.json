@@ -11,7 +11,7 @@
     "licence": "AGPL",
     "author": "Jeedom SAS",
     "require": "3.3",
-    "category": "automation protocol",
+    "category": "energy",
     "hasOwnDeamon": true,
     "changelog": "https:\/\/doc.jeedom.com\/#language#\/plugins\/automation protocol\/wes\/changelog",
     "documentation": "https:\/\/doc.jeedom.com\/#language#\/plugins\/automation protocol\/wes\/",

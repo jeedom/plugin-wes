@@ -20,48 +20,132 @@
 require_once dirname(__FILE__) . '/../../../../core/php/core.inc.php';
 
 class wes extends eqLogic {
-    /*     * *************************Attributs****************************** */
 
-    /*     * ***********************Methode static*************************** */
-	private function getListeDefaultCommandes()
-	{
-		return array("ADCO" => array('Numero compteur', 'numeric', '', 0, ""),
-		"OPTARIF" => array('Option tarif', 'string', '', 1, ""),
-		"ISOUSC" => array('Intensité souscrite', 'numeric', 'A', 0, ""),
-		"PTEC" => array('Tarif en cours', 'string', '', 1, ""),
-		"PAP" => array('Puissance Apparente', 'numeric', 'W', 1, ""),
-		"IINST" => array('Intensité instantanée', 'numeric', 'A', 1, ""),
-		"IINST1" => array('Intensité instantanée 1', 'numeric', 'A', 0, ""),
-		"IINST2" => array('Intensité instantanée 2', 'numeric', 'A', 0, ""),
-		"IINST3" => array('Intensité instantanée 3', 'numeric', 'A', 0, ""),
-		"IMAX" => array('Intensité maximum', 'numeric', 'A', 1, ""),
-		"IMAX1" => array('Intensité maximum 1', 'numeric', 'A', 0, ""),
-		"IMAX2" => array('Intensité maximum 2', 'numeric', 'A', 0, ""),
-		"IMAX3" => array('Intensité maximum 3', 'numeric', 'A', 0, ""),
-		"PEJP" => array('Préavis EJP', 'binary', '', 0, "EJP"),
-		"DEMAIN" => array('Couleur demain', 'string', '', 0, "BBRH"),
-		"BASE" => array('Index (base)', 'numeric', 'W', 1, "BASE"),
-		"HCHC" => array('Index (heures creuses)', 'numeric', 'W', 1, "HC"),
-		"HCHP" => array('Index (heures pleines)', 'numeric', 'W', 1, "HC"),
-		"EJPHN" => array('Index (normal EJP)', 'numeric', 'W', 0, "EJP"),
-		"EJPHPM" => array('Index (pointe mobile EJP)', 'numeric', 'W', 0, "EJP"),
-		"BBRHCJB" => array('Index (heures creuses jours bleus Tempo)', 'numeric', 'W', 0, "BBRH"),
-		"BBRHPJB" => array('Index (heures pleines jours bleus Tempo)', 'numeric', 'W', 0, "BBRH"),
-		"BBRHCJW" => array('Index (heures creuses jours blancs Tempo)', 'numeric', 'W', 0, "BBRH"),
-		"BBRHPJW" => array('Index (heures pleines jours blancs Tempo)', 'numeric', 'W', 0, "BBRH"),
-		"BBRHCJR" => array('Index (heures creuses jours rouges Tempo)', 'numeric', 'W', 0, "BBRH"),
-		"BBRHPJR" => array('Index (heures pleines jours rouges Tempo)', 'numeric', 'W', 0, "BBRH"),
-		"BASE_evolution" => array('Evolution index (base)', 'numeric', 'W/min', 1, "BASE"),
-		"HCHC_evolution" => array('Evolution index (heures creuses)', 'numeric', 'W/min', 1, "HC"),
-		"HCHP_evolution" => array('Evolution index (heures pleines)', 'numeric', 'W/min', 1, "HC"),
-		"BBRHCJB_evolution" => array('Evolution index (heures creuses jours bleus Tempo)', 'numeric', 'W/min', 0, "BBRH"),
-		"BBRHPJB_evolution" => array('Evolution index (heures pleines jours bleus Tempo)', 'numeric', 'W/min', 0, "BBRH"),
-		"BBRHCJW_evolution" => array('Evolution index (heures creuses jours blancs Tempo)', 'numeric', 'W/min', 0, "BBRH"),
-		"BBRHPJW_evolution" => array('Evolution index (heures pleines jours blancs Tempo)', 'numeric', 'W/min', 0, "BBRH"),
-		"BBRHCJR_evolution" => array('Evolution index (heures creuses jours rouges Tempo)', 'numeric', 'W/min', 0, "BBRH"),
-		"BBRHPJR_evolution" => array('Evolution index (heures pleines jours rouges Tempo)', 'numeric', 'W/min', 0, "BBRH"),
-		"EJPHN_evolution" => array('Evolution index (normal EJP)', 'numeric', 'W', 0, "EJP"),
-		"EJPHPM_evolution" => array('Evolution index (pointe mobile EJP)', 'numeric', 'W', 0, "EJP"));
+	private function getListeCommandes() {
+		$commands = array(
+						"teleinfo" => array(
+							"ADCO" => array("name" => "Numero compteur", "type" => "info", "subtype"=> "numeric", "dashboard" =>"line", "mobile" =>"line", "xpath" => "//tic#id#/ADCO"),
+							"OPTARIF" => array("name" => "Option tarif", "type" => "info", "subtype"=> "string", "xpath" => "//tic#id#/OPTARIF"),
+							"ISOUSC" => array("name" => "Intensité souscrite", "type" => "info", "subtype"=> "numeric", "unite" => "A", "dashboard" =>"line", "mobile" =>"line", "xpath" => "//tic#id#/ISOUSC"),
+							"PTEC" => array("name" => "Tarif en cours", "type" => "info", "subtype"=> "string", "xpath" => "//tic#id#/PTEC"),
+							"PAP" => array("name" => "Puissance Apparente", "type" => "info", "subtype"=> "numeric", "unite" => "VA", "xpath" => "//tic#id#/PAP"),
+							"IINST" => array("name" => "Intensité instantanée", "type" => "info", "subtype"=> "numeric", "unite" => "A", "xpath" => "//tic#id#/IINST"),
+							"IINST1" => array("name" => "Intensité instantanée 1", "type" => "info", "subtype"=> "numeric", "unite" => "A", "visible" => 0, "xpath" => "//tic#id#/IINST1"),
+							"IINST2" => array("name" => "Intensité instantanée 2", "type" => "info", "subtype"=> "numeric", "unite" => "A", "visible" => 0, "xpath" => "//tic#id#/IINST2"),
+							"IINST3" => array("name" => "Intensité instantanée 3", "type" => "info", "subtype"=> "numeric", "unite" => "A", "visible" => 0, "xpath" => "//tic#id#/IINST3"),
+							"IMAX" => array("name" => "Intensité maximum", "type" => "info", "subtype"=> "numeric", "unite" => "A", "xpath" => "//tic#id#/IMAX"),
+							"IMAX1" => array("name" => "Intensité maximum 1", "type" => "info", "subtype"=> "numeric", "unite" => "A", "visible" => 0, "xpath" => "//tic#id#/IMAX1"),
+							"IMAX2" => array("name" => "Intensité maximum 2", "type" => "info", "subtype"=> "numeric", "unite" => "A", "visible" => 0, "xpath" => "//tic#id#/IMAX2"),
+							"IMAX3" => array("name" => "Intensité maximum 3", "type" => "info", "subtype"=> "numeric", "unite" => "A", "visible" => 0, "xpath" => "//tic#id#/IMAX3"),
+							"TENS1" => array("name" => "Tension 1", "type" => "info", "subtype"=> "numeric", "unite" => "V", "visible" => 0, "xpath" => "//tic#id#/TENSION1"),
+							"TENS2" => array("name" => "Tension 2", "type" => "info", "subtype"=> "numeric", "unite" => "V", "visible" => 0, "xpath" => "//tic#id#/TENSION2"),
+							"TENS3" => array("name" => "Tension 3", "type" => "info", "subtype"=> "numeric", "unite" => "V", "visible" => 0, "xpath" => "//tic#id#/TENSION3"),
+							"PEJP" => array("name" => "Préavis EJP", "type" => "info", "subtype"=> "binary", "filter" => "EJP", "xpath" => "//tic#id#/PEJP"),
+							"DEMAIN" => array("name" => "Couleur demain", "type" => "info", "subtype"=> "string", "filter" => "BBRH", "xpath" => "//tic#id#/DEMAIN"),
+							"BASE" => array("name" => "Index (base)", "type" => "info", "subtype"=> "numeric", "unite" => "kWh", "filter" => "BASE","calcul"=>"#value#/1000", "dashboard" =>"line", "mobile" =>"line", "xpath" => "//tic#id#/BASE"),
+							"HCHC" => array("name" => "Index (heures creuses)", "type" => "info", "subtype"=> "numeric", "unite" => "kWh", "filter" => "HC","calcul"=>"#value#/1000", "dashboard" =>"line", "mobile" =>"line","xpath" => "//tic#id#/HCHC"),
+							"HCHP" => array("name" => "Index (heures pleines)", "type" => "info", "subtype"=> "numeric", "unite" => "kWh", "filter" => "HC","calcul"=>"#value#/1000", "dashboard" =>"line", "mobile" =>"line","xpath" => "//tic#id#/HCHP"),
+							"EJPHN" => array("name" => "Index (normal EJP)", "type" => "info", "subtype"=> "numeric", "unite" => "kWh", "filter" => "EJP","calcul"=>"#value#/1000", "dashboard" =>"line", "mobile" =>"line","xpath" => "//tic#id#/EJPHN"),
+							"EJPHPM" => array("name" => "Index (pointe mobile EJP)", "type" => "info", "subtype"=> "numeric", "unite" => "kWh", "filter" => "EJP","calcul"=>"#value#/1000", "dashboard" =>"line", "mobile" =>"line","xpath" => "//tic#id#/EJPHPM"),
+							"BBRHCJB" => array("name" => "Index (heures creuses jours bleus Tempo)", "type" => "info", "subtype"=> "numeric", "unite" => "kWh", "filter" => "EJP","calcul"=>"#value#/1000", "dashboard" =>"line", "mobile" =>"line","xpath" => "//tic#id#/BBRHCJB"),
+							"BBRHPJB" => array("name" => "Index (heures pleines jours bleus Tempo)", "type" => "info", "subtype"=> "numeric", "unite" => "kWh", "filter" => "EJP","calcul"=>"#value#/1000", "dashboard" =>"line", "mobile" =>"line","xpath" => "//tic#id#/BBRHPJB"),
+							"BBRHCJW" => array("name" => "Index (heures creuses jours blancs Tempo)", "type" => "info", "subtype"=> "numeric", "unite" => "kWh", "filter" => "EJP","calcul"=>"#value#/1000", "dashboard" =>"line", "mobile" =>"line","xpath" => "//tic#id#/BBRHCJW"),
+							"BBRHPJW" => array("name" => "Index (heures pleines jours blancs Tempo)", "type" => "info", "subtype"=> "numeric", "unite" => "kWh", "filter" => "EJP","calcul"=>"#value#/1000", "dashboard" =>"line", "mobile" =>"line","xpath" => "//tic#id#/BBRHPJW"),
+							"BBRHCJR" => array("name" => "Index (heures creuses jours rouges Tempo)", "type" => "info", "subtype"=> "numeric", "unite" => "kWh", "filter" => "EJP","calcul"=>"#value#/1000", "dashboard" =>"line", "mobile" =>"line","xpath" => "//tic#id#/BBRHCJR"),
+							"BBRHPJR" => array("name" => "Index (heures pleines jours rouges Tempo)", "type" => "info", "subtype"=> "numeric", "unite" => "kWh", "filter" => "EJP","calcul"=>"#value#/1000", "dashboard" =>"line", "mobile" =>"line","xpath" => "//tic#id#/BBRHPJR"),
+							"CONSO_JOUR" => array("name" => "Consommation de la Journée", "type" => "info", "subtype"=> "numeric", "unite" => "kWh", "xpath" => "//tic#id#/CONSO_JOUR"),
+							"COUT_JOUR" => array("name" => "Coût de la Journée", "type" => "info", "subtype"=> "numeric", "unite" => "€", "xpath" => "//tic#id#/COUT_JOUR"),
+							"CONSO_MOIS" => array("name" => "Consommation du mois", "type" => "info", "subtype"=> "numeric", "unite" => "kWh", "xpath" => "//tic#id#/CONSO_MOIS"),
+							"COUT_MOIS" => array("name" => "Coût du mois", "type" => "info", "subtype"=> "numeric", "unite" => "€", "xpath" => "//tic#id#/COUT_MOIS"),
+							"CONSO_ANNEE" => array("name" => "Consommation année", "type" => "info", "subtype"=> "numeric", "unite" => "kWh", "xpath" => "//tic#id#/CONSO_ANNEE"),
+							"COUT_ANNEE" => array("name" => "Coût année", "type" => "info", "subtype"=> "numeric", "unite" => "€", "xpath" => "//tic#id#/COUT_ANNEE"),
+						),
+						"general" => array(
+							"status" => array("name"=>"Statut", "type"=>"info", "subtype" =>"binary"),
+							"alarme" => array("name"=>"Alarme", "type"=>"info", "subtype" =>"binary", "xpath" =>"//info/alarme","dashboard" =>"alert", "mobile" =>"alert", "invert" =>True),
+							"firmware" => array("name"=>"Firmware", "type"=>"info", "subtype" =>"string", "xpath" =>"//info/firmware"),
+							"serverversion" => array("name"=>"Version Serveur", "type"=>"info", "subtype" =>"string", "xpath" =>"//info/serverversion"),
+							"spaceleft" => array("name"=>"Espace libre", "type"=>"info", "subtype" =>"numeric", "unite"=>"Go", "xpath" =>"//info/spaceleft"),
+							"tension" => array("name"=>"Tension", "type"=>"info", "subtype" =>"numeric", "unite"=>"V","xpath" =>"//pince/V"),
+							"alarmeon" => array("name"=>"Alarme On", "type"=>"action", "subtype" =>"other"),
+							"alarmeoff" => array("name"=>"Alarme Off", "type"=>"action", "subtype" =>"other"),
+						),
+						"compteur" => array(
+							"nbimpulsion" => array("name"=>"Nombre d impulsion", "type"=>"info", "subtype" =>"numeric", "unite"=>"imp", "xpath" =>"//impulsion/PULSE#id#"),
+							"index" => array("name"=>"Index", "type"=>"info", "subtype" =>"numeric", "unite"=>"l", "xpath" =>"//impulsion/INDEX#id#"),
+							"debit" => array("name"=>"Débit", "type"=>"info", "subtype" =>"numeric", "unite"=>"l/min", "xpath" =>"//impulsion/DEBIT#id#"),
+							"consojour" => array("name"=>"Consommation jour", "type"=>"info", "subtype" =>"numeric", "unite"=>"l", "xpath" =>"//impulsion/CONSO_JOUR#id#"),
+							"consoveille" => array("name"=>"Consommation veille", "type"=>"info", "subtype" =>"numeric", "unite"=>"l", "xpath" =>"//impulsion/CONSO_VEILLE#id#"),
+							"coutjour" => array("name"=>"Coût jour", "type"=>"info", "subtype" =>"numeric", "unite"=>"€", "xpath" =>"//impulsion/COUT_JOUR#id#"),
+							"consomois" => array("name"=>"Consommation mois", "type"=>"info", "subtype" =>"numeric", "unite"=>"m3", "xpath" =>"//impulsion/CONSO_MOIS#id#"),
+							"coutmois" => array("name"=>"Coût mois", "type"=>"info", "subtype" =>"numeric", "unite"=>"€", "xpath" =>"//impulsion/COUT_MOIS#id#"),
+							"consoannee" => array("name"=>"Consommation année", "type"=>"info", "subtype" =>"numeric", "unite"=>"m3", "xpath" =>"//impulsion/CONSO_ANNEE#id#"),
+							"coutannee" => array("name"=>"Coût année", "type"=>"info", "subtype" =>"numeric", "unite"=>"€", "xpath" =>"//impulsion/COUT_ANNEE#id#"),
+						),
+						"pince" => array(
+							"intensite" => array("name"=>"Intensité", "type"=>"info", "subtype" =>"numeric", "unite"=>"A", "xpath" =>"//pince/I#id#"),
+							"puissance" => array("name"=>"Puissance", "type"=>"info", "subtype" =>"numeric", "unite"=>"VA", "xpath" =>"//pince/PUISSANCE#id#"),
+							"index" => array("name"=>"Index", "type"=>"info", "subtype" =>"numeric", "unite"=>"kWh", "xpath" =>"//pince/INDEX#id#"),
+							"injection" => array("name"=>"Injection", "type"=>"info", "subtype" =>"numeric", "unite"=>"kWh", "xpath" =>"//pince/INJECT#id#"),
+							"consojour" => array("name"=>"Consommation jour", "type"=>"info", "subtype" =>"numeric", "unite"=>"kWh", "xpath" =>"//pince/CONSO_JOUR#id#"),
+							"coutjour" => array("name"=>"Coût jour", "type"=>"info", "subtype" =>"numeric", "unite"=>"€", "xpath" =>"//pince/COUT_JOUR#id#"),
+							"injecjour" => array("name"=>"Injection jour", "type"=>"info", "subtype" =>"numeric", "unite"=>"kWh", "xpath" =>"//pince/INJEC_JOUR#id#"),
+							"gainjour" => array("name"=>"Gain jour", "type"=>"info", "subtype" =>"numeric", "unite"=>"€","xpath" =>"//pince/GAIN_JOUR#id#"),
+							"maxjour" => array("name"=>"Max jour", "type"=>"info", "subtype" =>"numeric", "unite"=>"A", "xpath" =>"//pince/MAX_JOUR#id#"),
+							"consomois" => array("name"=>"Consommation mois", "type"=>"info", "subtype" =>"numeric", "unite"=>"kWh", "xpath" =>"//pince/CONSO_MOIS#id#"),
+							"coutmois" => array("name"=>"Coût mois", "type"=>"info", "subtype" =>"numeric", "unite"=>"€", "xpath" =>"//pince/COUT_MOIS#id#"),
+							"injecmois" => array("name"=>"Injection mois", "type"=>"info", "subtype" =>"numeric", "unite"=>"kWh","xpath" =>"//pince/INJEC_MOIS#id#"),
+							"gainmois" => array("name"=>"Gain mois", "type"=>"info", "subtype" =>"numeric", "unite"=>"€", "xpath" =>"//pince/GAIN_MOIS#id#"),
+							"maxmois" => array("name"=>"Max mois", "type"=>"info", "subtype" =>"numeric", "unite"=>"A", "xpath" =>"//pince/MAX_MOIS#id#"),
+							"consoannee" => array("name"=>"Consommation année", "type"=>"info", "subtype" =>"numeric", "unite"=>"kWh","xpath" =>"//pince/CONSO_ANNEE#id#"),
+							"coutannee" => array("name"=>"Coût année", "type"=>"info", "subtype" =>"numeric", "unite"=>"€", "xpath" =>"//pince/COUT_ANNEE#id#"),
+							"injecannee" => array("name"=>"Injection année", "type"=>"info", "subtype" =>"numeric", "unite"=>"kWh", "xpath" =>"//pince/INJEC_ANNEE#id#"),
+							"gainannee" => array("name"=>"Gain année", "type"=>"info", "subtype" =>"numeric", "unite"=>"€", "xpath" =>"//pince/GAIN_ANNEE#id#"),
+							"maxannee" => array("name"=>"Max année", "type"=>"info", "subtype" =>"numeric", "unite"=>"A", "xpath" =>"//pince/MAX_ANNEE#id#"),
+						),
+						"bouton" => array(
+							"state" => array("name"=>"Etat", "type"=>"info", "subtype" =>"binary","xpath" =>"//entree/ENTREE#id#"),
+						),
+						"relai" => array(
+							"state" => array("name"=>"Etat", "type"=>"info", "subtype" =>"binary","xpath" =>"//relais/RELAIS#id#","xpathcond" => "//relais1W/RELAIS#id#","cond"=>"#id#>=10", "dashboard" =>"prise", "mobile" =>"prise"),
+							"btn_on" => array("name"=>"On", "type"=>"action", "subtype" =>"other"),
+							"btn_off" => array("name"=>"Off", "type"=>"action", "subtype" =>"other"),
+							"commute" => array("name"=>"Toggle", "type"=>"action", "subtype" =>"other"),
+						),
+						"switch" => array(
+							"state" => array("name"=>"Etat", "type"=>"info", "subtype" =>"binary","xpath" =>"//switch_virtuel/SWITCH#id#","dashboard" =>"prise", "mobile" =>"prise"),
+							"btn_on" => array("name"=>"On", "type"=>"action", "subtype" =>"other"),
+							"btn_off" => array("name"=>"Off", "type"=>"action", "subtype" =>"other"),
+							"commute" => array("name"=>"Toggle", "type"=>"action", "subtype" =>"other"),
+						),
+						"temperature" => array(
+							"reel" => array("name"=>"Température", "type"=>"info", "subtype" =>"numeric", "unite"=>"°C","xpath" =>"//temp/SONDE#id#"),
+						),
+						"analogique" => array(
+							"reel" => array("name"=>"Réel", "type"=>"info", "subtype" =>"numeric"),
+							"brut" => array("name"=>"Brut", "type"=>"info", "subtype" =>"numeric","xpath" =>"//analogique/AD#id#"),
+						),
+						"variable" => array(
+							"value" => array("name"=>"Valeur", "type"=>"info", "subtype" =>"numeric","xpath" =>"//variables/VARIABLE#id#"),
+						)
+					);
+		return $commands;
+	}
+	
+	public function getTypes() {
+		$types = array(
+						"general" => array("name" => "Serveur Wes","ignoreCreation"=>1),
+						"analogique" => array("name" => "Capteur","logical" => "_N","xpath" =>"//analogique/AD#id#"),
+						"compteur" => array("name" => "Compteur Impulsion","logical" => "_C","xpath" =>"//impulsion/INDEX#id#"),
+						"bouton" => array("name" => "Entrée","logical" => "_B","xpath" =>"//entree/ENTREE#id#"),
+						"pince" => array("name" => "Pince Ampèremétrique","logical" => "_P","xpath" =>"//pince/I#id#"),
+						"relai" => array("name" => "Relais","logical" => "_R","xpath" =>"//relais/RELAIS#id#"),
+						"switch" => array("name" => "Switch Virtuel","logical" => "_S","xpath" =>"//switch_virtuel/SWITCH#id#"),
+						"teleinfo" => array("name" => "Téléinfo","logical" => "_T","xpath" =>"//tic#id#/ADCO"),
+						"temperature" => array("name" => "Température","logical" => "_A","xpath" =>"//temp/SONDE#id#"),
+						"variable" => array("name" => "Variable","logical" => "_V","xpath" =>"//variables/VARIABLE#id#"),
+					);
+		return $types;
 	}
 
 	public static function daemon() {
@@ -74,8 +158,7 @@ class wes extends eqLogic {
 		}
 		log::add('wes','debug','cron stop');
 		$endtime = microtime (true);
-		if ( $endtime - $starttime < config::byKey('temporisation_lecture', 'wes', 60, true) )
-		{
+		if ($endtime - $starttime < config::byKey('temporisation_lecture', 'wes', 60, true)) {
 			usleep(floor((config::byKey('temporisation_lecture', 'wes') + $starttime - $endtime)*1000000));
 		}
 	}
@@ -102,6 +185,7 @@ class wes extends eqLogic {
 		if (!is_object($cron)) {
 			throw new Exception(__('Tâche cron introuvable', __FILE__));
 		}
+		log::add('wes','debug','Launching Daemon');
 		$cron->run();
 	}
 
@@ -110,6 +194,7 @@ class wes extends eqLogic {
 		if (!is_object($cron)) {
 			throw new Exception(__('Tâche cron introuvable', __FILE__));
 		}
+		log::add('wes','debug','Stopping Daemon');
 		$cron->halt();
 	}
 
@@ -120,6 +205,31 @@ class wes extends eqLogic {
 		}
 		$cron->setEnable($_mode);
 		$cron->save();
+	}
+	
+	public function sendFtp() {
+		$ftpIp = $this->getConfiguration('ip');
+		$ftpUser = $this->getConfiguration('ftpusername');
+		$ftpPass = $this->getConfiguration('ftppassword');
+		$local_file = dirname(__FILE__) . '/../../resources/DATA_JEEDOM.CGX';
+		$connection = ftp_connect($ftpIp);
+		if (@ftp_login($connection, $ftpUser, $ftpPass)){
+			log::add('wes','debug','Successfully connected to ftp');
+		}else{
+			ftp_close($connection);
+			log::add('wes','error','Error connecting to ftp');
+			return false;
+		}
+		ftp_pasv($connection, true);
+		if (ftp_put($connection, '/DATA_JEEDOM.CGX',  $local_file, FTP_BINARY)) {
+			log::add('wes','debug','Successfully uploaded file to ftp');
+		} else {
+			log::add('wes','error','Error uploading file to ftp');
+			ftp_close($connection);
+			return false;
+		}
+		ftp_close($connection);
+		return true;
 	}
 
 	public function getUrl($file, $postarg = "") {
@@ -148,695 +258,135 @@ class wes extends eqLogic {
 		return $return;
 	}
 
-	public function preUpdate()
-	{
-		if ( $this->getIsEnable() && $this->getConfiguration('type') == "general" )
-		{
-			log::add('wes','debug','get data.cgx');
-			$this->xmlstatus = simplexml_load_string($this->getUrl('data.cgx'));
-			if ( $this->xmlstatus === false )
+	public function preUpdate() {
+		if ($this->getConfiguration('usecustomcgx',0) == 1){
+			if ($this->getConfiguration('ftpusername','') != '' && $this->getConfiguration('ftppassword','') != '') {
+				$this->sendFtp();
+			}
+		}
+		if ( $this->getIsEnable() && $this->getConfiguration('type') == "general" ){
+			log::add('wes','debug','get cgx');
+			$file = 'data.cgx';
+			if ($this->getConfiguration('usecustomcgx',0) == 1) {
+				$file = 'data_jeedom.cgx';
+			}
+			$this->xmlstatus = simplexml_load_string($this->getUrl($file));
+			if ( $this->xmlstatus === false ){
 				throw new Exception(__('Le wes ne repond pas.',__FILE__));
+			}
 		}
 	}
 
-	public function preInsert()
-	{
+	public function preInsert() {
 		$this->setIsEnable(0);
 		$this->setIsVisible(0);
+		if ($this->getConfiguration('type','') == '') {
+			$this->setConfiguration('type','general');
+		}
 	}
-
-	public function postInsert()
-	{
-		switch ($this->getConfiguration('type')) {
-			case 'general':
-				$cmd = $this->getCmd(null, 'status');
-				if ( ! is_object($cmd) ) {
-					$cmd = new wesCmd();
-					$cmd->setName('Etat');
-					$cmd->setEqLogic_id($this->getId());
-					$cmd->setType('info');
-					$cmd->setSubType('binary');
-					$cmd->setLogicalId('status');
-					$cmd->setIsVisible(1);
-					$cmd->setEventOnly(1);
-					$cmd->setConfiguration('type','general');
-					$cmd->save();
-				}
-				$firmware = $this->getCmd(null, 'firmware');
-				if ( ! is_object($firmware) ) {
-					$firmware = new wesCmd();
-					$firmware->setName('Firmware');
-					$firmware->setEqLogic_id($this->getId());
-					$firmware->setType('info');
-					$firmware->setSubType('string');
-					$firmware->setLogicalId('firmware');
-					$firmware->setIsVisible(1);
-					$firmware->setEventOnly(1);
-					$firmware->setConfiguration('type','general');
-					$firmware->save();
-				}
-				$tension = $this->getCmd(null, 'tension');
-				if ( ! is_object($tension) ) {
-					$tension = new wesCmd();
-					$tension->setName('Tension');
-					$tension->setEqLogic_id($this->getId());
-					$tension->setType('info');
-					$tension->setSubType('numeric');
-					$tension->setLogicalId('tension');
-					$tension->setUnite("V");
-					$tension->setIsVisible(1);
-					$tension->setEventOnly(1);
-					$tension->setConfiguration('type','general');
-					$tension->save();
-				}
-				break;
-			case 'analogique':
-				$brut = $this->getCmd(null, 'brut');
-				if ( ! is_object($brut) ) {
-						$brut = new wesCmd();
-						$brut->setName('Brut');
-						$brut->setEqLogic_id($this->getId());
-						$brut->setType('info');
-						$brut->setSubType('numeric');
-						$brut->setLogicalId('brut');
-						$brut->setIsVisible(0);
-						$brut->setEventOnly(1);
-						$brut->setConfiguration('type','analogique');
-						$brut->save();
-				}
-				$reel = $this->getCmd(null, 'reel');
-				if ( ! is_object($reel) ) {
-						$reel = new wesCmd();
-						$reel->setName('Réel');
-						$reel->setEqLogic_id($this->getId());
-						$reel->setType('info');
-						$reel->setSubType('numeric');
-						$reel->setLogicalId('reel');
-                  		$reel->setIsVisible(0);
-						$reel->setEventOnly(1);
-						$reel->setConfiguration('calcul', '#' . $brut->getId() . '#');
-						$reel->setConfiguration('type','analogique');
-						$reel->save();
-				}
-				break;
-
-			case 'bouton':
-				$state = $this->getCmd(null, 'state');
-				if ( ! is_object($state) ) {
-						$state = new wesCmd();
-						$state->setName('Etat');
-						$state->setEqLogic_id($this->getId());
-						$state->setType('info');
-						$state->setSubType('binary');
-						$state->setLogicalId('state');
-						$state->setEventOnly(1);
-                  		$state->setIsVisible(1);
-						$state->setConfiguration('type','bouton');
-						$state->save();
-				}
-				break;
-
-			case 'compteur':
-				$nbimpulsion = $this->getCmd(null, 'nbimpulsion');
-				if ( ! is_object($nbimpulsion) ) {
-						$nbimpulsion = new wesCmd();
-						$nbimpulsion->setName('Nombre d impulsion');
-						$nbimpulsion->setEqLogic_id($this->getId());
-						$nbimpulsion->setType('info');
-						$nbimpulsion->setSubType('numeric');
-						$nbimpulsion->setLogicalId('nbimpulsion');
-						$nbimpulsion->setEventOnly(1);
-                  		$nbimpulsion->setIsVisible(1);
-						$nbimpulsion->setConfiguration('type','compteur');
-						$nbimpulsion->save();
-				}
-				$nbimpulsionminute = $this->getCmd(null, 'nbimpulsionminute');
-				if ( ! is_object($nbimpulsionminute) ) {
-						$nbimpulsionminute = new wesCmd();
-						$nbimpulsionminute->setName('Nombre d impulsion par minute');
-						$nbimpulsionminute->setEqLogic_id($this->getId());
-						$nbimpulsionminute->setType('info');
-						$nbimpulsionminute->setSubType('numeric');
-						$nbimpulsionminute->setLogicalId('nbimpulsionminute');
-						$nbimpulsionminute->setUnite("Imp/min");
-						$nbimpulsionminute->setEventOnly(1);
-                  		$nbimpulsionminute->setIsVisible(1);
-						$nbimpulsionminute->setConfiguration('calcul', '#brut#');
-						$nbimpulsionminute->setConfiguration('type','compteur');
-						$nbimpulsionminute->save();
-				}
-				$nbimpulsionjour = $this->getCmd(null, 'nbimpulsionjour');
-				if ( ! is_object($nbimpulsionjour) ) {
-						$nbimpulsionjour = new wesCmd();
-						$nbimpulsionjour->setName('Nombre d impulsion pour la journée');
-						$nbimpulsionjour->setEqLogic_id($this->getId());
-						$nbimpulsionjour->setType('info');
-						$nbimpulsionjour->setSubType('numeric');
-						$nbimpulsionjour->setLogicalId('nbimpulsionjour');
-						$nbimpulsionjour->setUnite("Imp/jour");
-						$nbimpulsionjour->setEventOnly(1);
-						$nbimpulsionjour->setIsVisible(1);
-						$nbimpulsionjour->setConfiguration('type','compteur');
-						$nbimpulsionjour->save();
-				}
-				break;
-
-			case 'pince':
-				$intensite = $this->getCmd(null, 'intensite');
-				if ( ! is_object($intensite) ) {
-						$intensite = new wesCmd();
-						$intensite->setName('Intensité');
-						$intensite->setEqLogic_id($this->getId());
-						$intensite->setType('info');
-						$intensite->setSubType('numeric');
-						$intensite->setUnite("A");
-						$intensite->setLogicalId('intensite');
-						$intensite->setEventOnly(1);
-                  		$intensite->setIsVisible(1);
-						$intensite->setConfiguration('type','pince');
-						$intensite->save();
-				}
-				$puissance = $this->getCmd(null, 'consommation');
-				if ( ! is_object($puissance) ) {
-						$puissance = new wesCmd();
-						$puissance->setName('Consommation');
-						$puissance->setEqLogic_id($this->getId());
-						$puissance->setType('info');
-						$puissance->setSubType('numeric');
-						$puissance->setLogicalId('consommation');
-						$puissance->setUnite("Wh");
-						$puissance->setEventOnly(1);
-                  		$puissance->setIsVisible(1);
-						$puissance->setConfiguration('type','pince');
-						$puissance->save();
-				}
-				break;
-
-			case 'relai':
-				$state = $this->getCmd(null, 'state');
-				if ( ! is_object($state) ) {
-						$state = new wesCmd();
-						$state->setName('Etat');
-						$state->setEqLogic_id($this->getId());
-						$state->setType('info');
-						$state->setSubType('binary');
-						$state->setLogicalId('state');
-						$state->setEventOnly(1);
-                  		$state->setIsVisible(1);
-						$state->setConfiguration('type','relai');
-						$state->save();
-				}
-				$btn_on = $this->getCmd(null, 'btn_on');
-				if ( ! is_object($btn_on) ) {
-						$btn_on = new wesCmd();
-						$btn_on->setName('On');
-						$btn_on->setEqLogic_id($this->getId());
-						$btn_on->setType('action');
-						$btn_on->setSubType('other');
-						$btn_on->setLogicalId('btn_on');
-						$btn_on->setEventOnly(1);
-                  		$btn_on->setIsVisible(1);
-						$btn_on->setConfiguration('type','relai');
-						$btn_on->save();
-				}
-				$btn_off = $this->getCmd(null, 'btn_off');
-				if ( ! is_object($btn_off) ) {
-						$btn_off = new wesCmd();
-						$btn_off->setName('Off');
-						$btn_off->setEqLogic_id($this->getId());
-						$btn_off->setType('action');
-						$btn_off->setSubType('other');
-						$btn_off->setLogicalId('btn_off');
-						$btn_off->setEventOnly(1);
-                  		$btn_off->setIsVisible(1);
-						$btn_off->setConfiguration('type','relai');
-						$btn_off->save();
-				}
-				$commute = $this->getCmd(null, 'commute');
-				if ( ! is_object($commute) ) {
-						$commute = new wesCmd();
-						$commute->setName('Commute');
-						$commute->setEqLogic_id($this->getId());
-						$commute->setType('action');
-						$commute->setSubType('other');
-						$commute->setLogicalId('commute');
-						$commute->setEventOnly(1);
-                  		$commute->setIsVisible(1);
-						$commute->setConfiguration('type','relai');
-						$commute->save();
-				}
-				break;
-
-			case 'teleinfo':
-				foreach( $this->getListeDefaultCommandes() as $label => $data)
-				{
-					if ( $this->getConfiguration('tarification') == $data[4] || $data[4] == "" ) {
-						$cmd = $this->getCmd(null, $label);
-						if ( ! is_object($cmd) ) {
-							$cmd = new wesCmd();
-							$cmd->setName($data[0]);
-							$cmd->setEqLogic_id($this->getId());
-							$cmd->setType('info');
-							$cmd->setSubType($data[1]);
-							$cmd->setLogicalId($label);
-							$cmd->setUnite($data[2]);
-							$cmd->setIsVisible($data[3]);
-							$cmd->setEventOnly(1);
-							$cmd->setConfiguration('type','teleinfo');
-							$cmd->save();
-						}
-					} else {
-						$cmd = $this->getCmd(null, $label);
-						if ( is_object($cmd) ) {
-							$cmd->remove();
-						}
+	
+	public function postAjax() {
+		$type = $this->getConfiguration('type');
+		foreach($this->getListeCommandes()[$type] as $logicalId => $details) {
+			$filter = '';
+			if ($type == 'teleinfo') {
+				$filter = $this->getConfiguration('tarification','');
+			}
+			if (isset($details['filter'])) {
+				if ($filter != '' && $details['filter'] != $filter){
+					$cmd = $this->getCmd(null, $logicalId);
+					if (is_object($cmd) ) {
+						$cmd->remove();
 					}
 				}
-				break;
-
-			case 'temperature':
-				$reel = $this->getCmd(null, 'reel');
-				if ( ! is_object($reel) ) {
-					$reel = new wesCmd();
-					$reel->setName('Réel');
-					$reel->setEqLogic_id($this->getId());
-					$reel->setType('info');
-					$reel->setSubType('numeric');
-					$reel->setLogicalId('reel');
-					$reel->setEventOnly(1);
-                  	$reel->setIsVisible(1);
-					$reel->setConfiguration('type','temperature');
-					$reel->save();
-				}
-				break;
-
-			case 'switch':
-				$state = $this->getCmd(null, 'state');
-				if ( ! is_object($state) ) {
-						$state = new wesCmd();
-						$state->setName('Etat');
-						$state->setEqLogic_id($this->getId());
-						$state->setType('info');
-						$state->setSubType('binary');
-						$state->setLogicalId('state');
-						$state->setEventOnly(1);
-						$state->setIsVisible(1);
-						$state->setConfiguration('type','switch');
-						$state->save();
-				}
-				$btn_on = $this->getCmd(null, 'btn_on');
-				if ( ! is_object($btn_on) ) {
-						$btn_on = new wesCmd();
-						$btn_on->setName('On');
-						$btn_on->setEqLogic_id($this->getId());
-						$btn_on->setType('action');
-						$btn_on->setSubType('other');
-						$btn_on->setLogicalId('btn_on');
-						$btn_on->setEventOnly(1);
-						$btn_on->setIsVisible(1);
-						$btn_on->setConfiguration('type','switch');
-						$btn_on->save();
-				}
-				$btn_off = $this->getCmd(null, 'btn_off');
-				if ( ! is_object($btn_off) ) {
-						$btn_off = new wesCmd();
-						$btn_off->setName('Off');
-						$btn_off->setEqLogic_id($this->getId());
-						$btn_off->setType('action');
-						$btn_off->setSubType('other');
-						$btn_off->setLogicalId('btn_off');
-						$btn_off->setEventOnly(1);
-						$btn_off->setIsVisible(1);
-						$btn_off->setConfiguration('type','switch');
-						$btn_off->save();
-				}
-				$commute = $this->getCmd(null, 'commute');
-				if ( ! is_object($commute) ) {
-						$commute = new wesCmd();
-						$commute->setName('Commute');
-						$commute->setEqLogic_id($this->getId());
-						$commute->setType('action');
-						$commute->setSubType('other');
-						$commute->setLogicalId('commute');
-						$commute->setEventOnly(1);
-						$commute->setIsVisible(1);
-						$commute->setConfiguration('type','switch');
-						$commute->save();
-				}
-				break;
-
-			default:
-				break;
+			}
 		}
 	}
 
-	public function postUpdate()
-	{
-		switch ($this->getConfiguration('type')) {
-			case 'general':
-				$this->xmlstatus = simplexml_load_string($this->getUrl('data.cgx'));
-				$compteurId = 1;
-				$status = $this->xmlstatus->xpath('//temp/SONDE'.$compteurId);
-				while ( count($status) != 0 ) {
-					if ( !is_object(self::byLogicalId($this->getId()."_A".$compteurId, 'wes')) ) {
-						log::add('wes','debug',count($status).'Creation temperature : '.$this->getId().'_A'.$compteurId);
-						$eqLogic = new wes();
-						$eqLogic->setEqType_name('wes');
-						$eqLogic->setLogicalId($this->getId().'_A'.$compteurId);
-						$eqLogic->setName('Temperature ' . $compteurId);
-						$eqLogic->setConfiguration('type','temperature');
-						$eqLogic->save();
-					}
-					$compteurId ++;
-					$status = $this->xmlstatus->xpath('//temp/SONDE'.$compteurId);
+	public function postSave() {
+		$type = $this->getConfiguration('type');
+		$order = 1;
+		foreach($this->getListeCommandes()[$type] as $logicalId => $details) {
+			$filter = '';
+			if ($type == 'teleinfo') {
+				$filter = $this->getConfiguration('tarification','');
+			}
+			if (isset($details['filter'])) {
+				if ($filter != '' && $details['filter'] != $filter){
+					continue;
 				}
-				$this->xmlstatus = simplexml_load_string($this->getUrl('data.cgx'));
-				for ($compteurId = 1; $compteurId <= 9; $compteurId++) {
-					$status = $this->xmlstatus->xpath('//relais1W/RELAIS'.$compteurId."01");
-					if ( count($status) != 0 ) {
-						for ($souscompteurId = 1; $souscompteurId <= 8; $souscompteurId++) {
-							if ( ! is_object(self::byLogicalId($this->getId()."_R".$compteurId.sprintf("%02d", $souscompteurId), 'wes')) ) {
-								log::add('wes','debug','Creation relai : '.$this->getId().'_R'.$compteurId.sprintf("%02d", $souscompteurId));
-								$eqLogic = new wes();
-								$eqLogic->setEqType_name('wes');
-								$eqLogic->setLogicalId($this->getId().'_R'.$compteurId.sprintf("%02d", $souscompteurId));
-								$eqLogic->setName('Relai ' . $compteurId.sprintf("%02d", $souscompteurId));
-								$eqLogic->setConfiguration('type','relai');
-								$eqLogic->save();
-							}
-						}
-					}
-					else {
-						for ($souscompteurId = 1; $souscompteurId <= 8; $souscompteurId++) {
-							$eqLogic = self::byLogicalId($this->getId()."_R".$compteurId.sprintf("%02d", $souscompteurId), 'wes');
-							if ( is_object($eqLogic) ) {
-								log::add('wes','debug','Suppression relai : '.$this->getId().'_R'.$compteurId.sprintf("%02d", $souscompteurId));
-								$eqLogic->remove();
-							}
-						}
-					}
+			}
+			$cmd = $this->getCmd(null, $logicalId);
+			if (!is_object($cmd) ) {
+				$cmd = new wesCmd();
+				$cmd->setName($details['name']);
+				$cmd->setEqLogic_id($this->getId());
+				$cmd->setType($details['type']);
+				$cmd->setSubType($details['subtype']);
+				$cmd->setLogicalId($logicalId);
+				$cmd->setOrder($order);
+				if (isset($details['visible'])){
+					$cmd->setIsVisible($details['visible']);
 				}
-
-				for ($compteurId = 1; $compteurId <= 2; $compteurId++) {
-					if ( ! is_object(self::byLogicalId($this->getId()."_R".$compteurId, 'wes')) ) {
-						log::add('wes','debug','Creation relai : '.$this->getId().'_R'.$compteurId);
-						$eqLogic = new wes();
-						$eqLogic->setEqType_name('wes');
-						$eqLogic->setLogicalId($this->getId().'_R'.$compteurId);
-						$eqLogic->setName('Relai ' . $compteurId);
-						$eqLogic->setConfiguration('type','relai');
-						$eqLogic->save();
-					}
+				if (isset($details['history'])){
+					$cmd->setIsHistorized($details['history']);
 				}
-				for ($compteurId = 1; $compteurId <= 2; $compteurId++) {
-					if ( ! is_object(self::byLogicalId($this->getId()."_B".$compteurId, 'wes')) ) {
-						log::add('wes','debug','Creation bouton : '.$this->getId().'_B'.$compteurId);
-						$eqLogic = new wes();
-						$eqLogic->setEqType_name('wes');
-						$eqLogic->setLogicalId($this->getId().'_B'.$compteurId);
-						$eqLogic->setName('Bouton ' . $compteurId);
-						$eqLogic->setConfiguration('type','bouton');
-						$eqLogic->save();
-					}
+				if (isset($details['unite'])){
+					$cmd->setUnite($details['unite']);
 				}
-				$compteurId = 1;
-				$status = $this->xmlstatus->xpath('//impulsion/INDEX'.$compteurId);
-				while ( count($status) != 0 ) {
-					if ( ! is_object(self::byLogicalId($this->getId()."_C".$compteurId, 'wes')) ) {
-						log::add('wes','debug','Creation compteur : '.$this->getId().'_C'.$compteurId);
-						$eqLogic = new wes();
-						$eqLogic->setEqType_name('wes');
-						$eqLogic->setLogicalId($this->getId().'_C'.$compteurId);
-						$eqLogic->setName('Compteur ' . $compteurId);
-						$eqLogic->setConfiguration('type','compteur');
-						$eqLogic->save();
-					}
-					$compteurId ++;
-					$status = $this->xmlstatus->xpath('//impulsion/INDEX'.$compteurId);
+				if (isset($details['calcul'])){
+					$cmd->setConfiguration('calculValueOffset',$details['calcul']);
 				}
-
-				for ($compteurId = 1; $compteurId <= 3; $compteurId++) {
-					if ( ! is_object(self::byLogicalId($this->getId()."_T".$compteurId, 'wes')) ) {
-						log::add('wes','debug','Creation teleinfo : '.$this->getId().'_T'.$compteurId);
-						$eqLogic = new wes();
-						$eqLogic->setEqType_name('wes');
-						$eqLogic->setLogicalId($this->getId().'_T'.$compteurId);
-						if($compteurId == 3){
-							$eqLogic->setName('Teleinfo ' . $compteurId . ' Radio');
-						}
-						else{
-							$eqLogic->setName('Teleinfo ' . $compteurId);
-						}
-						$eqLogic->setConfiguration('type','teleinfo');
-						$eqLogic->save();
-					}
+				if (isset($details['dashboard'])){
+					$cmd->setTemplate('dashboard',$details['dashboard']);
 				}
-
-				$compteurId = 1;
-				$status = $this->xmlstatus->xpath('//pince/I'.$compteurId);
-				while ( count($status) != 0 ) {
-					if ( ! is_object(self::byLogicalId($this->getId()."_P".$compteurId, 'wes')) ) {
-						log::add('wes','debug','Creation pince : '.$this->getId().'_P'.$compteurId);
-						$eqLogic = new wes();
-						$eqLogic->setEqType_name('wes');
-						$eqLogic->setLogicalId($this->getId().'_P'.$compteurId);
-						$eqLogic->setName('Pince ' . $compteurId);
-						$eqLogic->setConfiguration('type','pince');
-						$eqLogic->save();
-					}
-					$compteurId ++;
-					$status = $this->xmlstatus->xpath('//pince/I'.$compteurId);
+				if (isset($details['mobile'])){
+					$cmd->setTemplate('mobile',$details['mobile']);
 				}
-
-				$compteurId = 1;
-				$status = $this->xmlstatus->xpath('//analogique/AD'.$compteurId);
-				while ( count($status) != 0 ) {
-					if ( ! is_object(self::byLogicalId($this->getId()."_N".$compteurId, 'wes')) ) {
-						log::add('wes','debug','Creation Analogique : '.$this->getId().'_N'.$compteurId);
-						$eqLogic = new wes();
-						$eqLogic->setEqType_name('wes');
-						$eqLogic->setLogicalId($this->getId().'_N'.$compteurId);
-						$eqLogic->setName('Analogique ' . $compteurId);
-						$eqLogic->setConfiguration('type','analogique');
-						$eqLogic->save();
-					}
-					$compteurId ++;
-					$status = $this->xmlstatus->xpath('//analogique/AD'.$compteurId);
+				if (isset($details['invert'])){
+					$cmd->setDisplay('invertBinary',$details['invert']);
 				}
-
-				for ($compteurId = 1; $compteurId <= 8; $compteurId++) {
-					if ( ! is_object(self::byLogicalId($this->getId()."_S".$compteurId, 'wes')) ) {
-						log::add('wes','debug','Creation switch : '.$this->getId().'_S'.$compteurId);
-						$eqLogic = new wes();
-						$eqLogic->setEqType_name('wes');
-						$eqLogic->setLogicalId($this->getId().'_S'.$compteurId);
-						$eqLogic->setName('Switch ' . $compteurId);
-						$eqLogic->setConfiguration('type','switch');
-						$eqLogic->save();
-					}
-				}
-
-				$cmd = $this->getCmd(null, 'status');
-				if ( ! is_object($cmd) ) {
-					$cmd = new wesCmd();
-					$cmd->setName('Etat');
-					$cmd->setEqLogic_id($this->getId());
-					$cmd->setType('info');
-					$cmd->setSubType('binary');
-					$cmd->setLogicalId('status');
-					$cmd->setIsVisible(1);
-					$cmd->setEventOnly(1);
-					$cmd->setConfiguration('type','general');
-					$cmd->save();
-				}
-
-				$firmware = $this->getCmd(null, 'firmware');
-				if ( ! is_object($firmware) ) {
-					$firmware = new wesCmd();
-					$firmware->setName('Firmware');
-					$firmware->setEqLogic_id($this->getId());
-					$firmware->setType('info');
-					$firmware->setSubType('string');
-					$firmware->setLogicalId('firmware');
-					$firmware->setIsVisible(1);
-					$firmware->setEventOnly(1);
-					$firmware->setConfiguration('type','general');
-					$firmware->save();
-				}
-				$tension = $this->getCmd(null, 'tension');
-				if ( ! is_object($tension) ) {
-					$tension = new wesCmd();
-					$tension->setName('Tension');
-					$tension->setEqLogic_id($this->getId());
-					$tension->setType('info');
-					$tension->setSubType('numeric');
-					$tension->setLogicalId('tension');
-					$tension->setUnite("V");
-					$tension->setIsVisible(1);
-					$tension->setEventOnly(1);
-					$tension->setConfiguration('type','general');
-					$tension->save();
-				}
-				break;
-
-			case 'analogique':
-				$brut = $this->getCmd(null, 'voltage');
-				if ( is_object($brut) ) {
-					$brut->setLogicalId('brut');
-					$brut->setConfiguration('type','analogique');
-					$brut->save();
-				} else {
-					$brut = $this->getCmd(null, 'brut');
-				}
-			$reel = $this->getCmd(null, 'reel');
-			if ( ! is_object($reel) ) {
-					$reel = new wesCmd();
-					$reel->setName('Réel');
-					$reel->setEqLogic_id($this->getId());
-					$reel->setType('info');
-					$reel->setSubType('numeric');
-					$reel->setLogicalId('reel');
-					$reel->setEventOnly(1);
-					$reel->setConfiguration('calcul', '#' . $brut->getId() . '#');
-					$reel->setConfiguration('type','analogique');
-					$reel->save();
-					}
-				break;
-
-			case 'bouton':
-				$nbimpulsion = $this->getCmd(null, 'nbimpulsion');
-				if ( is_object($nbimpulsion) ) {
-					$nbimpulsion->remove();
-				}
-				$state = $this->getCmd(null, 'etat');
-				if ( is_object($state) ) {
-					$state->setLogicalId('state');
-					$state->setConfiguration('type','bouton');
-					$state->save();
-				}
-				break;
-
-			case 'compteur':
-				$nbimpulsion = $this->getCmd(null, 'nbimpulsion');
-				if ( ! is_object($nbimpulsion) ) {
-						$nbimpulsion = new wesCmd();
-						$nbimpulsion->setName('Nombre d impulsion');
-						$nbimpulsion->setEqLogic_id($this->getId());
-						$nbimpulsion->setType('info');
-						$nbimpulsion->setSubType('numeric');
-						$nbimpulsion->setLogicalId('nbimpulsion');
-						$nbimpulsion->setEventOnly(1);
-						$nbimpulsion->setConfiguration('type','compteur');
-						$nbimpulsion->save();
-					}
-				$nbimpulsionminute = $this->getCmd(null, 'nbimpulsionminute');
-				if ( ! is_object($nbimpulsionminute) ) {
-						$nbimpulsionminute = new wesCmd();
-						$nbimpulsionminute->setName('Nombre d impulsion par minute');
-						$nbimpulsionminute->setEqLogic_id($this->getId());
-						$nbimpulsionminute->setType('info');
-						$nbimpulsionminute->setSubType('numeric');
-						$nbimpulsionminute->setLogicalId('nbimpulsionminute');
-						$nbimpulsionminute->setUnite("Imp/min");
-						$nbimpulsionminute->setConfiguration('calcul', '#brut#');
-						$nbimpulsionminute->setConfiguration('type','compteur');
-						$nbimpulsionminute->setEventOnly(1);
-						$nbimpulsionminute->save();
-					}
-				$nbimpulsionjour = $this->getCmd(null, 'nbimpulsionjour');
-				if ( ! is_object($nbimpulsionjour) ) {
-						$nbimpulsionjour = new wesCmd();
-						$nbimpulsionjour->setName('Nombre d impulsion pour la journée');
-						$nbimpulsionjour->setEqLogic_id($this->getId());
-						$nbimpulsionjour->setType('info');
-						$nbimpulsionjour->setSubType('numeric');
-						$nbimpulsionjour->setLogicalId('nbimpulsionjour');
-						$nbimpulsionjour->setUnite("Imp/jour");
-						$nbimpulsionjour->setEventOnly(1);
-						$nbimpulsionjour->setIsVisible(1);
-						$nbimpulsionjour->setConfiguration('type','compteur');
-						$nbimpulsionjour->save();
-				}
-				break;
-
-			case 'relai':
-				$commute = $this->getCmd(null, 'commute');
-				if ( ! is_object($commute) ) {
-						$commute = new wesCmd();
-						$commute->setName('Commute');
-						$commute->setEqLogic_id($this->getId());
-						$commute->setType('action');
-						$commute->setSubType('other');
-						$commute->setLogicalId('commute');
-						$commute->setEventOnly(1);
-						$commute->setConfiguration('type','relai');
-						$commute->save();
-					}
-				break;
-			case 'teleinfo':
-				foreach( $this->getListeDefaultCommandes() as $label => $data)
-				{
-					if ( $this->getConfiguration('tarification') == "" || $this->getConfiguration('tarification') == $data[4] || $data[4] == "" ) {
-						$cmd = $this->getCmd(null, $label);
-						if ( ! is_object($cmd) ) {
-							$cmd = new wesCmd();
-							$cmd->setName($data[0]);
-							$cmd->setEqLogic_id($this->getId());
-							$cmd->setType('info');
-							$cmd->setSubType($data[1]);
-							$cmd->setLogicalId($label);
-							$cmd->setUnite($data[2]);
-							$cmd->setIsVisible($data[3]);
-							$cmd->setEventOnly(1);
-							$cmd->setConfiguration('type','teleinfo');
-							$cmd->save();
-						}
-					} else {
-						$cmd = $this->getCmd(null, $label);
-						if ( is_object($cmd) ) {
-							$cmd->remove();
-						}
-					}
-				}
-				break;
-
-			case 'temperature':
-				$reel = $this->getCmd(null, 'reel');
-				if ( ! is_object($reel) ) {
-						$reel = new wesCmd();
-						$reel->setName('Réel');
-						$reel->setEqLogic_id($this->getId());
-						$reel->setType('info');
-						$reel->setSubType('numeric');
-						$reel->setLogicalId('reel');
-						$reel->setEventOnly(1);
-						$reel->setConfiguration('type','temperature');
-						$reel->save();
-					}
-				break;
-
-			case 'switch':
-				$commute = $this->getCmd(null, 'commute');
-				if ( ! is_object($commute) ) {
-						$commute = new wesCmd();
-						$commute->setName('Commute');
-						$commute->setEqLogic_id($this->getId());
-						$commute->setType('action');
-						$commute->setSubType('other');
-						$commute->setLogicalId('commute');
-						$commute->setEventOnly(1);
-						$commute->setConfiguration('type','switch');
-						$commute->save();
-					}
-				break;
-
-			default:
-				break;
+				$cmd->save();
+			}
+			$order += 1;
 		}
+		if ($type == 'general') {
+			self::deamon_start();
 		}
+	}
 
-	public function preRemove()
-	{
+	public function postUpdate() {
+		if ($this->getConfiguration('type') == 'general') {
+			$file = 'data.cgx';
+			if ($this->getConfiguration('usecustomcgx',0) == 1) {
+				$file = 'data_jeedom.cgx';
+			}
+			$this->xmlstatus = simplexml_load_string($this->getUrl($file));
+			foreach (self::getTypes() as $type => $data){
+				if (!isset($data['ignoreCreation'])) {
+					$id = 1;
+					$xpathModele = str_replace('#id#',$id,$data['xpath']);
+					$status = $this->xmlstatus->xpath($xpathModele);
+					while ( count($status) != 0 ) {
+						if (!is_object(self::byLogicalId($this->getId().$data['logical'].$id, 'wes')) ) {
+							log::add('wes','debug',count($status).'Creation ' . $data['name'] . ' : '.$this->getId().$data['logical'].$id);
+							$eqLogic = new wes();
+							$eqLogic->setEqType_name('wes');
+							$eqLogic->setLogicalId($this->getId().$data['logical'].$id);
+							$eqLogic->setName($data['name'] . ' ' . $id);
+							$eqLogic->setConfiguration('type',$type);
+							$eqLogic->save();
+						}
+						$id ++;
+						$xpathModele = str_replace('#id#',$id,$data['xpath']);
+						$status = $this->xmlstatus->xpath($xpathModele);
+					}
+				}
+			}
+		}
+	}
+
+	public function preRemove() {
 		foreach (self::byType('wes') as $eqLogic) {
 			if ( substr($eqLogic->getLogicalId(), 0, strpos($eqLogic->getLogicalId(),"_")) == $this->getId() ) {
 				log::add('wes','debug','Suppression '.$eqLogic->getConfiguration('type').' : '.$eqLogic->getName());
@@ -957,269 +507,46 @@ class wes extends eqLogic {
 	public function pull() {
 		if ( $this->getIsEnable() && $this->getConfiguration('type') == "general" ) {
 			log::add('wes','debug','pull '.$this->getName());
-			$statuscmd = $this->getCmd(null, 'status');
-			log::add('wes','debug','get data.cgx');
-			$this->xmlstatus = simplexml_load_string($this->getUrl('data.cgx'));
+			$file = 'data.cgx';
+			if ($this->getConfiguration('usecustomcgx',0) == 1) {
+				$file = 'data_jeedom.cgx';
+			}
+			log::add('wes','debug','get ' . $file);
+			$this->xmlstatus = simplexml_load_string($this->getUrl($file));
 			$count = 0;
 			while ( $this->xmlstatus === false && $count < 3 ) {
-				log::add('wes','debug','reget data.cgx');
-				$this->xmlstatus = simplexml_load_string($this->getUrl('data.cgx'));
+				log::add('wes','debug','reget ' . $file);
+				$this->xmlstatus = simplexml_load_string($this->getUrl($file));
 				$count++;
 			}
 			if ( $this->xmlstatus === false ) {
-				if ($statuscmd->execCmd() != 0) {
-					$statuscmd->setCollectDate('');
-					$statuscmd->event(0);
-				}
-				log::add('wes','error',__('Le wes ne repond pas.',__FILE__)." ".$this->getName()." get data.cgx");
+				$this->checkAndUpdateCmd('status', 0);
+				log::add('wes','error',__('Le wes ne repond pas.',__FILE__)." ".$this->getName()." get " . $file);
 				return false;
 			}
-			if ($statuscmd->execCmd() != 1) {
-				$statuscmd->setCollectDate('');
-				$statuscmd->event(1);
-			}
-			$xpathModele = '//info/firmware';
-			$firmware = $this->xmlstatus->xpath($xpathModele);
-			$value = (string) $firmware[0];
-			$this->checkAndUpdateCmd('firmware', $value);
-			
-			$xpathModele = '//pince/V';
-			$tension = $this->xmlstatus->xpath($xpathModele);
-			$value = (string) $tension[0];
-			$this->checkAndUpdateCmd('tension', $value);
-			
-			foreach (self::byType('wes') as $eqLogicRelai) {
-				if ( $eqLogicRelai->getConfiguration('type') == "relai" && $eqLogicRelai->getIsEnable() && substr($eqLogicRelai->getLogicalId(), 0, strpos($eqLogicRelai->getLogicalId(),"_")) == $this->getId() ) {
-					$wesid = substr($eqLogicRelai->getLogicalId(), strpos($eqLogicRelai->getLogicalId(),"_")+2);
-					if ( $wesid < 10 ) {
-						$xpathModele = '//relais/RELAIS'.$wesid;
-						$status = $this->xmlstatus->xpath($xpathModele);
-						$value = (string) $status[0];
-
-						if ( count($status) != 0 )
-						{
-							$eqLogic_cmd = $eqLogicRelai->getCmd(null, 'state');
-							if ($eqLogic_cmd->execCmd() != $eqLogic_cmd->formatValue($value)) {
-								log::add('wes','debug',"Change state off ".$eqLogicRelai->getName());
-								$eqLogic_cmd->setCollectDate('');
-								$eqLogic_cmd->event($value);
-							}
-						}
-					} else {
-						$xpathModele = '//relais1W/RELAIS'.$wesid;
-						$status = $this->xmlstatus->xpath($xpathModele);
-						$value = (string) $status[0];
-
-						if ( count($status) != 0 )
-						{
-							$eqLogic_cmd = $eqLogicRelai->getCmd(null, 'state');
-							if ($eqLogic_cmd->execCmd() != $eqLogic_cmd->formatValue($value)) {
-								log::add('wes','debug',"Change state off ".$eqLogicRelai->getName());
-								$eqLogic_cmd->setCollectDate('');
-								$eqLogic_cmd->event($value);
-							}
-						}
-					}
-				}
-			}
-			foreach (self::byType('wes') as $eqLogicBouton) {
-				if ($eqLogicBouton->getConfiguration('type') == "bouton" && $eqLogicBouton->getIsEnable() && substr($eqLogicBouton->getLogicalId(), 0, strpos($eqLogicBouton->getLogicalId(),"_")) == $this->getId() ) {
-					$wesid = substr($eqLogicBouton->getLogicalId(), strpos($eqLogicBouton->getLogicalId(),"_")+2);
-					$xpathModele = '//entree/ENTREE'.$wesid;
-					$status = $this->xmlstatus->xpath($xpathModele);
-					$value = (string) $status[0];
-
-					if ( count($status) != 0 )
-					{
-						$eqLogic_cmd = $eqLogicBouton->getCmd(null, 'state');
-						if ($eqLogic_cmd->execCmd() != $eqLogic_cmd->formatValue($value)) {
-							log::add('wes','debug',"Change state off ".$eqLogicBouton->getName());
-							$eqLogic_cmd->setCollectDate('');
-							$eqLogic_cmd->event($value);
-						}
-					}
-				}
-			}
-			foreach (self::byType('wes') as $eqLogictemperature) {
-				if ($eqLogictemperature->getConfiguration('type') == "temperature" && $eqLogictemperature->getIsEnable() && substr($eqLogictemperature->getLogicalId(), 0, strpos($eqLogictemperature->getLogicalId(),"_")) == $this->getId() ) {
-					$wesid = substr($eqLogictemperature->getLogicalId(), strpos($eqLogictemperature->getLogicalId(),"_")+2);
-					$xpathModele = '//temp/SONDE'.$wesid;
-					$status = $this->xmlstatus->xpath($xpathModele);
-					$value = (string) $status[0];
-
-					if ( count($status) != 0 )
-					{
-						$eqLogic_cmd = $eqLogictemperature->getCmd(null, 'reel');
-						if ($eqLogic_cmd->execCmd() != $eqLogic_cmd->formatValue($value)) {
-							log::add('wes','debug',"Change reel ".$eqLogictemperature->getName());
-						}
-						$eqLogic_cmd->setCollectDate('');
-						$eqLogic_cmd->event($value);
-					}
-				}
-			}
-			foreach (self::byType('wes') as $eqLogicCompteur) {
-				if ($eqLogicCompteur->getConfiguration('type') == "compteur" && $eqLogicCompteur->getIsEnable() && substr($eqLogicCompteur->getLogicalId(), 0, strpos($eqLogicCompteur->getLogicalId(),"_")) == $this->getId() ) {
-					$wesid = substr($eqLogicCompteur->getLogicalId(), strpos($eqLogicCompteur->getLogicalId(),"_")+2);
-					$xpathModele = '//impulsion/INDEX'.$wesid;
-					$status = $this->xmlstatus->xpath($xpathModele);
-					$value = (string) $status[0];
-
-					if ( count($status) != 0 )
-					{
-						$nbimpulsion_cmd = $eqLogicCompteur->getCmd(null, 'nbimpulsion');
-						$nbimpulsion = $nbimpulsion_cmd->execCmd();
-						$nbimpulsionminute_cmd = $eqLogicCompteur->getCmd(null, 'nbimpulsionminute');
-						if ( $nbimpulsion != $value ) {
-							log::add('wes','debug',"Change nbimpulsion off ".$eqLogicCompteur->getName());
-							$lastCollectDate = $nbimpulsion_cmd->getCollectDate();
-							if ( $lastCollectDate == '' ) {
-								log::add('wes','debug',"Change nbimpulsionminute 0");
-								$nbimpulsionminute = 0;
-							} else {
-								$DeltaSeconde = (time() - strtotime($lastCollectDate))*60;
-								if ( $DeltaSeconde != 0 )
-								{
-									if ( $value > $nbimpulsion ) {
-										$DeltaValeur = $value - $nbimpulsion;
-									} else {
-										$DeltaValeur = $value;
-									}
-									$nbimpulsionminute = round (($value - $nbimpulsion)/(time() - strtotime($lastCollectDate))*60, 6);
-								} else {
-									$nbimpulsionminute = 0;
+			$this->checkAndUpdateCmd('status', 1);
+			foreach (self::byType('wes') as $eqLogic) {
+				if ($eqLogic->getIsEnable() && ($eqLogic->getId() == $this->getId() || substr($eqLogic->getLogicalId(), 0, strpos($eqLogic->getLogicalId(),"_")) == $this->getId() )) {
+					$wesid = substr($eqLogic->getLogicalId(), strpos($eqLogic->getLogicalId(),"_")+2);
+					foreach (self::getListeCommandes()[$eqLogic->getConfiguration('type','')] as $logical => $details) {
+						if (isset($details['xpath']) && $details['xpath'] != ''){
+							$xpath = $details['xpath'];
+							if (isset($details['cond'])) {
+								$cond = str_replace('#id#',$wesid,$details['cond']);
+								$test = eval("return " . $cond .";");
+								if ($test){
+									$xpath = $details['xpathcond'];
 								}
 							}
-							log::add('wes','debug',"Change nbimpulsionminute ".$nbimpulsionminute);
-							$nbimpulsionminute_cmd->setCollectDate(date('Y-m-d H:i:s'));
-							$nbimpulsionminute_cmd->event($nbimpulsionminute);
-						} else {
-							$nbimpulsionminute_cmd->setCollectDate(date('Y-m-d H:i:s'));
-							$nbimpulsionminute_cmd->event(0);
-						}
-						$nbimpulsion_cmd->setCollectDate(date('Y-m-d H:i:s'));
-						$nbimpulsion_cmd->event($value);
-					}
-					$xpathModele = '//impulsion/PULSE'.$wesid;
-					$status = $this->xmlstatus->xpath($xpathModele);
-					$value = (string) $status[0];
-                  	if ( count($status) != 0 )
-					{
-						$eqLogic_cmd = $eqLogicCompteur->getCmd(null, 'nbimpulsionjour');
-						if ($eqLogic_cmd->execCmd() != $value) {
-							$eqLogic_cmd->setCollectDate('');
-							$eqLogic_cmd->event($value);
-						}
-                    }
-				}
-			}
-			foreach (self::byType('wes') as $eqLogicPince) {
-				if ($eqLogicPince->getConfiguration('type') == "pince" && $eqLogicPince->getIsEnable() && substr($eqLogicPince->getLogicalId(), 0, strpos($eqLogicPince->getLogicalId(),"_")) == $this->getId() ) {
-					$wesid = substr($eqLogicPince->getLogicalId(), strpos($eqLogicPince->getLogicalId(),"_")+2);
-					$xpathModele = '//pince/I'.$wesid;
-					$status = $this->xmlstatus->xpath($xpathModele);
-					$value = (string) $status[0];
-					
-					if ( count($status) != 0 )
-					{
-						$eqLogic_cmd = $eqLogicPince->getCmd(null, 'intensite');
-						if ($eqLogic_cmd->execCmd() != $eqLogic_cmd->formatValue($value)) {
-							log::add('wes','debug',"Change intensite ".$eqLogicPince->getName());
-						}
-						$eqLogic_cmd->setCollectDate('');
-						$eqLogic_cmd->event($value);
-					}
-					$xpathModele = '//pince/INDEX'.$wesid;
-					$status = $this->xmlstatus->xpath($xpathModele);
-					$value = (string) $status[0];
-
-					if ( count($status) != 0 )
-					{
-						$eqLogic_cmd = $eqLogicPince->getCmd(null, 'consommation');
-						if ($eqLogic_cmd->execCmd() != $eqLogic_cmd->formatValue($value)) {
-							log::add('wes','debug',"Change consommation ".$eqLogicPince->getName());
-						}
-						$eqLogic_cmd->setCollectDate('');
-						$eqLogic_cmd->event($value);
-					}
-				}
-			}
-			foreach (self::byType('wes') as $eqLogicTeleinfo) {
-				if ($eqLogicTeleinfo->getConfiguration('type') == "teleinfo" && $eqLogicTeleinfo->getIsEnable() && substr($eqLogicTeleinfo->getLogicalId(), 0, strpos($eqLogicTeleinfo->getLogicalId(),"_")) == $this->getId() ) {
-					$wesid = substr($eqLogicTeleinfo->getLogicalId(), strpos($eqLogicTeleinfo->getLogicalId(),"_")+2, 1);
-					$xpathModele = '//tic'.$wesid;
-					$status = $this->xmlstatus->xpath($xpathModele);
-
-					if ( count($status) != 0 )
-					{
-						foreach($status[0] as $item => $datas) {
-						$data = (string) $datas;
-						log::add('wes','debug',"Trouve ".$item." => ".$data);
-							$eqLogic_cmd = $eqLogicTeleinfo->getCmd(null, $item);
-							if ( is_object($eqLogic_cmd) ) {
-								$eqLogic_cmd_evol = $eqLogicTeleinfo->getCmd(null, $item."_evolution");
-								if ( is_object($eqLogic_cmd_evol) ) {
-									$ancien_data = $eqLogic_cmd->execCmd();
-									if ($ancien_data != $data) {
-										log::add('wes', 'debug', $eqLogic_cmd->getName().' Change '.$data);
-										if ( $eqLogic_cmd->getCollectDate() == '' ) {
-											$nbimpulsionminute = 0;
-										} else {
-											if ( $data > $ancien_data ) {
-												$nbimpulsionminute = round (($data - $ancien_data)/(time() - strtotime($eqLogic_cmd->getCollectDate()))*60);
-											} else {
-												$nbimpulsionminute = round ($data/(time() - strtotime($eqLogic_cmd_evol->getCollectDate())*60));
-											}
-										}
-										$eqLogic_cmd_evol->setCollectDate(date('Y-m-d H:i:s'));
-										$eqLogic_cmd_evol->event($nbimpulsionminute);
-									} else {
-										$eqLogic_cmd_evol->setCollectDate(date('Y-m-d H:i:s'));
-										$eqLogic_cmd_evol->event(0);
-									}
-									$eqLogic_cmd->setCollectDate(date('Y-m-d H:i:s'));
-									$eqLogic_cmd->event($data);
-								} else {
-									$eqLogic_cmd->setCollectDate(date('Y-m-d H:i:s'));
-									$eqLogic_cmd->event($data);
+							$xpathModele = str_replace('#id#',$wesid,$xpath);
+							$status = $this->xmlstatus->xpath($xpathModele);
+							$value = (string) $status[0];
+							if (count($status) != 0){
+								if ($eqLogic->getConfiguration('type','') == 'relai' && $logical == 'state'){
+									$value = ($value == 'ON') ? 1 :0;
 								}
+								$eqLogic->checkAndUpdateCmd($logical, $value);
 							}
-						}
-					}
-				}
-			}
-			foreach (self::byType('wes') as $eqLogicAnalogique) {
-				if ($eqLogicAnalogique->getConfiguration('type') == "analogique" && $eqLogicAnalogique->getIsEnable() && substr($eqLogicAnalogique->getLogicalId(), 0, strpos($eqLogicAnalogique->getLogicalId(),"_")) == $this->getId() ) {
-					$wesid = substr($eqLogicAnalogique->getLogicalId(), strpos($eqLogicAnalogique->getLogicalId(),"_")+2);
-					$xpathModele = '//analogique/AD'.$wesid;
-					$status = $this->xmlstatus->xpath($xpathModele);
-					$value = (string) intval($status[0]);
-
-					if ( count($status) != 0 )
-					{
-						$eqLogic_cmd = $eqLogicAnalogique->getCmd(null, 'brut');
-						if ($eqLogic_cmd->execCmd() != $eqLogic_cmd->formatValue($value)) {
-							log::add('wes','debug',"Change brut ".$eqLogicAnalogique->getName());
-						}
-						$eqLogic_cmd->setCollectDate('');
-						$eqLogic_cmd->event($value);
-					}
-				}
-			}
-			foreach (self::byType('wes') as $eqLogicSwitch) {
-				if ( $eqLogicSwitch->getConfiguration('type') == "switch" && $eqLogicSwitch->getIsEnable() && substr($eqLogicSwitch->getLogicalId(), 0, strpos($eqLogicSwitch->getLogicalId(),"_")) == $this->getId() ) {
-					$wesid = substr($eqLogicSwitch->getLogicalId(), strpos($eqLogicSwitch->getLogicalId(),"_")+2);
-					$xpathModele = '//switch_virtuel/SWITCH'.$wesid;
-					$status = $this->xmlstatus->xpath($xpathModele);
-					$value = (boolean)(int) $status[0];
-
-					if ( count($status) != 0 )
-					{
-						$eqLogic_cmd = $eqLogicSwitch->getCmd(null, 'state');
-						if ($eqLogic_cmd->execCmd() != $eqLogic_cmd->formatValue($value)) {
-							log::add('wes','debug',"Change state off ".$eqLogicSwitch->getName());
-							$eqLogic_cmd->setCollectDate('');
-							$eqLogic_cmd->event($value);
 						}
 					}
 				}
@@ -1230,18 +557,9 @@ class wes extends eqLogic {
     /*     * **********************Getteur Setteur*************************** */
 }
 
-class wesCmd extends cmd
-{
-    /*     * *************************Attributs****************************** */
-
-
-    /*     * ***********************Methode static*************************** */
-
-
-    /*     * *********************Methode d'instance************************* */
-
-    /*     * **********************Getteur Setteur*************************** */
-		public function preSave() {
+class wesCmd extends cmd {
+	
+	public function preSave() {
         if ( $this->getLogicalId() == 'reel' && $this->getConfiguration('type') == 'analogique') {
             $this->setValue('');
             $calcul = $this->getConfiguration('calcul');
@@ -1262,7 +580,7 @@ class wesCmd extends cmd
         }
     }
 
-		public function getUrlPush() {
+	public function getUrlPush() {
 			if ( config::byKey('internalAddr') == "" ) {
 				throw new Exception(__('L\'adresse IP du serveur Jeedom doit être renseignée.',__FILE__));
 			}
@@ -1309,47 +627,50 @@ class wesCmd extends cmd
 			return $url;
 		}
 
-		public function execute($_options = null) {
-		if($this->getConfiguration('type') == "general"){
-			$eqLogic = $this->getEqLogic();
-	        if (!is_object($eqLogic) || $eqLogic->getIsEnable() != 1) {
-	            throw new Exception(__('Equipement desactivé impossible d\éxecuter la commande : ' . $this->getHumanName(), __FILE__));
-	        }
-
-			if ( $this->getLogicalId() == 'all_on' )
-			{
-				$url .= 'preset.htm';
-				for ($wesid = 0; $wesid <= 7; $wesid++) {
-					$data['led'.($wesid+1)] =1;
-				}
-			}
-			else if ( $this->getLogicalId() == 'all_off' )
-			{
-				$url .= 'preset.htm';
-				for ($wesid = 0; $wesid <= 7; $wesid++) {
-					$data['led'.($wesid+1)] =0;
-				}
-			}
-			else if ( $this->getLogicalId() == 'reboot' )
-			{
-				$url .= "protect/settings/reboot.htm";
-			}
-			else
+	public function execute($_options = null) {
+		log::add('wes','debug','execute '.$_options);
+		$eqLogic = $this->getEqLogic();
+		if (!is_object($eqLogic) || $eqLogic->getIsEnable() != 1) {
+			throw new Exception(__('Equipement desactivé impossible d\éxecuter la commande : ' . $this->getHumanName(), __FILE__));
+		}
+		$weseqLogic = eqLogic::byId(substr ($eqLogic->getLogicalId(), 0, strpos($eqLogic->getLogicalId(),"_")));
+		$wesid = substr($eqLogic->getLogicalId(), strpos($eqLogic->getLogicalId(),"_")+2);
+		if($eqLogic->getConfiguration('type') == 'general'){
+			if ( $this->getLogicalId() == 'alarmeon') {
+				$file = 'AJAX.cgx?alarme=ON';
+			} else if ( $this->getLogicalId() == 'alarmeoff' ){
+				$file = 'AJAX.cgx?alarme=OFF';
+			} else {
 				return false;
-			log::add('wes','debug','get '.$url.'?'.http_build_query($data));
-			$result = $eqLogic->getUrl($url.'?'.http_build_query($data));
-			$count = 0;
-			while ( $result === false )
-			{
-			$result = $eqLogic->getUrl($url.'?'.http_build_query($data));
-				if ( $count < 3 ) {
-					log::add('wes','error',__('Le wes ne repond pas.',__FILE__)." ".$this->getName()." get ".$url."?".http_build_query($data));
-					throw new Exception(__('Le wes ne repond pas.',__FILE__)." ".$this->getName());
-				}
-				$count ++;
 			}
-	        return false;
-	    }elseif ($this->getConfiguration('type') == "analogique") {
+			$eqLogic->getUrl($file);
+			return;
+		} else if ($eqLogic->getConfiguration('type') == "relai") {
+			log::add('wes','debug','execute '.$this->getLogicalId());
+			if ( $this->getLogicalId() == 'btn_on' ){
+				$file .= 'RL.cgi?rl'.$wesid.'=ON';
+			} else if ( $this->getLogicalId() == 'btn_off' ){
+				$file .= 'RL.cgi?rl'.$wesid.'=OFF';
+			} else if ( $this->getLogicalId() == 'commute' ){
+				$file .= 'RL.cgi?frl='.$wesid;
+			} else {
+				return false;
+			}
+			$weseqLogic->getUrl($file);
+			return;
+		} elseif ($eqLogic->getConfiguration('type') == "switch") {
+			if ( $this->getLogicalId() == 'btn_on' ){
+				$file .= 'AJAX.cgx?vs'.$wesid.'=ON';
+			} else if ( $this->getLogicalId() == 'btn_off' ){
+				$file .= 'AJAX.cgx?vs'.$wesid.'=OFF';
+			}else if ( $this->getLogicalId() == 'commute' ){
+				$file .= 'AJAX.cgx?fvs='.$wesid;
+			} else {
+				return false;
+			}
+			$weseqLogic->getUrl($file);
+			return;
+		} elseif ($eqLogic->getConfiguration('type') == "analogique") {
 				if ($this->getLogicalId() == 'reel') {
 				try {
 					$calcul = $this->getConfiguration('calcul');
@@ -1381,7 +702,7 @@ class wesCmd extends cmd
 			} else {
 				return $this->getConfiguration('value');
 			}
-		}elseif ($this->getConfiguration('type') == "bouton") {
+		}elseif ($eqLogic->getConfiguration('type') == "bouton") {
 			log::add('wes','debug','execute '.$_options);
 			$eqLogic = $this->getEqLogic();
 	        if (!is_object($eqLogic) || $eqLogic->getIsEnable() != 1) {
@@ -1408,48 +729,7 @@ class wesCmd extends cmd
 				throw new Exception(__('Le wes ne repond pas.',__FILE__)." ".$weseqLogic->getName());
 			}
 	        return false;
-		}elseif ($this->getConfiguration('type') == "relai") {
-			log::add('wes','debug','execute '.$_options);
-			$eqLogic = $this->getEqLogic();
-	        if (!is_object($eqLogic) || $eqLogic->getIsEnable() != 1) {
-	            throw new Exception(__('Equipement desactivé impossible d\éxecuter la commande : ' . $this->getHumanName(), __FILE__));
-	        }
-			$weseqLogic = eqLogic::byId(substr ($eqLogic->getLogicalId(), 0, strpos($eqLogic->getLogicalId(),"_")));
-			$wesid = substr($eqLogic->getLogicalId(), strpos($eqLogic->getLogicalId(),"_")+2);
-			if ( $this->getLogicalId() == 'btn_on' )
-				$file .= 'RL.cgi?rl'.($wesid).'=ON';
-			else if ( $this->getLogicalId() == 'btn_off' )
-				$file .= 'RL.cgi?rl'.($wesid).'=OFF';
-	/*		else if ( $this->getLogicalId() == 'impulsion' )
-				$file .= 'preset.htm?RLY'.($wesid+1).'=1';*/
-			else if ( $this->getLogicalId() == 'commute' )
-				$file .= 'RL.cgi?frl='.$wesid;
-			else
-				return false;
-			$weseqLogic->getUrl($file);
-			return false;
-		}elseif ($this->getConfiguration('type') == "switch") {
-			log::add('wes','debug','execute '.$_options);
-			$eqLogic = $this->getEqLogic();
-	        if (!is_object($eqLogic) || $eqLogic->getIsEnable() != 1) {
-	            throw new Exception(__('Equipement desactivé impossible d\éxecuter la commande : ' . $this->getHumanName(), __FILE__));
-	        }
-			$weseqLogic = eqLogic::byId(substr ($eqLogic->getLogicalId(), 0, strpos($eqLogic->getLogicalId(),"_")));
-			$wesid = substr($eqLogic->getLogicalId(), strpos($eqLogic->getLogicalId(),"_")+2);
-			if ( $this->getLogicalId() == 'btn_on' )
-				$file .= 'AJAX.cgx?sw'.($wesid).'=ON';
-			else if ( $this->getLogicalId() == 'btn_off' )
-				$file .= 'AJAX.cgx?sw'.($wesid).'=OFF';
-			else if ( $this->getLogicalId() == 'commute' )
-				$file .= 'AJAX.cgx?fsw='.$wesid;
-			else
-				return false;
-			$weseqLogic->getUrl($file);
-	        return false;
 		}
-		}
-
-
-
+	}
 }
 ?>
