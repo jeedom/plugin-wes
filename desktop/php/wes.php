@@ -170,6 +170,22 @@ sendVarToJS('typeid', $typeid);
 									<label class="checkbox-inline"><input type="checkbox" class="eqLogicAttr" data-label-text="{{Activer}}" data-l1key="configuration" data-l2key="usecustomcgx"/>Utiliser Fichier CGX Jeedom</label>
 								</div>
 							</div>
+							<div class="form-group showgeneral">
+								<label class="col-sm-3 control-label">{{Création}}</label>
+								
+								<?php
+									foreach (wes::getTypes() as $key => $value) {
+										if (isset($value["maxnumber"])) {
+											echo'<div class="col-sm-12">';
+											echo '<label class="col-sm-3 control-label">'.$value["name"].'</label>';
+											foreach (range(1,$value["maxnumber"]) as $number) {
+												echo '<input type="checkbox" class="eqLogicAttr" data-l1key="configuration" data-l2key="'.$key.$number.'" checked/>';
+											}
+											echo '</div>';
+										}
+									}
+								?>
+							</div>
 							<div class="form-group showteleinfo" style="display: none;" data-cmd_id="tarification">
 								<label class="col-sm-3 control-label">{{Tarification}}</label>
 								<div class="col-sm-7">

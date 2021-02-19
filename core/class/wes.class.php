@@ -135,15 +135,15 @@ class wes extends eqLogic {
 	public function getTypes() {
 		$types = array(
 						"general" => array("name" => "Serveur Wes","ignoreCreation"=>1),
-						"analogique" => array("name" => "Capteur","logical" => "_N","xpath" =>"//analogique/AD#id#"),
-						"compteur" => array("name" => "Compteur Impulsion","logical" => "_C","xpath" =>"//impulsion/INDEX#id#"),
-						"bouton" => array("name" => "Entrée","logical" => "_B","xpath" =>"//entree/ENTREE#id#"),
-						"pince" => array("name" => "Pince Ampèremétrique","logical" => "_P","xpath" =>"//pince/I#id#"),
-						"relai" => array("name" => "Relais","logical" => "_R","xpath" =>"//relais/RELAIS#id#"),
-						"switch" => array("name" => "Switch Virtuel","logical" => "_S","xpath" =>"//switch_virtuel/SWITCH#id#"),
-						"teleinfo" => array("name" => "Téléinfo","logical" => "_T","xpath" =>"//tic#id#/ADCO"),
-						"temperature" => array("name" => "Température","logical" => "_A","xpath" =>"//temp/SONDE#id#"),
-						"variable" => array("name" => "Variable","logical" => "_V","xpath" =>"//variables/VARIABLE#id#"),
+						"analogique" => array("name" => "Capteur","logical" => "_N","xpath" =>"//analogique/AD#id#","maxnumber"=>4),
+						"compteur" => array("name" => "Compteur Impulsion","logical" => "_C","xpath" =>"//impulsion/INDEX#id#","maxnumber"=>6),
+						"bouton" => array("name" => "Entrée","logical" => "_B","xpath" =>"//entree/ENTREE#id#","maxnumber"=>2),
+						"pince" => array("name" => "Pince Ampèremétrique","logical" => "_P","xpath" =>"//pince/I#id#","maxnumber"=>4),
+						"relai" => array("name" => "Relais","logical" => "_R","xpath" =>"//relais/RELAIS#id#","maxnumber"=>2),
+						"switch" => array("name" => "Switch Virtuel","logical" => "_S","xpath" =>"//switch_virtuel/SWITCH#id#","maxnumber"=>24),
+						"teleinfo" => array("name" => "Téléinfo","logical" => "_T","xpath" =>"//tic#id#/ADCO","maxnumber"=>3),
+						"temperature" => array("name" => "Température","logical" => "_A","xpath" =>"//temp/SONDE#id#","maxnumber"=>30),
+						"variable" => array("name" => "Variable","logical" => "_V","xpath" =>"//variables/VARIABLE#id#","maxnumber"=>8),
 					);
 		return $types;
 	}
@@ -368,7 +368,7 @@ class wes extends eqLogic {
 					$xpathModele = str_replace('#id#',$id,$data['xpath']);
 					$status = $this->xmlstatus->xpath($xpathModele);
 					while ( count($status) != 0 ) {
-						if (!is_object(self::byLogicalId($this->getId().$data['logical'].$id, 'wes')) ) {
+						if (!is_object(self::byLogicalId($this->getId().$data['logical'].$id, 'wes')) && $this->getConfiguration($type.$id,1)==1) {
 							log::add('wes','debug',count($status).'Creation ' . $data['name'] . ' : '.$this->getId().$data['logical'].$id);
 							$eqLogic = new wes();
 							$eqLogic->setEqType_name('wes');
@@ -376,6 +376,8 @@ class wes extends eqLogic {
 							$eqLogic->setName($data['name'] . ' ' . $id);
 							$eqLogic->setConfiguration('type',$type);
 							$eqLogic->save();
+						} else if (is_object(self::byLogicalId($this->getId().$data['logical'].$id, 'wes')) && $this->getConfiguration($type.$id,1)==0) {
+							self::byLogicalId($this->getId().$data['logical'].$id, 'wes')->remove();
 						}
 						$id ++;
 						$xpathModele = str_replace('#id#',$id,$data['xpath']);
