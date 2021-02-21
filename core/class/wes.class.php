@@ -131,19 +131,19 @@ class wes extends eqLogic {
 					);
 		return $commands;
 	}
-	
+
 	public function getTypes() {
 		$types = array(
 						"general" => array("name" => "Serveur Wes","ignoreCreation"=>1),
-						"analogique" => array("name" => "Capteur","logical" => "_N","xpath" =>"//analogique/AD#id#","maxnumber"=>4),
-						"compteur" => array("name" => "Compteur Impulsion","logical" => "_C","xpath" =>"//impulsion/INDEX#id#","maxnumber"=>6),
-						"bouton" => array("name" => "Entrée","logical" => "_B","xpath" =>"//entree/ENTREE#id#","maxnumber"=>2),
-						"pince" => array("name" => "Pince Ampèremétrique","logical" => "_P","xpath" =>"//pince/I#id#","maxnumber"=>4),
-						"relai" => array("name" => "Relais","logical" => "_R","xpath" =>"//relais/RELAIS#id#","maxnumber"=>2),
-						"switch" => array("name" => "Switch Virtuel","logical" => "_S","xpath" =>"//switch_virtuel/SWITCH#id#","maxnumber"=>24),
-						"teleinfo" => array("name" => "Téléinfo","logical" => "_T","xpath" =>"//tic#id#/ADCO","maxnumber"=>3),
-						"temperature" => array("name" => "Température","logical" => "_A","xpath" =>"//temp/SONDE#id#","maxnumber"=>30),
-						"variable" => array("name" => "Variable","logical" => "_V","xpath" =>"//variables/VARIABLE#id#","maxnumber"=>8),
+						"analogique" => array("name" => __("Capteurs", __FILE__),"logical" => "_N","xpath" =>"//analogique/AD#id#","maxnumber"=>4, "type"=>__("Tension", __FILE__)),
+						"compteur" => array("name" => __("Compteurs impulsions", __FILE__),"logical" => "_C","xpath" =>"//impulsion/INDEX#id#","maxnumber"=>6, "type"=>__("Compteur", __FILE__)),
+						"bouton" => array("name" => __("Entrées", __FILE__),"logical" => "_B","xpath" =>"//entree/ENTREE#id#","maxnumber"=>2, "type"=>__("Entrée", __FILE__)),
+						"pince" => array("name" => __("Pinces Ampèremétriques", __FILE__),"logical" => "_P","xpath" =>"//pince/I#id#","maxnumber"=>4, "type"=>__("Pince", __FILE__)),
+						"relai" => array("name" => __("Relais", __FILE__),"logical" => "_R","xpath" =>"//relais/RELAIS#id#","maxnumber"=>2, "type"=>__("Relais", __FILE__)),
+						"switch" => array("name" => __("Switchs virtuels", __FILE__),"logical" => "_S","xpath" =>"//switch_virtuel/SWITCH#id#","maxnumber"=>24, "type"=>__("Switch", __FILE__)),
+						"teleinfo" => array("name" => __("Téléinfo", __FILE__),"logical" => "_T","xpath" =>"//tic#id#/ADCO","maxnumber"=>3, "type"=>__("TIC", __FILE__)),
+						"temperature" => array("name" => __("Températures", __FILE__),"logical" => "_A","xpath" =>"//temp/SONDE#id#","maxnumber"=>30, "type"=>__("Sonde", __FILE__)),
+						"variable" => array("name" => __("Variables", __FILE__),"logical" => "_V","xpath" =>"//variables/VARIABLE#id#","maxnumber"=>8, "type"=>__("Variable", __FILE__)),
 					);
 		return $types;
 	}
@@ -206,7 +206,7 @@ class wes extends eqLogic {
 		$cron->setEnable($_mode);
 		$cron->save();
 	}
-	
+
 	public function sendFtp() {
 		$ftpIp = $this->getConfiguration('ip');
 		$ftpUser = $this->getConfiguration('ftpusername');
@@ -272,7 +272,7 @@ class wes extends eqLogic {
 			}
 			$this->xmlstatus = simplexml_load_string($this->getUrl($file));
 			if ( $this->xmlstatus === false ){
-				throw new Exception(__('Le wes ne repond pas.',__FILE__));
+				throw new Exception(__('Le serveur Wes n\'est pas joignable.',__FILE__));
 			}
 		}
 	}
@@ -284,7 +284,7 @@ class wes extends eqLogic {
 			$this->setConfiguration('type','general');
 		}
 	}
-	
+
 	public function postAjax() {
 		$type = $this->getConfiguration('type');
 		foreach($this->getListeCommandes()[$type] as $logicalId => $details) {
@@ -373,7 +373,7 @@ class wes extends eqLogic {
 							$eqLogic = new wes();
 							$eqLogic->setEqType_name('wes');
 							$eqLogic->setLogicalId($this->getId().$data['logical'].$id);
-							$eqLogic->setName($data['name'] . ' ' . $id);
+							$eqLogic->setName($data['type'] . ' ' . $id);
 							$eqLogic->setConfiguration('type',$type);
 							$eqLogic->save();
 						} else if (is_object(self::byLogicalId($this->getId().$data['logical'].$id, 'wes')) && $this->getConfiguration($type.$id,1)==0) {
@@ -560,7 +560,7 @@ class wes extends eqLogic {
 }
 
 class wesCmd extends cmd {
-	
+
 	public function preSave() {
         if ( $this->getLogicalId() == 'reel' && $this->getConfiguration('type') == 'analogique') {
             $this->setValue('');
