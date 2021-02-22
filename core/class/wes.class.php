@@ -134,7 +134,7 @@ class wes extends eqLogic {
 
 	public function getTypes() {
 		$types = array(
-			"general" => array("name"=>"Serveur Wes", "category"=>"energy", "width"=>"192px", "height"=>"212px", "ignoreCreation"=>1),
+			"general" => array("name"=>__("Serveur Wes", __FILE__), "category"=>"energy", "width"=>"192px", "height"=>"212px", "ignoreCreation"=>1),
 			"analogique" => array("name" => __("Capteurs", __FILE__), "logical"=>"_N", "category"=>"automatism", "width"=>"112px", "height"=>"152px", "xpath"=>"//analogique/AD#id#", "maxnumber"=>4, "type"=>__("Tension", __FILE__)),
 			"compteur" => array("name" => __("Compteurs impulsions", __FILE__), "logical"=>"_C", "width"=>"272px", "height"=>"332px", "category"=>"energy", "xpath"=>"//impulsion/INDEX#id#", "maxnumber"=>6, "type"=>__("Compteur", __FILE__)),
 			"bouton" => array("name" => __("Entrées", __FILE__), "logical"=>"_B", "category"=>"automatism", "width"=>"112px", "height"=>"152px", "xpath"=>"//entree/ENTREE#id#", "maxnumber"=>2, "type"=>__("Entrée", __FILE__)),
@@ -293,12 +293,6 @@ class wes extends eqLogic {
 
 	public function postSave() {
 		$type = $this->getConfiguration('type');
-		if ($type == 'pince' && $this->getConfiguration('pinceMeasure', '') == '') {
-			return false;
-		}
-		if ($type == 'teleinfo' && $this->getConfiguration('tarification', '') == '') {
-			return false;
-		}
 
 		foreach($this->getListeCommandes()[$type] as $logicalId => $details) {
 			if ($type == 'pince' && (!isset($details[$this->getConfiguration('pinceMeasure')]) || $details[$this->getConfiguration('pinceMeasure')] != 1)) {
