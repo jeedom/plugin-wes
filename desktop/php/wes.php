@@ -188,10 +188,10 @@ if (count($eqLogics) == 0) {
 						</div>
 						<div class="form-group showgeneral" style="display: none;" data-cmd_id="port">
 							<label class="col-sm-3 control-label">{{Port du Wes}}
-								<sup><i class="fas fa-question-circle tooltips" title="{{Port de communication sur lequel le serveur Wes est joignable. 80 par défaut}}"></i></sup>
+								<sup><i class="fas fa-question-circle tooltips" title="{{Port de communication sur lequel le serveur Wes est joignable. (facultatif - 80 par défaut)}}"></i></sup>
 							</label>
 							<div class="col-sm-7">
-								<input type="text" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="port" data-cmd_id="port"/>
+								<input type="text" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="port" data-cmd_id="port" placeholder="80"/>
 							</div>
 						</div>
 						<div class="form-group showgeneral" style="display: none;" data-cmd_id="username">
@@ -240,11 +240,23 @@ if (count($eqLogics) == 0) {
 							</label>
 							<div class="col-sm-7">
 								<select class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="tarification"  data-cmd_id="tarification">
-									<option value="">Sans</option>
+									<option value="">{{Sans tarification}}</option>
 									<option value="BASE">Base</option>
 									<option value="HC">Heures creuses</option>
 									<option value="BBRH">Tempo</option>
 									<option value="EJP">EJP</option>
+								</select>
+							</div>
+						</div>
+						<div class="form-group showpince" style="display: none;" data-cmd_id="pinceMeasure">
+							<label class="col-sm-3 control-label">{{Type de mesure}}
+								<sup><i class="fas fa-question-circle tooltips" title="{{Indiquer le type de mesure à relever}}"></i></sup>
+							</label>
+							<div class="col-sm-7">
+								<select class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="pinceMeasure"  data-cmd_id="pinceMeasure">
+									<option value="" disabled>*** {{A renseigner}} ***</option>
+									<option value="consumption">{{Consommation}}</option>
+									<option value="production">{{Production}}</option>
 								</select>
 							</div>
 						</div>
@@ -264,7 +276,7 @@ if (count($eqLogics) == 0) {
 								echo '<div class="col-sm-7">';
 								foreach (range(1,$value["maxnumber"]) as $number) {
 									echo '<label class="checkbox-inline">';
-									echo '<input type="checkbox" class="eqLogicAttr" data-l1key="configuration" data-l2key="' . $key.$number . '"/>' .$value["type"].$number;
+									echo '<input type="checkbox" class="eqLogicAttr" data-l1key="configuration" data-l2key="' . $key.$number . '"/>' .$value["type"].' '.$number;
 									echo '</label>';
 								}
 								echo '</div>';

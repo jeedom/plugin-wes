@@ -127,15 +127,15 @@ $('#bt_goCarte').on('click', function() {
   window.open('http://'+$('.eqLogicAttr[data-l2key=username]').value()+':'+$('.eqLogicAttr[data-l2key=password]').value()+'@'+$('.eqLogicAttr[data-l2key=ip]').value()+':'+$('.eqLogicAttr[data-l2key=port]').value()+'/');
 });
 
-$('.eqLogicAction[data-action=hide]').on('click', function () {
-  var eqLogic_id = $(this).attr('data-eqLogic_id');
-  $('.sub-nav-list').each(function () {
-    if ( $(this).attr('data-eqLogic_id') == eqLogic_id ) {
-      $(this).toggle();
-    }
-  });
-  return false;
-});
+// $('.eqLogicAction[data-action=hide]').on('click', function () {
+//   var eqLogic_id = $(this).attr('data-eqLogic_id');
+//   $('.sub-nav-list').each(function () {
+//     if ( $(this).attr('data-eqLogic_id') == eqLogic_id ) {
+//       $(this).toggle();
+//     }
+//   });
+//   return false;
+// });
 
 function prePrintEqLogic() {
   $('.eqLogic').hide();
