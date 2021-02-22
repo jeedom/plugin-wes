@@ -280,8 +280,9 @@ class wes extends eqLogic {
 	public function preInsert() {
 		$this->setIsEnable(0);
 		$this->setIsVisible(0);
-		if ($this->getConfiguration('type','') == '') {
-			$this->setConfiguration('type','general');
+		if ($this->getConfiguration('type', '') == '') {
+			$this->setConfiguration('type', 'general');
+			$this->setConfiguration('port', 80);
 		}
 	}
 

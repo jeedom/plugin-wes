@@ -22,7 +22,7 @@ $('#in_searchWes').keyup(function() {
     return;
   }
   search = normTextLower(search)
-  $('.wesTab .eqLogicDisplayCard').hide()
+  $('.eqLogicThumbnailContainer.packery .eqLogicDisplayCard').hide()
   $('.panel-collapse').attr('data-show',0)
   var text
   $('.eqLogicDisplayCard .name').each(function() {
@@ -37,10 +37,10 @@ $('#in_searchWes').keyup(function() {
   $('.packery').packery()
 })
 
-$('#bt_openAll').off('click').on('click', function() {
+$('#bt_openAllWes').off('click').on('click', function() {
   $("div.panel-title > .accordion-toggle[aria-expanded='false']").click()
 })
-$('#bt_closeAll').off('click').on('click', function() {
+$('#bt_closeAllWes').off('click').on('click', function() {
   $("div.panel-title > .accordion-toggle[aria-expanded='true']").click()
 })
 $('#bt_resetWesSearch').off('click').on('click', function() {
@@ -123,7 +123,7 @@ $('#bt_configPush').on('click', function() {
 });
 
 $('#bt_goCarte').on('click', function() {
-  $('#md_modal').dialog({title: "{{Accèder à l'interface de la Wes}}"});
+  // $('#md_modal').dialog({title: "{{Accèder à l'interface de la Wes}}"});
   window.open('http://'+$('.eqLogicAttr[data-l2key=username]').value()+':'+$('.eqLogicAttr[data-l2key=password]').value()+'@'+$('.eqLogicAttr[data-l2key=ip]').value()+':'+$('.eqLogicAttr[data-l2key=port]').value()+'/');
 });
 

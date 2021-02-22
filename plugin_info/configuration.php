@@ -25,12 +25,12 @@ if (!isConnect('admin')) {
 <form class="form-horizontal">
 	<fieldset>
 		<div class="form-group">
-			<label class="col-lg-4 control-label">{{Temporisation minumum entre deux lectures en secondes}}</label>
-			<div class="col-lg-3">
+			<label class="col-sm-3 control-label">{{Temps entre deux lectures}} <sub>(s.)</sub>
+				<sup><i class="fas fa-question-circle tooltips" title="{{Délai en secondes entre 2 interrogations du Wes. Un délai trop court est suceptible de rendre Jeedom instable}}"></i></sup>
+			</label>
+			<div class="col-sm-7">
 				<input class="configKey form-control" data-l1key="temporisation_lecture" value="60" />
 			</div>
-			<label class="col-lg-4 alert-label">{{Trop diminuer cette valeur peut rendre instable votre serveur}}</label>
 		</div>
 	</fieldset>
 </form>
-

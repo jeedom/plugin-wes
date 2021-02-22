@@ -39,13 +39,13 @@ if (count($eqLogics) == 0) {
 	echo '<a id="bt_resetWesSearch" class="btn" style="width:30px"><i class="fas fa-times"></i> </a>';
 	echo '</div>';
 	echo '<div class="input-group-btn">';
-	echo '<a class="btn" id="bt_openAll"><i class="fas fa-folder-open"></i></a>';
+	echo '<a class="btn" id="bt_openAllWes"><i class="fas fa-folder-open"></i></a>';
 	echo '</div>';
 	echo '<div class="input-group-btn">';
-	echo '<a class="btn roundedRight" id="bt_closeAll"><i class="fas fa-folder"></i></a>';
+	echo '<a class="btn roundedRight" id="bt_closeAllWes"><i class="fas fa-folder"></i></a>';
 	echo '</div>';
 	echo '</div>';
-	echo '<div class="panel-group" id="accordionWes">';
+	echo '<div class="panel-group">';
 	$img = $plugin->getPathImgIcon();
 	$generalEqLogics = array();
 	$childEqLogics = array();
