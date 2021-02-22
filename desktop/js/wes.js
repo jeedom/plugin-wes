@@ -1,3 +1,52 @@
+/* This file is part of Jeedom.
+*
+* Jeedom is free software: you can redistribute it and/or modify
+* it under the terms of the GNU General Public License as published by
+* the Free Software Foundation, either version 3 of the License, or
+* (at your option) any later version.
+*
+* Jeedom is distributed in the hope that it will be useful,
+* but WITHOUT ANY WARRANTY; without even the implied warranty of
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+* GNU General Public License for more details.
+*
+* You should have received a copy of the GNU General Public License
+* along with Jeedom. If not, see <http://www.gnu.org/licenses/>.
+*/
+
+$('#in_searchWes').keyup(function() {
+  var search = $(this).value()
+  if (search == '') {
+    $("div.panel-title > .accordion-toggle[aria-expanded='true']").click()
+    $('.eqLogicDisplayCard').show()
+    return;
+  }
+  search = normTextLower(search)
+  $('.wesTab .eqLogicDisplayCard').hide()
+  $('.panel-collapse').attr('data-show',0)
+  var text
+  $('.eqLogicDisplayCard .name').each(function() {
+    text = normTextLower($(this).text())
+    if (text.indexOf(search) >= 0) {
+      $(this).closest('.eqLogicDisplayCard').show()
+      $(this).closest('.panel-collapse').attr('data-show',1)
+    }
+  })
+  $('.panel-collapse[data-show=1]').collapse('show')
+  $('.panel-collapse[data-show=0]').collapse('hide')
+  $('.packery').packery()
+})
+
+$('#bt_openAll').off('click').on('click', function() {
+  $("div.panel-title > .accordion-toggle[aria-expanded='false']").click()
+})
+$('#bt_closeAll').off('click').on('click', function() {
+  $("div.panel-title > .accordion-toggle[aria-expanded='true']").click()
+})
+$('#bt_resetWesSearch').off('click').on('click', function() {
+  $('#in_searchWes').val('').keyup()
+})
+
 function addCmdToTable(_cmd) {
   if (!isset(_cmd)) {
     var _cmd = {configuration: {}};
@@ -60,119 +109,118 @@ function addCmdToTable(_cmd) {
   });
 }
 
- $(".wesTab").on('click',function(){
-	setTimeout(function(){
-   $('.packery').packery({
-        itemSelector: ".eqLogicDisplayCard",
-        gutter:25
-     });
-	},50);
+$(".wesTab").on('click',function(){
+  setTimeout(function(){
+    $('.packery').packery({
+      itemSelector: ".eqLogicDisplayCard"
+    });
+  },50);
 });
 
 $('#bt_configPush').on('click', function() {
-    $('#md_modal').dialog({title: "{{Configurer la Wes pour avoir le retour des etats}}"});
-    $('#md_modal').load('index.php?v=d&plugin=wes&modal=wes.configpush&id=' + $('.eqLogicAttr[data-l1key=id]').value()).dialog('open');
+  $('#md_modal').dialog({title: "{{Configurer la Wes pour avoir le retour des etats}}"});
+  $('#md_modal').load('index.php?v=d&plugin=wes&modal=wes.configpush&id=' + $('.eqLogicAttr[data-l1key=id]').value()).dialog('open');
 });
 
 $('#bt_goCarte').on('click', function() {
-    $('#md_modal').dialog({title: "{{Accèder à l'interface de la Wes}}"});
-	window.open('http://'+$('.eqLogicAttr[data-l2key=username]').value()+':'+$('.eqLogicAttr[data-l2key=password]').value()+'@'+$('.eqLogicAttr[data-l2key=ip]').value()+':'+$('.eqLogicAttr[data-l2key=port]').value()+'/');
+  $('#md_modal').dialog({title: "{{Accèder à l'interface de la Wes}}"});
+  window.open('http://'+$('.eqLogicAttr[data-l2key=username]').value()+':'+$('.eqLogicAttr[data-l2key=password]').value()+'@'+$('.eqLogicAttr[data-l2key=ip]').value()+':'+$('.eqLogicAttr[data-l2key=port]').value()+'/');
 });
 
 $('.eqLogicAction[data-action=hide]').on('click', function () {
-    var eqLogic_id = $(this).attr('data-eqLogic_id');
-    $('.sub-nav-list').each(function () {
-		if ( $(this).attr('data-eqLogic_id') == eqLogic_id ) {
-			$(this).toggle();
-		}
-    });
-    return false;
+  var eqLogic_id = $(this).attr('data-eqLogic_id');
+  $('.sub-nav-list').each(function () {
+    if ( $(this).attr('data-eqLogic_id') == eqLogic_id ) {
+      $(this).toggle();
+    }
+  });
+  return false;
 });
 
 function prePrintEqLogic() {
-	$('.eqLogic').hide();
+  $('.eqLogic').hide();
 }
 
 $('.eqLogicAttr[data-l1key=configuration][data-l2key=type]').on('change',function(){
-	type = $(this).value()
-	for (var i in typeid) {
-		if (type == typeid[i]){
-			$('.show'+typeid[i]).show();
-		} else {
-			$('.show'+typeid[i]).hide();
-		}
-	}
-	$('#img_device').attr("src", 'plugins/wes/core/config/'+type+'.png')
+  type = $(this).value()
+  for (var i in typeid) {
+    if (type == typeid[i]){
+      $('.show'+typeid[i]).show();
+    } else {
+      $('.show'+typeid[i]).hide();
+    }
+  }
+  $('#img_device').attr("src", 'plugins/wes/core/config/'+type+'.png')
 });
 
 $('body').delegate('.cmd .cmdAction[data-action=urlpush]', 'click', function (event) {
-    $.hideAlert();
-	var id = $(this).closest('.cmd').attr('data-cmd_id');
-    $.ajax({// fonction permettant de faire de l'ajax
-        type: "POST", // methode de transmission des données au fichier php
-        url: "plugins/wes/core/ajax/wes.ajax.php", // url du fichier php
-        data: {
-            action: "getUrlPush",
-			id:  $(this).closest('.cmd').attr('data-cmd_id'),
-        },
-        dataType: 'json',
-        error: function(request, status, error) {
-            handleAjaxError(request, status, $('#div_alert'));
-        },
-        success: function(data) { // si l'appel a bien fonctionné
-			if (data.state != 'ok') {
-				$('#div_alert').showAlert({message: data.result, level: 'danger'});
-			} else {
-				$('#div_alert').showAlert({message: data.result, level: 'success'});
-			}
-			return;
-        }
-    });});
+  $.hideAlert();
+  var id = $(this).closest('.cmd').attr('data-cmd_id');
+  $.ajax({// fonction permettant de faire de l'ajax
+    type: "POST", // methode de transmission des données au fichier php
+    url: "plugins/wes/core/ajax/wes.ajax.php", // url du fichier php
+    data: {
+      action: "getUrlPush",
+      id:  $(this).closest('.cmd').attr('data-cmd_id'),
+    },
+    dataType: 'json',
+    error: function(request, status, error) {
+      handleAjaxError(request, status, $('#div_alert'));
+    },
+    success: function(data) { // si l'appel a bien fonctionné
+      if (data.state != 'ok') {
+        $('#div_alert').showAlert({message: data.result, level: 'danger'});
+      } else {
+        $('#div_alert').showAlert({message: data.result, level: 'success'});
+      }
+      return;
+    }
+  });});
 
-$('#bt_CheckAll').on('click', function() {
-	$('.configPusheqLogic').not(':checked').each(function() {
-		$(this).prop('checked', true);
-		}
-	);
+  $('#bt_CheckAll').on('click', function() {
+    $('.configPusheqLogic').not(':checked').each(function() {
+      $(this).prop('checked', true);
+    }
+  );
 });
 
 $('#bt_UnCheckAll').on('click', function() {
-	$('.configPusheqLogic:checked').each(function() {
-		$(this).prop('checked', false);
-		}
-	);
+  $('.configPusheqLogic:checked').each(function() {
+    $(this).prop('checked', false);
+  }
+);
 });
 
 $('#bt_ApplyconfigPush').on('click', function() {
-	var list_object = [];
-	$('.configPusheqLogic:checked').each(function() {
-		list_object.push($(this).attr('data-configPusheqLogic_id'));
-		}
-	);
-  	console.log('EQ > '+JSON.stringify(list_object));
-  console.log('ID > '+eqLogicIdGlobal);
-  
-    $.ajax({// fonction permettant de faire de l'ajax
-        type: "POST", // methode de transmission des données au fichier php
-        url: "plugins/wes/core/ajax/wes.ajax.php", // url du fichier php
-        data: {
-            action: "configPush",
-			id: eqLogicIdGlobal,
-			eqLogicPush_id: list_object.join(",")
-        },
-        dataType: 'json',
-        error: function(request, status, error) {
-            handleAjaxError(request, status, $('#div_configurePush'));
-        },
-        success: function(data) { // si l'appel a bien fonctionné
-			if (data.state != 'ok') {
-				$('#div_configurePush').showAlert({message: data.result, level: 'danger'});
-			} else {
-				$('#div_configurePush').showAlert({message: '{{Application de la configuration Push correcte}}', level: 'success'});
-			}
-			return;
-        }
-    });
+  var list_object = [];
+  $('.configPusheqLogic:checked').each(function() {
+    list_object.push($(this).attr('data-configPusheqLogic_id'));
+  }
+);
+console.log('EQ > '+JSON.stringify(list_object));
+console.log('ID > '+eqLogicIdGlobal);
+
+$.ajax({// fonction permettant de faire de l'ajax
+  type: "POST", // methode de transmission des données au fichier php
+  url: "plugins/wes/core/ajax/wes.ajax.php", // url du fichier php
+  data: {
+    action: "configPush",
+    id: eqLogicIdGlobal,
+    eqLogicPush_id: list_object.join(",")
+  },
+  dataType: 'json',
+  error: function(request, status, error) {
+    handleAjaxError(request, status, $('#div_configurePush'));
+  },
+  success: function(data) { // si l'appel a bien fonctionné
+    if (data.state != 'ok') {
+      $('#div_configurePush').showAlert({message: data.result, level: 'danger'});
+    } else {
+      $('#div_configurePush').showAlert({message: '{{Application de la configuration Push correcte}}', level: 'success'});
+    }
+    return;
+  }
+});
 });
 
 $("#table_cmd").sortable({axis: "y", cursor: "move", items: ".cmd", placeholder: "ui-state-highlight", tolerance: "intersect", forcePlaceholderSize: true});
