@@ -250,17 +250,6 @@ class wes extends eqLogic {
 		return $return;
 	}
 
-	public function preUpdate() {
-		if ($this->getConfiguration('type') == "general" && $this->getConfiguration('usecustomcgx', 0) == 1) {
-			if ($this->getConfiguration('ip','') != '' && $this->getConfiguration('ftpusername','') != '' && $this->getConfiguration('ftppassword','') != '') {
-				$this->sendFtp();
-			}
-			else {
-				throw new Exception(__('Veuillez renseigner les informations de connexion FTP pour utiliser le fichier CGX personnalisé.',__FILE__));
-			}
-		}
-	}
-
 	public function preInsert() {
 		$this->setIsEnable(0);
 		$this->setIsVisible(0);
