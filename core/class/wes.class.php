@@ -336,6 +336,9 @@ class wes extends eqLogic {
 
 	public function postUpdate() {
 		if ($this->getConfiguration('type') == "general") {
+			if ($this->getConfiguration('ip', '') == '' || $this->getConfiguration('username', '') == '' || $this->getConfiguration('password', '') == '') {
+					throw new Exception(__('Veuillez renseigner les informations de connexion HTTP pour accéder au serveur Wes.',__FILE__));
+			}
 			foreach (self::getTypes() as $type=>$data){
 				if (!isset($data['ignoreCreation'])) {
 					$id = 1;
