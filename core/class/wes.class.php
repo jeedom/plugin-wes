@@ -23,110 +23,110 @@ class wes extends eqLogic {
 
 	private function getListeCommandes() {
 		$commands = array(
-			"teleinfo" => array(
-				"ADCO" => array("name"=>__("Numéro compteur", __FILE__), "type" => "info", "subtype"=> "numeric", "dashboard" =>"line", "mobile" =>"line", "xpath" => "//tic#id#/ADCO", "order"=>1),
-				"OPTARIF" => array("name"=>__("Option tarif", __FILE__), "type" => "info", "subtype"=> "string", "xpath" => "//tic#id#/OPTARIF", "order"=>2),
-				"ISOUSC" => array("name"=>__("Intensité souscrite", __FILE__), "type" => "info", "subtype"=> "numeric", "unite" => "A", "dashboard" =>"line", "mobile" =>"line", "xpath" => "//tic#id#/ISOUSC", "order"=>3),
-				"PTEC" => array("name"=>__("Tarif en cours", __FILE__), "type" => "info", "subtype"=> "string", "xpath" => "//tic#id#/PTEC", "order"=>4),
-				"PAP" => array("name"=>__("Puissance Apparente", __FILE__), "type" => "info", "subtype"=> "numeric", "unite" => "VA", "xpath" => "//tic#id#/PAP", "dashboard"=>"tile", "mobile"=>"tile", "order"=>5),
-				"IINST" => array("name"=>__("Intensité instantanée", __FILE__), "type" => "info", "subtype"=> "numeric", "unite" => "A", "xpath" => "//tic#id#/IINST", "dashboard"=>"tile", "mobile"=>"tile", "order"=>6),
-				"IINST1" => array("name"=>__("Intensité instantanée 1", __FILE__), "type" => "info", "subtype"=> "numeric", "unite" => "A", "visible" => 0, "xpath" => "//tic#id#/IINST1", "dashboard"=>"tile", "mobile"=>"tile", "order"=>7),
-				"IINST2" => array("name"=>__("Intensité instantanée 2", __FILE__), "type" => "info", "subtype"=> "numeric", "unite" => "A", "visible" => 0, "xpath" => "//tic#id#/IINST2", "dashboard"=>"tile", "mobile"=>"tile", "order"=>8),
-				"IINST3" => array("name"=>__("Intensité instantanée 3", __FILE__), "type" => "info", "subtype"=> "numeric", "unite" => "A", "visible" => 0, "xpath" => "//tic#id#/IINST3", "dashboard"=>"tile", "mobile"=>"tile", "order"=>9),
-				"IMAX" => array("name"=>__("Intensité maximum", __FILE__), "type" => "info", "subtype"=> "numeric", "unite" => "A", "xpath" => "//tic#id#/IMAX", "dashboard"=>"tile", "mobile"=>"tile", "order"=>10),
-				"IMAX1" => array("name"=>__("Intensité maximum 1", __FILE__), "type" => "info", "subtype"=> "numeric", "unite" => "A", "visible" => 0, "xpath" => "//tic#id#/IMAX1", "dashboard"=>"tile", "mobile"=>"tile", "order"=>11),
-				"IMAX2" => array("name"=>__("Intensité maximum 2", __FILE__), "type" => "info", "subtype"=> "numeric", "unite" => "A", "visible" => 0, "xpath" => "//tic#id#/IMAX2", "dashboard"=>"tile", "mobile"=>"tile", "order"=>12),
-				"IMAX3" => array("name"=>__("Intensité maximum 3", __FILE__), "type" => "info", "subtype"=> "numeric", "unite" => "A", "visible" => 0, "xpath" => "//tic#id#/IMAX3", "dashboard"=>"tile", "mobile"=>"tile", "order"=>13),
-				"TENS1" => array("name"=>__("Tension 1", __FILE__), "type" => "info", "subtype"=> "numeric", "unite" => "V", "xpath" => "//tic#id#/TENSION1", "dashboard"=>"tile", "mobile"=>"tile", "order"=>14),
-				"TENS2" => array("name"=>__("Tension 2", __FILE__), "type" => "info", "subtype"=> "numeric", "unite" => "V", "visible" => 0, "xpath" => "//tic#id#/TENSION2", "dashboard"=>"tile", "mobile"=>"tile", "order"=>15),
-				"TENS3" => array("name"=>__("Tension 3", __FILE__), "type" => "info", "subtype"=> "numeric", "unite" => "V", "visible" => 0, "xpath" => "//tic#id#/TENSION3", "dashboard"=>"tile", "mobile"=>"tile", "order"=>16),
-				"PEJP" => array("name"=>__("Préavis EJP", __FILE__), "type" => "info", "subtype"=> "binary", "filter" => ["tarification"=>"EJP"], "xpath" => "//tic#id#/PEJP", "order"=>17),
-				"DEMAIN" => array("name"=>__("Couleur demain", __FILE__), "type" => "info", "subtype"=> "string", "filter" => ["tarification"=>"BBRH"], "xpath" => "//tic#id#/DEMAIN", "order"=>18),
-				"BASE" => array("name"=>__("Index (base)", __FILE__), "type" => "info", "subtype"=> "numeric", "unite" => "kWh", "filter" => ["tarification"=>"BASE"],"calcul"=>"#value#/1000", "dashboard" =>"tile", "mobile" =>"tile", "xpath" => "//tic#id#/BASE", "order"=>19),
-				"HCHC" => array("name"=>__("Index (heures creuses)", __FILE__), "type" => "info", "subtype"=> "numeric", "unite" => "kWh", "filter" => ["tarification"=>"HC"],"calcul"=>"#value#/1000", "dashboard" =>"tile", "mobile" =>"tile","xpath" => "//tic#id#/HCHC", "order"=>20),
-				"HCHP" => array("name"=>__("Index (heures pleines)", __FILE__), "type" => "info", "subtype"=> "numeric", "unite" => "kWh", "filter" => ["tarification"=>"HC"],"calcul"=>"#value#/1000", "dashboard" =>"tile", "mobile" =>"tile","xpath" => "//tic#id#/HCHP", "order"=>21),
-				"EJPHN" => array("name"=>__("Index (normal EJP)", __FILE__), "type" => "info", "subtype"=> "numeric", "unite" => "kWh", "filter" => ["tarification"=>"EJP"],"calcul"=>"#value#/1000", "dashboard" =>"tile", "mobile" =>"tile","xpath" => "//tic#id#/EJPHN", "order"=>22),
-				"EJPHPM" => array("name"=>__("Index (pointe mobile EJP)", __FILE__), "type" => "info", "subtype"=> "numeric", "unite" => "kWh", "filter" => ["tarification"=>"EJP"],"calcul"=>"#value#/1000", "dashboard" =>"tile", "mobile" =>"tile","xpath" => "//tic#id#/EJPHPM", "order"=>23),
-				"BBRHCJB" => array("name"=>__("Index (heures creuses jours bleus Tempo)", __FILE__), "type" => "info", "subtype"=> "numeric", "unite" => "kWh", "filter"=>["tarification"=>"EJP"], "calcul"=>"#value#/1000", "dashboard"=>"tile", "mobile" =>"tile","xpath" => "//tic#id#/BBRHCJB", "order"=>24),
-				"BBRHPJB" => array("name"=>__("Index (heures pleines jours bleus Tempo)", __FILE__), "type" => "info", "subtype"=> "numeric", "unite" => "kWh", "filter"=>["tarification"=>"EJP"], "calcul"=>"#value#/1000", "dashboard"=>"tile", "mobile" =>"tile","xpath" => "//tic#id#/BBRHPJB", "order"=>25),
-				"BBRHCJW" => array("name"=>__("Index (heures creuses jours blancs Tempo)", __FILE__), "type" => "info", "subtype"=> "numeric", "unite" => "kWh", "filter"=>["tarification"=>"EJP"], "calcul"=>"#value#/1000", "dashboard"=>"tile", "mobile" =>"tile","xpath" => "//tic#id#/BBRHCJW", "order"=>26),
-				"BBRHPJW" => array("name"=>__("Index (heures pleines jours blancs Tempo)", __FILE__), "type" => "info", "subtype"=> "numeric", "unite" => "kWh", "filter"=>["tarification"=>"EJP"], "calcul"=>"#value#/1000", "dashboard"=>"tile", "mobile" =>"tile","xpath" => "//tic#id#/BBRHPJW", "order"=>27),
-				"BBRHCJR" => array("name"=>__("Index (heures creuses jours rouges Tempo)", __FILE__), "type" => "info", "subtype"=> "numeric", "unite" => "kWh", "filter"=>["tarification"=>"EJP"], "calcul"=>"#value#/1000", "dashboard"=>"tile", "mobile" =>"tile","xpath" => "//tic#id#/BBRHCJR", "order"=>28),
-				"BBRHPJR" => array("name"=>__("Index (heures pleines jours rouges Tempo)", __FILE__), "type" => "info", "subtype"=> "numeric", "unite" => "kWh", "filter"=>["tarification"=>"EJP"], "calcul"=>"#value#/1000", "dashboard"=>"tile", "mobile" =>"tile","xpath" => "//tic#id#/BBRHPJR", "order"=>29),
-				"CONSO_JOUR" => array("name"=>__("Consommation jour", __FILE__), "type" => "info", "subtype"=> "numeric", "unite" => "kWh", "xpath" => "//tic#id#/CONSO_JOUR", "filter"=>["usecustomcgx"=>1], "dashboard"=>"tile", "mobile"=>"tile", "order"=>30),
-				"COUT_JOUR" => array("name"=>__("Coût jour", __FILE__), "type" => "info", "subtype"=> "numeric", "unite" => "€", "xpath" => "//tic#id#/COUT_JOUR", "filter"=>["usecustomcgx"=>1], "dashboard"=>"tile", "mobile"=>"tile", "order"=>31),
-				"CONSO_MOIS" => array("name"=>__("Consommation mois", __FILE__), "type" => "info", "subtype"=> "numeric", "unite" => "kWh", "xpath" => "//tic#id#/CONSO_MOIS", "filter"=>["usecustomcgx"=>1], "dashboard"=>"tile", "mobile"=>"tile", "order"=>32),
-				"COUT_MOIS" => array("name"=>__("Coût mois", __FILE__), "type" => "info", "subtype"=> "numeric", "unite" => "€", "xpath" => "//tic#id#/COUT_MOIS", "filter"=>["usecustomcgx"=>1], "dashboard"=>"tile", "mobile"=>"tile", "order"=>33),
-				"CONSO_ANNEE" => array("name"=>__("Consommation année", __FILE__), "type" => "info", "subtype"=> "numeric", "unite" => "kWh", "xpath" => "//tic#id#/CONSO_ANNEE", "filter"=>["usecustomcgx"=>1], "dashboard"=>"tile", "mobile"=>"tile", "order"=>34),
-				"COUT_ANNEE" => array("name"=>__("Coût année", __FILE__), "type" => "info", "subtype"=> "numeric", "unite" => "€", "xpath" => "//tic#id#/COUT_ANNEE", "filter"=>["usecustomcgx"=>1], "dashboard"=>"tile", "mobile"=>"tile", "order"=>35)
+			"teleinfo"=>array(
+				"ADCO"=>array("name"=>__("Numéro compteur", __FILE__), "type"=>"info", "subtype"=> "numeric", "dashboard"=>"line", "mobile"=>"line", "xpath"=>"//tic#id#/ADCO", "order"=>1),
+				"OPTARIF"=>array("name"=>__("Option tarif", __FILE__), "type"=>"info", "subtype"=> "string", "xpath"=>"//tic#id#/OPTARIF", "order"=>2),
+				"ISOUSC"=>array("name"=>__("Intensité souscrite", __FILE__), "type"=>"info", "subtype"=> "numeric", "unite"=>"A", "dashboard"=>"line", "mobile"=>"line", "xpath"=>"//tic#id#/ISOUSC", "order"=>3),
+				"PTEC"=>array("name"=>__("Tarif en cours", __FILE__), "type"=>"info", "subtype"=> "string", "xpath"=>"//tic#id#/PTEC", "order"=>4),
+				"PAP"=>array("name"=>__("Puissance Apparente", __FILE__), "type"=>"info", "subtype"=> "numeric", "unite"=>"VA", "xpath"=>"//tic#id#/PAP", "dashboard"=>"tile", "mobile"=>"tile", "order"=>5),
+				"IINST"=>array("name"=>__("Intensité instantanée", __FILE__), "type"=>"info", "subtype"=> "numeric", "unite"=>"A", "xpath"=>"//tic#id#/IINST", "dashboard"=>"tile", "mobile"=>"tile", "order"=>6),
+				"IINST1"=>array("name"=>__("Intensité instantanée 1", __FILE__), "type"=>"info", "subtype"=> "numeric", "unite"=>"A", "visible"=>0, "xpath"=>"//tic#id#/IINST1", "dashboard"=>"tile", "mobile"=>"tile", "order"=>7),
+				"IINST2"=>array("name"=>__("Intensité instantanée 2", __FILE__), "type"=>"info", "subtype"=> "numeric", "unite"=>"A", "visible"=>0, "xpath"=>"//tic#id#/IINST2", "dashboard"=>"tile", "mobile"=>"tile", "order"=>8),
+				"IINST3"=>array("name"=>__("Intensité instantanée 3", __FILE__), "type"=>"info", "subtype"=> "numeric", "unite"=>"A", "visible"=>0, "xpath"=>"//tic#id#/IINST3", "dashboard"=>"tile", "mobile"=>"tile", "order"=>9),
+				"IMAX"=>array("name"=>__("Intensité maximum", __FILE__), "type"=>"info", "subtype"=> "numeric", "unite"=>"A", "xpath"=>"//tic#id#/IMAX", "dashboard"=>"tile", "mobile"=>"tile", "order"=>10),
+				"IMAX1"=>array("name"=>__("Intensité maximum 1", __FILE__), "type"=>"info", "subtype"=> "numeric", "unite"=>"A", "visible"=>0, "xpath"=>"//tic#id#/IMAX1", "dashboard"=>"tile", "mobile"=>"tile", "order"=>11),
+				"IMAX2"=>array("name"=>__("Intensité maximum 2", __FILE__), "type"=>"info", "subtype"=> "numeric", "unite"=>"A", "visible"=>0, "xpath"=>"//tic#id#/IMAX2", "dashboard"=>"tile", "mobile"=>"tile", "order"=>12),
+				"IMAX3"=>array("name"=>__("Intensité maximum 3", __FILE__), "type"=>"info", "subtype"=> "numeric", "unite"=>"A", "visible"=>0, "xpath"=>"//tic#id#/IMAX3", "dashboard"=>"tile", "mobile"=>"tile", "order"=>13),
+				"TENS1"=>array("name"=>__("Tension 1", __FILE__), "type"=>"info", "subtype"=> "numeric", "unite"=>"V", "xpath"=>"//tic#id#/TENSION1", "dashboard"=>"tile", "mobile"=>"tile", "order"=>14),
+				"TENS2"=>array("name"=>__("Tension 2", __FILE__), "type"=>"info", "subtype"=> "numeric", "unite"=>"V", "visible"=>0, "xpath"=>"//tic#id#/TENSION2", "dashboard"=>"tile", "mobile"=>"tile", "order"=>15),
+				"TENS3"=>array("name"=>__("Tension 3", __FILE__), "type"=>"info", "subtype"=> "numeric", "unite"=>"V", "visible"=>0, "xpath"=>"//tic#id#/TENSION3", "dashboard"=>"tile", "mobile"=>"tile", "order"=>16),
+				"PEJP"=>array("name"=>__("Préavis EJP", __FILE__), "type"=>"info", "subtype"=> "binary", "filter"=>["tarification"=>"EJP"], "xpath"=>"//tic#id#/PEJP", "order"=>17),
+				"DEMAIN"=>array("name"=>__("Couleur demain", __FILE__), "type"=>"info", "subtype"=> "string", "filter"=>["tarification"=>"BBRH"], "xpath"=>"//tic#id#/DEMAIN", "order"=>18),
+				"BASE"=>array("name"=>__("Index (base)", __FILE__), "type"=>"info", "subtype"=> "numeric", "unite"=>"kWh", "filter"=>["tarification"=>"BASE"],"calcul"=>"#value#/1000", "dashboard"=>"tile", "mobile"=>"tile", "xpath"=>"//tic#id#/BASE", "order"=>19),
+				"HCHC"=>array("name"=>__("Index (heures creuses)", __FILE__), "type"=>"info", "subtype"=> "numeric", "unite"=>"kWh", "filter"=>["tarification"=>"HC"],"calcul"=>"#value#/1000", "dashboard"=>"tile", "mobile"=>"tile","xpath"=>"//tic#id#/HCHC", "order"=>20),
+				"HCHP"=>array("name"=>__("Index (heures pleines)", __FILE__), "type"=>"info", "subtype"=> "numeric", "unite"=>"kWh", "filter"=>["tarification"=>"HC"],"calcul"=>"#value#/1000", "dashboard"=>"tile", "mobile"=>"tile","xpath"=>"//tic#id#/HCHP", "order"=>21),
+				"EJPHN"=>array("name"=>__("Index (normal EJP)", __FILE__), "type"=>"info", "subtype"=> "numeric", "unite"=>"kWh", "filter"=>["tarification"=>"EJP"],"calcul"=>"#value#/1000", "dashboard"=>"tile", "mobile"=>"tile","xpath"=>"//tic#id#/EJPHN", "order"=>22),
+				"EJPHPM"=>array("name"=>__("Index (pointe mobile EJP)", __FILE__), "type"=>"info", "subtype"=> "numeric", "unite"=>"kWh", "filter"=>["tarification"=>"EJP"],"calcul"=>"#value#/1000", "dashboard"=>"tile", "mobile"=>"tile","xpath"=>"//tic#id#/EJPHPM", "order"=>23),
+				"BBRHCJB"=>array("name"=>__("Index (heures creuses jours bleus Tempo)", __FILE__), "type"=>"info", "subtype"=> "numeric", "unite"=>"kWh", "filter"=>["tarification"=>"EJP"], "calcul"=>"#value#/1000", "dashboard"=>"tile", "mobile"=>"tile","xpath"=>"//tic#id#/BBRHCJB", "order"=>24),
+				"BBRHPJB"=>array("name"=>__("Index (heures pleines jours bleus Tempo)", __FILE__), "type"=>"info", "subtype"=> "numeric", "unite"=>"kWh", "filter"=>["tarification"=>"EJP"], "calcul"=>"#value#/1000", "dashboard"=>"tile", "mobile"=>"tile","xpath"=>"//tic#id#/BBRHPJB", "order"=>25),
+				"BBRHCJW"=>array("name"=>__("Index (heures creuses jours blancs Tempo)", __FILE__), "type"=>"info", "subtype"=> "numeric", "unite"=>"kWh", "filter"=>["tarification"=>"EJP"], "calcul"=>"#value#/1000", "dashboard"=>"tile", "mobile"=>"tile","xpath"=>"//tic#id#/BBRHCJW", "order"=>26),
+				"BBRHPJW"=>array("name"=>__("Index (heures pleines jours blancs Tempo)", __FILE__), "type"=>"info", "subtype"=> "numeric", "unite"=>"kWh", "filter"=>["tarification"=>"EJP"], "calcul"=>"#value#/1000", "dashboard"=>"tile", "mobile"=>"tile","xpath"=>"//tic#id#/BBRHPJW", "order"=>27),
+				"BBRHCJR"=>array("name"=>__("Index (heures creuses jours rouges Tempo)", __FILE__), "type"=>"info", "subtype"=> "numeric", "unite"=>"kWh", "filter"=>["tarification"=>"EJP"], "calcul"=>"#value#/1000", "dashboard"=>"tile", "mobile"=>"tile","xpath"=>"//tic#id#/BBRHCJR", "order"=>28),
+				"BBRHPJR"=>array("name"=>__("Index (heures pleines jours rouges Tempo)", __FILE__), "type"=>"info", "subtype"=> "numeric", "unite"=>"kWh", "filter"=>["tarification"=>"EJP"], "calcul"=>"#value#/1000", "dashboard"=>"tile", "mobile"=>"tile","xpath"=>"//tic#id#/BBRHPJR", "order"=>29),
+				"CONSO_JOUR"=>array("name"=>__("Consommation jour", __FILE__), "type"=>"info", "subtype"=> "numeric", "unite"=>"kWh", "xpath"=>"//tic#id#/CONSO_JOUR", "filter"=>["usecustomcgx"=>1], "dashboard"=>"tile", "mobile"=>"tile", "order"=>30),
+				"COUT_JOUR"=>array("name"=>__("Coût jour", __FILE__), "type"=>"info", "subtype"=> "numeric", "unite"=>"€", "xpath"=>"//tic#id#/COUT_JOUR", "filter"=>["usecustomcgx"=>1], "dashboard"=>"tile", "mobile"=>"tile", "order"=>31),
+				"CONSO_MOIS"=>array("name"=>__("Consommation mois", __FILE__), "type"=>"info", "subtype"=> "numeric", "unite"=>"kWh", "xpath"=>"//tic#id#/CONSO_MOIS", "filter"=>["usecustomcgx"=>1], "dashboard"=>"tile", "mobile"=>"tile", "order"=>32),
+				"COUT_MOIS"=>array("name"=>__("Coût mois", __FILE__), "type"=>"info", "subtype"=> "numeric", "unite"=>"€", "xpath"=>"//tic#id#/COUT_MOIS", "filter"=>["usecustomcgx"=>1], "dashboard"=>"tile", "mobile"=>"tile", "order"=>33),
+				"CONSO_ANNEE"=>array("name"=>__("Consommation année", __FILE__), "type"=>"info", "subtype"=> "numeric", "unite"=>"kWh", "xpath"=>"//tic#id#/CONSO_ANNEE", "filter"=>["usecustomcgx"=>1], "dashboard"=>"tile", "mobile"=>"tile", "order"=>34),
+				"COUT_ANNEE"=>array("name"=>__("Coût année", __FILE__), "type"=>"info", "subtype"=> "numeric", "unite"=>"€", "xpath"=>"//tic#id#/COUT_ANNEE", "filter"=>["usecustomcgx"=>1], "dashboard"=>"tile", "mobile"=>"tile", "order"=>35)
 			),
-			"general" => array(
-				"firmware" => array("name"=>__("Firmware", __FILE__), "type"=>"info", "subtype"=>"string", "xpath"=>"//info/firmware", "order"=>1),
-				"serverversion" => array("name"=>__("Version Serveur", __FILE__), "type"=>"info", "subtype"=>"string", "xpath"=>"//info/serverversion", "filter"=>["usecustomcgx"=>1], "order"=>2),
-				"status" => array("name"=>__("Statut", __FILE__), "type"=>"info", "subtype"=>"binary", "order"=>3),
-				"alarme" => array("name"=>__("Alarme", __FILE__), "type"=>"info", "subtype"=>"binary", "visible"=> 0, "xpath"=>"//info/alarme","dashboard"=>"alert", "mobile"=>"alert", "filter"=>["usecustomcgx"=>1], "order"=>4),
-				"alarmeon" => array("name"=>__("Alarme On", __FILE__), "type"=>"action", "subtype"=>"other", "value"=>"alarme","dashboard"=>"alert", "mobile"=>"alert", "filter"=>["usecustomcgx"=>1], "order"=>5),
-				"alarmeoff" => array("name"=>__("Alarme Off", __FILE__), "type"=>"action", "subtype"=>"other", "value"=>"alarme","dashboard"=>"alert", "mobile"=>"alert", "filter"=>["usecustomcgx"=>1], "order"=>6),
-				"spaceleft" => array("name"=>__("Espace libre", __FILE__), "type"=>"info", "subtype"=>"numeric", "unite"=>"Go", "xpath"=>"//info/spaceleft", "filter"=>["usecustomcgx"=>1], "order"=>7),
-				"tension" => array("name"=>__("Tension", __FILE__), "type"=>"info", "subtype"=>"numeric", "unite"=>"V", "minValue"=>200, "maxValue"=>260, "xpath"=>"//pince/V", "order"=>8)
+			"general"=>array(
+				"firmware"=>array("name"=>__("Firmware", __FILE__), "type"=>"info", "subtype"=>"string", "xpath"=>"//info/firmware", "order"=>1),
+				"serverversion"=>array("name"=>__("Version Serveur", __FILE__), "type"=>"info", "subtype"=>"string", "xpath"=>"//info/serverversion", "filter"=>["usecustomcgx"=>1], "order"=>2),
+				"status"=>array("name"=>__("Statut", __FILE__), "type"=>"info", "subtype"=>"binary", "order"=>3),
+				"alarme"=>array("name"=>__("Alarme", __FILE__), "type"=>"info", "subtype"=>"binary", "visible"=> 0, "xpath"=>"//info/alarme","dashboard"=>"alert", "mobile"=>"alert", "filter"=>["usecustomcgx"=>1], "order"=>4),
+				"alarmeon"=>array("name"=>__("Alarme On", __FILE__), "type"=>"action", "subtype"=>"other", "value"=>"alarme","dashboard"=>"alert", "mobile"=>"alert", "filter"=>["usecustomcgx"=>1], "order"=>5),
+				"alarmeoff"=>array("name"=>__("Alarme Off", __FILE__), "type"=>"action", "subtype"=>"other", "value"=>"alarme","dashboard"=>"alert", "mobile"=>"alert", "filter"=>["usecustomcgx"=>1], "order"=>6),
+				"spaceleft"=>array("name"=>__("Espace libre", __FILE__), "type"=>"info", "subtype"=>"numeric", "unite"=>"Go", "xpath"=>"//info/spaceleft", "filter"=>["usecustomcgx"=>1], "order"=>7),
+				"tension"=>array("name"=>__("Tension", __FILE__), "type"=>"info", "subtype"=>"numeric", "unite"=>"V", "minValue"=>200, "maxValue"=>260, "xpath"=>"//pince/V", "order"=>8)
 			),
-			"compteur" => array(
-				"nbimpulsion" => array("name"=>__("Impulsions", __FILE__), "type"=>"info", "subtype"=>"numeric", "unite"=>"imp", "xpath"=>"//impulsion/PULSE#id#", "dashboard"=>"tile", "mobile"=>"tile", "order"=>1),
-				"index" => array("name"=>__("Index", __FILE__), "type"=>"info", "subtype"=>"numeric", "unite"=>"l", "xpath"=>"//impulsion/INDEX#id#", "dashboard"=>"tile", "mobile"=>"tile", "order"=>2),
-				"debit" => array("name"=>__("Débit", __FILE__), "type"=>"info", "subtype"=>"numeric", "unite"=>"l/min", "xpath"=>"//impulsion/DEBIT#id#", "dashboard"=>"tile", "mobile"=>"tile", "filter"=>["usecustomcgx"=>1], "order"=>3),
-				"consoveille" => array("name"=>__("Consommation J-1", __FILE__), "type"=>"info", "subtype"=>"numeric", "unite"=>"l", "xpath"=>"//impulsion/CONSO_VEILLE#id#", "dashboard"=>"tile", "mobile"=>"tile", "filter"=>["usecustomcgx"=>1], "order"=>4),
-				"consojour" => array("name"=>__("Consommation jour", __FILE__), "type"=>"info", "subtype"=>"numeric", "unite"=>"l", "xpath"=>"//impulsion/CONSO_JOUR#id#", "dashboard"=>"tile", "mobile"=>"tile", "filter"=>["usecustomcgx"=>1], "order"=>5),
-				"coutjour" => array("name"=>__("Coût jour", __FILE__), "type"=>"info", "subtype"=>"numeric", "unite"=>"€", "xpath"=>"//impulsion/COUT_JOUR#id#", "dashboard"=>"tile", "mobile"=>"tile", "filter"=>["usecustomcgx"=>1], "order"=>6),
-				"consomois" => array("name"=>__("Consommation mois", __FILE__), "type"=>"info", "subtype"=>"numeric", "unite"=>"m3", "xpath"=>"//impulsion/CONSO_MOIS#id#", "dashboard"=>"tile", "mobile"=>"tile", "filter"=>["usecustomcgx"=>1], "order"=>7),
-				"coutmois" => array("name"=>__("Coût mois", __FILE__), "type"=>"info", "subtype"=>"numeric", "unite"=>"€", "xpath"=>"//impulsion/COUT_MOIS#id#", "dashboard"=>"tile", "mobile"=>"tile", "filter"=>["usecustomcgx"=>1], "order"=>8),
-				"consoannee" => array("name"=>__("Consommation année", __FILE__), "type"=>"info", "subtype"=>"numeric", "unite"=>"m3", "xpath"=>"//impulsion/CONSO_ANNEE#id#", "dashboard"=>"tile", "mobile"=>"tile", "filter"=>["usecustomcgx"=>1], "order"=>9),
-				"coutannee" => array("name"=>__("Coût année", __FILE__), "type"=>"info", "subtype"=>"numeric", "unite"=>"€", "xpath"=>"//impulsion/COUT_ANNEE#id#", "dashboard"=>"tile", "mobile"=>"tile", "filter"=>["usecustomcgx"=>1], "order"=>10)
+			"compteur"=>array(
+				"nbimpulsion"=>array("name"=>__("Impulsions", __FILE__), "type"=>"info", "subtype"=>"numeric", "unite"=>"imp", "xpath"=>"//impulsion/PULSE#id#", "dashboard"=>"tile", "mobile"=>"tile", "order"=>1),
+				"index"=>array("name"=>__("Index", __FILE__), "type"=>"info", "subtype"=>"numeric", "unite"=>"l", "xpath"=>"//impulsion/INDEX#id#", "dashboard"=>"tile", "mobile"=>"tile", "order"=>2),
+				"debit"=>array("name"=>__("Débit", __FILE__), "type"=>"info", "subtype"=>"numeric", "unite"=>"l/min", "xpath"=>"//impulsion/DEBIT#id#", "dashboard"=>"tile", "mobile"=>"tile", "filter"=>["usecustomcgx"=>1], "order"=>3),
+				"consoveille"=>array("name"=>__("Consommation J-1", __FILE__), "type"=>"info", "subtype"=>"numeric", "unite"=>"l", "xpath"=>"//impulsion/CONSO_VEILLE#id#", "dashboard"=>"tile", "mobile"=>"tile", "filter"=>["usecustomcgx"=>1], "order"=>4),
+				"consojour"=>array("name"=>__("Consommation jour", __FILE__), "type"=>"info", "subtype"=>"numeric", "unite"=>"l", "xpath"=>"//impulsion/CONSO_JOUR#id#", "dashboard"=>"tile", "mobile"=>"tile", "filter"=>["usecustomcgx"=>1], "order"=>5),
+				"coutjour"=>array("name"=>__("Coût jour", __FILE__), "type"=>"info", "subtype"=>"numeric", "unite"=>"€", "xpath"=>"//impulsion/COUT_JOUR#id#", "dashboard"=>"tile", "mobile"=>"tile", "filter"=>["usecustomcgx"=>1], "order"=>6),
+				"consomois"=>array("name"=>__("Consommation mois", __FILE__), "type"=>"info", "subtype"=>"numeric", "unite"=>"m3", "xpath"=>"//impulsion/CONSO_MOIS#id#", "dashboard"=>"tile", "mobile"=>"tile", "filter"=>["usecustomcgx"=>1], "order"=>7),
+				"coutmois"=>array("name"=>__("Coût mois", __FILE__), "type"=>"info", "subtype"=>"numeric", "unite"=>"€", "xpath"=>"//impulsion/COUT_MOIS#id#", "dashboard"=>"tile", "mobile"=>"tile", "filter"=>["usecustomcgx"=>1], "order"=>8),
+				"consoannee"=>array("name"=>__("Consommation année", __FILE__), "type"=>"info", "subtype"=>"numeric", "unite"=>"m3", "xpath"=>"//impulsion/CONSO_ANNEE#id#", "dashboard"=>"tile", "mobile"=>"tile", "filter"=>["usecustomcgx"=>1], "order"=>9),
+				"coutannee"=>array("name"=>__("Coût année", __FILE__), "type"=>"info", "subtype"=>"numeric", "unite"=>"€", "xpath"=>"//impulsion/COUT_ANNEE#id#", "dashboard"=>"tile", "mobile"=>"tile", "filter"=>["usecustomcgx"=>1], "order"=>10)
 			),
-			"pince" => array(
-				"index" => array("name"=>__("Index consommation", __FILE__), "type"=>"info", "subtype"=>"numeric", "unite"=>"kWh", "xpath"=>"//pince/INDEX#id#", "dashboard"=>"tile", "mobile"=>"tile", "filter"=>["pinceMeasure"=>"consumption"], "order"=>1),
-				"injection" => array("name"=>__("Index injection", __FILE__), "type"=>"info", "subtype"=>"numeric", "unite"=>"kWh", "xpath"=>"//pince/INJECT#id#", "dashboard"=>"tile", "mobile"=>"tile",  "filter"=>["pinceMeasure"=>"production"], "order"=>1),
-				"intensite" => array("name"=>__("Intensité", __FILE__), "type"=>"info", "subtype"=>"numeric", "unite"=>"A", "xpath"=>"//pince/I#id#", "dashboard"=>"tile", "mobile"=>"tile", "order"=>2),
-				"puissance" => array("name"=>__("Puissance", __FILE__), "type"=>"info", "subtype"=>"numeric", "unite"=>"VA", "xpath"=>"//pince/PUISSANCE#id#", "dashboard"=>"tile", "mobile"=>"tile", "filter"=>["usecustomcgx"=>1], "order"=>3),
-				"consojour" => array("name"=>__("Consommation jour", __FILE__), "type"=>"info", "subtype"=>"numeric", "unite"=>"kWh", "xpath"=>"//pince/CONSO_JOUR#id#", "dashboard"=>"tile", "mobile"=>"tile", "filter"=>["usecustomcgx"=>1, "pinceMeasure"=>"consumption"], "order"=>4),
-				"coutjour" => array("name"=>__("Coût jour", __FILE__), "type"=>"info", "subtype"=>"numeric", "unite"=>"€", "xpath"=>"//pince/COUT_JOUR#id#", "dashboard"=>"tile", "mobile"=>"tile", "filter"=>["usecustomcgx"=>1, "pinceMeasure"=>"consumption"], "order"=>5),
-				"consomois" => array("name"=>__("Consommation mois", __FILE__), "type"=>"info", "subtype"=>"numeric", "unite"=>"kWh", "xpath"=>"//pince/CONSO_MOIS#id#", "dashboard"=>"tile", "mobile"=>"tile", "filter"=>["usecustomcgx"=>1, "pinceMeasure"=>"consumption"], "order"=>6),
-				"coutmois" => array("name"=>__("Coût mois", __FILE__), "type"=>"info", "subtype"=>"numeric", "unite"=>"€", "xpath"=>"//pince/COUT_MOIS#id#", "dashboard"=>"tile", "mobile"=>"tile", "filter"=>["usecustomcgx"=>1, "pinceMeasure"=>"consumption"], "order"=>7),
-				"consoannee" => array("name"=>__("Consommation année", __FILE__), "type"=>"info", "subtype"=>"numeric", "unite"=>"kWh","xpath"=>"//pince/CONSO_ANNEE#id#", "dashboard"=>"tile", "mobile"=>"tile", "filter"=>["usecustomcgx"=>1, "pinceMeasure"=>"consumption"], "order"=>8),
-				"coutannee" => array("name"=>__("Coût année", __FILE__), "type"=>"info", "subtype"=>"numeric", "unite"=>"€", "xpath"=>"//pince/COUT_ANNEE#id#", "dashboard"=>"tile", "mobile"=>"tile", "filter"=>["usecustomcgx"=>1, "pinceMeasure"=>"consumption"], "order"=>9),
-				"injecjour" => array("name"=>__("Injection jour", __FILE__), "type"=>"info", "subtype"=>"numeric", "unite"=>"kWh", "xpath"=>"//pince/INJEC_JOUR#id#", "dashboard"=>"tile", "mobile"=>"tile", "filter"=>["usecustomcgx"=>1, "pinceMeasure"=>"production"], "order"=>4),
-				"gainjour" => array("name"=>__("Gain jour", __FILE__), "type"=>"info", "subtype"=>"numeric", "unite"=>"€","xpath"=>"//pince/GAIN_JOUR#id#", "dashboard"=>"tile", "mobile"=>"tile", "filter"=>["usecustomcgx"=>1, "pinceMeasure"=>"production"], "order"=>5),
-				"injecmois" => array("name"=>__("Injection mois", __FILE__), "type"=>"info", "subtype"=>"numeric", "unite"=>"kWh","xpath"=>"//pince/INJEC_MOIS#id#", "dashboard"=>"tile", "mobile"=>"tile", "filter"=>["usecustomcgx"=>1, "pinceMeasure"=>"production"], "order"=>6),
-				"gainmois" => array("name"=>__("Gain mois", __FILE__), "type"=>"info", "subtype"=>"numeric", "unite"=>"€", "xpath"=>"//pince/GAIN_MOIS#id#", "dashboard"=>"tile", "mobile"=>"tile", "filter"=>["usecustomcgx"=>1, "pinceMeasure"=>"production"], "order"=>7),
-				"injecannee" => array("name"=>__("Injection année", __FILE__), "type"=>"info", "subtype"=>"numeric", "unite"=>"kWh", "xpath"=>"//pince/INJEC_ANNEE#id#", "dashboard"=>"tile", "mobile"=>"tile", "filter"=>["usecustomcgx"=>1, "pinceMeasure"=>"production"], "order"=>8),
-				"gainannee" => array("name"=>__("Gain année", __FILE__), "type"=>"info", "subtype"=>"numeric", "unite"=>"€", "xpath"=>"//pince/GAIN_ANNEE#id#", "dashboard"=>"tile", "mobile"=>"tile", "filter"=>["usecustomcgx"=>1, "pinceMeasure"=>"production"], "order"=>9),
-				"maxjour" => array("name"=>__("Puissance max jour", __FILE__), "type"=>"info", "subtype"=>"numeric", "unite"=>"A", "xpath"=>"//pince/MAX_JOUR#id#", "dashboard"=>"tile", "mobile"=>"tile", "filter"=>["usecustomcgx"=>1], "order"=>10),
-				"maxmois" => array("name"=>__("Puissance max mois", __FILE__), "type"=>"info", "subtype"=>"numeric", "unite"=>"A", "xpath"=>"//pince/MAX_MOIS#id#", "dashboard"=>"tile", "mobile"=>"tile", "filter"=>["usecustomcgx"=>1], "order"=>11),
-				"maxannee" => array("name"=>__("Puissance max année", __FILE__), "type"=>"info", "subtype"=>"numeric", "unite"=>"A", "xpath"=>"//pince/MAX_ANNEE#id#", "dashboard"=>"tile", "mobile"=>"tile", "filter"=>["usecustomcgx"=>1], "order"=>12)
+			"pince"=>array(
+				"index"=>array("name"=>__("Index consommation", __FILE__), "type"=>"info", "subtype"=>"numeric", "unite"=>"kWh", "xpath"=>"//pince/INDEX#id#", "dashboard"=>"tile", "mobile"=>"tile", "filter"=>["pinceMeasure"=>"consumption"], "order"=>1),
+				"injection"=>array("name"=>__("Index injection", __FILE__), "type"=>"info", "subtype"=>"numeric", "unite"=>"kWh", "xpath"=>"//pince/INJECT#id#", "dashboard"=>"tile", "mobile"=>"tile",  "filter"=>["pinceMeasure"=>"production"], "order"=>1),
+				"intensite"=>array("name"=>__("Intensité", __FILE__), "type"=>"info", "subtype"=>"numeric", "unite"=>"A", "xpath"=>"//pince/I#id#", "dashboard"=>"tile", "mobile"=>"tile", "order"=>2),
+				"puissance"=>array("name"=>__("Puissance", __FILE__), "type"=>"info", "subtype"=>"numeric", "unite"=>"VA", "xpath"=>"//pince/PUISSANCE#id#", "dashboard"=>"tile", "mobile"=>"tile", "filter"=>["usecustomcgx"=>1], "order"=>3),
+				"consojour"=>array("name"=>__("Consommation jour", __FILE__), "type"=>"info", "subtype"=>"numeric", "unite"=>"kWh", "xpath"=>"//pince/CONSO_JOUR#id#", "dashboard"=>"tile", "mobile"=>"tile", "filter"=>["usecustomcgx"=>1, "pinceMeasure"=>"consumption"], "order"=>4),
+				"coutjour"=>array("name"=>__("Coût jour", __FILE__), "type"=>"info", "subtype"=>"numeric", "unite"=>"€", "xpath"=>"//pince/COUT_JOUR#id#", "dashboard"=>"tile", "mobile"=>"tile", "filter"=>["usecustomcgx"=>1, "pinceMeasure"=>"consumption"], "order"=>5),
+				"consomois"=>array("name"=>__("Consommation mois", __FILE__), "type"=>"info", "subtype"=>"numeric", "unite"=>"kWh", "xpath"=>"//pince/CONSO_MOIS#id#", "dashboard"=>"tile", "mobile"=>"tile", "filter"=>["usecustomcgx"=>1, "pinceMeasure"=>"consumption"], "order"=>6),
+				"coutmois"=>array("name"=>__("Coût mois", __FILE__), "type"=>"info", "subtype"=>"numeric", "unite"=>"€", "xpath"=>"//pince/COUT_MOIS#id#", "dashboard"=>"tile", "mobile"=>"tile", "filter"=>["usecustomcgx"=>1, "pinceMeasure"=>"consumption"], "order"=>7),
+				"consoannee"=>array("name"=>__("Consommation année", __FILE__), "type"=>"info", "subtype"=>"numeric", "unite"=>"kWh","xpath"=>"//pince/CONSO_ANNEE#id#", "dashboard"=>"tile", "mobile"=>"tile", "filter"=>["usecustomcgx"=>1, "pinceMeasure"=>"consumption"], "order"=>8),
+				"coutannee"=>array("name"=>__("Coût année", __FILE__), "type"=>"info", "subtype"=>"numeric", "unite"=>"€", "xpath"=>"//pince/COUT_ANNEE#id#", "dashboard"=>"tile", "mobile"=>"tile", "filter"=>["usecustomcgx"=>1, "pinceMeasure"=>"consumption"], "order"=>9),
+				"injecjour"=>array("name"=>__("Injection jour", __FILE__), "type"=>"info", "subtype"=>"numeric", "unite"=>"kWh", "xpath"=>"//pince/INJEC_JOUR#id#", "dashboard"=>"tile", "mobile"=>"tile", "filter"=>["usecustomcgx"=>1, "pinceMeasure"=>"production"], "order"=>4),
+				"gainjour"=>array("name"=>__("Gain jour", __FILE__), "type"=>"info", "subtype"=>"numeric", "unite"=>"€","xpath"=>"//pince/GAIN_JOUR#id#", "dashboard"=>"tile", "mobile"=>"tile", "filter"=>["usecustomcgx"=>1, "pinceMeasure"=>"production"], "order"=>5),
+				"injecmois"=>array("name"=>__("Injection mois", __FILE__), "type"=>"info", "subtype"=>"numeric", "unite"=>"kWh","xpath"=>"//pince/INJEC_MOIS#id#", "dashboard"=>"tile", "mobile"=>"tile", "filter"=>["usecustomcgx"=>1, "pinceMeasure"=>"production"], "order"=>6),
+				"gainmois"=>array("name"=>__("Gain mois", __FILE__), "type"=>"info", "subtype"=>"numeric", "unite"=>"€", "xpath"=>"//pince/GAIN_MOIS#id#", "dashboard"=>"tile", "mobile"=>"tile", "filter"=>["usecustomcgx"=>1, "pinceMeasure"=>"production"], "order"=>7),
+				"injecannee"=>array("name"=>__("Injection année", __FILE__), "type"=>"info", "subtype"=>"numeric", "unite"=>"kWh", "xpath"=>"//pince/INJEC_ANNEE#id#", "dashboard"=>"tile", "mobile"=>"tile", "filter"=>["usecustomcgx"=>1, "pinceMeasure"=>"production"], "order"=>8),
+				"gainannee"=>array("name"=>__("Gain année", __FILE__), "type"=>"info", "subtype"=>"numeric", "unite"=>"€", "xpath"=>"//pince/GAIN_ANNEE#id#", "dashboard"=>"tile", "mobile"=>"tile", "filter"=>["usecustomcgx"=>1, "pinceMeasure"=>"production"], "order"=>9),
+				"maxjour"=>array("name"=>__("Puissance max jour", __FILE__), "type"=>"info", "subtype"=>"numeric", "unite"=>"A", "xpath"=>"//pince/MAX_JOUR#id#", "dashboard"=>"tile", "mobile"=>"tile", "filter"=>["usecustomcgx"=>1], "order"=>10),
+				"maxmois"=>array("name"=>__("Puissance max mois", __FILE__), "type"=>"info", "subtype"=>"numeric", "unite"=>"A", "xpath"=>"//pince/MAX_MOIS#id#", "dashboard"=>"tile", "mobile"=>"tile", "filter"=>["usecustomcgx"=>1], "order"=>11),
+				"maxannee"=>array("name"=>__("Puissance max année", __FILE__), "type"=>"info", "subtype"=>"numeric", "unite"=>"A", "xpath"=>"//pince/MAX_ANNEE#id#", "dashboard"=>"tile", "mobile"=>"tile", "filter"=>["usecustomcgx"=>1], "order"=>12)
 			),
-			"bouton" => array(
-				"state" => array("name"=>__("Etat", __FILE__), "type"=>"info", "subtype"=>"binary", "xpath"=>"//entree/ENTREE#id#")
+			"bouton"=>array(
+				"state"=>array("name"=>__("Etat", __FILE__), "type"=>"info", "subtype"=>"binary", "xpath"=>"//entree/ENTREE#id#")
 			),
-			"relai" => array(
-				"state" => array("name"=>__("Etat", __FILE__), "type"=>"info", "subtype"=>"binary", "visible"=>0, "xpath"=>"//relais/RELAIS#id#", "xpathcond"=>"//relais1W/RELAIS#id#", "cond"=>"#id#>=10", "dashboard"=>"prise", "mobile"=>"prise", "order"=>1),
-				"btn_on" => array("name"=>"On", "type"=>"action", "subtype"=>"other", "value"=>"state", "dashboard"=>"prise", "mobile"=>"prise", "order"=>2),
-				"btn_off" => array("name"=>"Off", "type"=>"action", "subtype"=>"other", "value"=>"state", "dashboard"=>"prise", "mobile"=>"prise", "order"=>3),
-				"commute" => array("name"=>"Toggle", "type"=>"action", "subtype"=>"other", "order"=>4)
+			"relai"=>array(
+				"state"=>array("name"=>__("Etat", __FILE__), "type"=>"info", "subtype"=>"binary", "visible"=>0, "xpath"=>"//relais/RELAIS#id#", "xpathcond"=>"//relais1W/RELAIS#id#", "cond"=>"#id#>=10", "dashboard"=>"prise", "mobile"=>"prise", "order"=>1),
+				"btn_on"=>array("name"=>"On", "type"=>"action", "subtype"=>"other", "value"=>"state", "dashboard"=>"prise", "mobile"=>"prise", "order"=>2),
+				"btn_off"=>array("name"=>"Off", "type"=>"action", "subtype"=>"other", "value"=>"state", "dashboard"=>"prise", "mobile"=>"prise", "order"=>3),
+				"commute"=>array("name"=>"Toggle", "type"=>"action", "subtype"=>"other", "order"=>4)
 			),
-			"switch" => array(
-				"state" => array("name"=>__("Etat", __FILE__), "type"=>"info", "subtype"=>"binary", "visible"=>0, "xpath"=>"//switch_virtuel/SWITCH#id#","dashboard" =>"circle", "mobile" =>"circle", "order"=>1),
-				"btn_on" => array("name"=>"On", "type"=>"action", "subtype"=>"other", "value"=>"state", "dashboard"=>"circle", "mobile"=>"circle", "order"=>2),
-				"btn_off" => array("name"=>"Off", "type"=>"action", "subtype"=>"other", "value"=>"state", "dashboard"=>"circle", "mobile"=>"circle", "order"=>3),
-				"commute" => array("name"=>"Toggle", "type"=>"action", "subtype"=>"other", "order"=>4)
+			"switch"=>array(
+				"state"=>array("name"=>__("Etat", __FILE__), "type"=>"info", "subtype"=>"binary", "visible"=>0, "xpath"=>"//switch_virtuel/SWITCH#id#","dashboard"=>"circle", "mobile"=>"circle", "order"=>1),
+				"btn_on"=>array("name"=>"On", "type"=>"action", "subtype"=>"other", "value"=>"state", "dashboard"=>"circle", "mobile"=>"circle", "order"=>2),
+				"btn_off"=>array("name"=>"Off", "type"=>"action", "subtype"=>"other", "value"=>"state", "dashboard"=>"circle", "mobile"=>"circle", "order"=>3),
+				"commute"=>array("name"=>"Toggle", "type"=>"action", "subtype"=>"other", "order"=>4)
 			),
-			"temperature" => array(
-				"reel" => array("name"=>__("Température",__FILE__), "type"=>"info", "subtype"=>"numeric", "unite"=>"°C", "xpath"=>"//temp/SONDE#id#", "dashboard"=>"tile", "mobile"=>"tile")
+			"temperature"=>array(
+				"reel"=>array("name"=>__("Température",__FILE__), "type"=>"info", "subtype"=>"numeric", "unite"=>"°C", "xpath"=>"//temp/SONDE#id#", "dashboard"=>"tile", "mobile"=>"tile")
 			),
-			"analogique" => array(
-				"reel" => array("name"=>__("Réel",__FILE__), "type"=>"info", "subtype"=>"numeric", "dashboard"=>"tile", "mobile"=>"tile"),
-				"brut" => array("name"=>__("Brut",__FILE__), "type"=>"info", "subtype"=>"numeric", "xpath"=>"//analogique/AD#id#", "dashboard"=>"tile", "mobile"=>"tile")
+			"analogique"=>array(
+				"reel"=>array("name"=>__("Réel",__FILE__), "type"=>"info", "subtype"=>"numeric", "dashboard"=>"tile", "mobile"=>"tile"),
+				"brut"=>array("name"=>__("Brut",__FILE__), "type"=>"info", "subtype"=>"numeric", "xpath"=>"//analogique/AD#id#", "dashboard"=>"tile", "mobile"=>"tile")
 			),
-			"variable" => array(
-				"value" => array("name"=>__("Valeur",__FILE__), "type"=>"info", "subtype"=>"numeric", "xpath"=>"//variables/VARIABLE#id#", "dashboard"=>"tile", "mobile"=>"tile")
+			"variable"=>array(
+				"value"=>array("name"=>__("Valeur",__FILE__), "type"=>"info", "subtype"=>"numeric", "xpath"=>"//variables/VARIABLE#id#", "dashboard"=>"tile", "mobile"=>"tile")
 			)
 		);
 		return $commands;
@@ -134,16 +134,16 @@ class wes extends eqLogic {
 
 	public function getTypes() {
 		$types = array(
-			"general" => array("name"=>__("Serveur Wes", __FILE__), "category"=>"energy", "width"=>"192px", "height"=>"212px", "ignoreCreation"=>1),
-			"analogique" => array("name" => __("Capteurs", __FILE__), "logical"=>"_N", "category"=>"automatism", "width"=>"112px", "height"=>"152px", "xpath"=>"//analogique/AD#id#", "maxnumber"=>4, "type"=>__("Tension", __FILE__)),
-			"compteur" => array("name" => __("Compteurs impulsions", __FILE__), "logical"=>"_C", "width"=>"272px", "height"=>"332px", "category"=>"energy", "xpath"=>"//impulsion/INDEX#id#", "maxnumber"=>6, "type"=>__("Compteur", __FILE__)),
-			"bouton" => array("name" => __("Entrées", __FILE__), "logical"=>"_B", "category"=>"automatism", "width"=>"112px", "height"=>"152px", "xpath"=>"//entree/ENTREE#id#", "maxnumber"=>2, "type"=>__("Entrée", __FILE__)),
-			"pince" => array("name" => __("Pinces Ampèremétriques", __FILE__), "logical"=>"_P", "width"=>"392px", "height"=>"272px", "category"=>"energy", "xpath"=>"//pince/I#id#","maxnumber"=>4, "type"=>__("Pince", __FILE__)),
-			"relai" => array("name" => __("Relais", __FILE__), "logical"=>"_R", "category"=>"automatism", "width"=>"112px", "height"=>"152px", "xpath"=>"//relais/RELAIS#id#","maxnumber"=>2, "type"=>__("Relais", __FILE__)),
-			"switch" => array("name" => __("Switchs virtuels", __FILE__), "logical"=>"_S", "category"=>"automatism", "width"=>"112px", "height"=>"152px", "xpath"=>"//switch_virtuel/SWITCH#id#", "maxnumber"=>24, "type"=>__("Switch", __FILE__)),
-			"teleinfo" => array("name" => __("Téléinfo", __FILE__), "logical"=>"_T", "width"=>"272px", "height"=>"492px", "category"=>"energy", "xpath"=>"//tic#id#/ADCO", "maxnumber"=>3, "type"=>__("TIC", __FILE__)),
-			"temperature" => array("name" => __("Températures", __FILE__), "logical"=>"_A", "category"=>"heating", "width"=>"112px", "height"=>"152px", "xpath"=>"//temp/SONDE#id#", "maxnumber"=>30, "type"=>__("Sonde", __FILE__)),
-			"variable" => array("name" => __("Variables", __FILE__), "logical"=>"_V", "category"=>"automatism", "width"=>"112px", "height"=>"152px", "xpath"=>"//variables/VARIABLE#id#", "maxnumber"=>8, "type"=>__("Variable", __FILE__)),
+			"general"=>array("name"=>__("Serveur Wes", __FILE__), "category"=>"energy", "width"=>"192px", "height"=>"212px", "ignoreCreation"=>1),
+			"analogique"=>array("name"=>__("Capteurs", __FILE__), "logical"=>"_N", "category"=>"automatism", "width"=>"112px", "height"=>"152px", "xpath"=>"//analogique/AD#id#", "maxnumber"=>4, "type"=>__("Tension", __FILE__)),
+			"compteur"=>array("name"=>__("Compteurs impulsions", __FILE__), "logical"=>"_C", "width"=>"272px", "height"=>"332px", "category"=>"energy", "xpath"=>"//impulsion/INDEX#id#", "maxnumber"=>6, "type"=>__("Compteur", __FILE__)),
+			"bouton"=>array("name"=>__("Entrées", __FILE__), "logical"=>"_B", "category"=>"automatism", "width"=>"112px", "height"=>"152px", "xpath"=>"//entree/ENTREE#id#", "maxnumber"=>2, "type"=>__("Entrée", __FILE__)),
+			"pince"=>array("name"=>__("Pinces ampèremétriques", __FILE__), "logical"=>"_P", "width"=>"392px", "height"=>"272px", "category"=>"energy", "xpath"=>"//pince/I#id#","maxnumber"=>4, "type"=>__("Pince", __FILE__)),
+			"relai"=>array("name"=>__("Relais", __FILE__), "logical"=>"_R", "category"=>"automatism", "width"=>"112px", "height"=>"152px", "xpath"=>"//relais/RELAIS#id#","maxnumber"=>2, "type"=>__("Relais", __FILE__)),
+			"switch"=>array("name"=>__("Switchs virtuels", __FILE__), "logical"=>"_S", "category"=>"automatism", "width"=>"112px", "height"=>"152px", "xpath"=>"//switch_virtuel/SWITCH#id#", "maxnumber"=>24, "type"=>__("Switch", __FILE__)),
+			"teleinfo"=>array("name"=>__("Téléinfo", __FILE__), "logical"=>"_T", "width"=>"272px", "height"=>"492px", "category"=>"energy", "xpath"=>"//tic#id#/ADCO", "maxnumber"=>3, "type"=>__("TIC", __FILE__)),
+			"temperature"=>array("name"=>__("Températures", __FILE__), "logical"=>"_A", "category"=>"heating", "width"=>"112px", "height"=>"152px", "xpath"=>"//temp/SONDE#id#", "maxnumber"=>30, "type"=>__("Sonde", __FILE__)),
+			"variable"=>array("name"=>__("Variables", __FILE__), "logical"=>"_V", "category"=>"automatism", "width"=>"112px", "height"=>"152px", "xpath"=>"//variables/VARIABLE#id#", "maxnumber"=>8, "type"=>__("Variable", __FILE__)),
 		);
 		return $types;
 	}
@@ -294,10 +294,10 @@ class wes extends eqLogic {
 	public function postSave() {
 		$type = $this->getConfiguration('type');
 
-		foreach($this->getListeCommandes()[$type] as $logicalId => $details) {
+		foreach($this->getListeCommandes()[$type] as $logicalId=>$details) {
 			if (isset($details['filter'])) {
 				$continue = false;
-				foreach ($details['filter'] as $param => $value) {
+				foreach ($details['filter'] as $param=>$value) {
 					if ($param == 'usecustomcgx' && $type != 'general') {
 						$generalId = explode('_', $this->getLogicalId());
 						if (eqLogic::byId($generalId[0])->getConfiguration($param) != $value) {
@@ -368,13 +368,13 @@ class wes extends eqLogic {
 				$file = 'data_jeedom.cgx';
 			}
 			$this->xmlstatus = simplexml_load_string($this->getUrl($file));
-			foreach (self::getTypes() as $type => $data){
+			foreach (self::getTypes() as $type=>$data){
 				if (!isset($data['ignoreCreation'])) {
 					$id = 1;
 					$xpathModele = str_replace('#id#',$id,$data['xpath']);
 					$status = $this->xmlstatus->xpath($xpathModele);
 					while (count($status) != 0) {
-						if (!is_object(self::byLogicalId($this->getId().$data['logical'].$id, 'wes')) && $this->getConfiguration($type.$id,1)==1) {
+						if (!is_object(self::byLogicalId($this->getId().$data['logical'].$id, 'wes')) && $this->getConfiguration($type.$id, 1) == 1) {
 							log::add(__CLASS__,'debug', $this->getHumanName() . __(' Création de l\'équipement ', __FILE__) . $data['type'] . ' ' . $id . ' : ' . $this->getId() . $data['logical'] . $id);
 							$eqLogic = new wes();
 							$eqLogic->setEqType_name('wes');
@@ -414,7 +414,7 @@ class wes extends eqLogic {
 
 	public function configPush() {
 		if (config::byKey("internalAddr") == "" || config::byKey("internalPort") == "")	{
-			throw new Exception(__('L\'adresse IP ou le port local de jeedom ne sont pas définis (Administration => Configuration réseaux => Accès interne).', __FILE__));
+			throw new Exception(__('L\'adresse IP ou le port local de jeedom ne sont pas définis (Administration=>Configuration réseaux=>Accès interne).', __FILE__));
 		}
 		$pathjeedom = config::byKey("internalComplement");
 		if ( substr($pathjeedom, 0, 1) != "/" ) {
@@ -466,18 +466,18 @@ class wes extends eqLogic {
 					$url .= 'protect/settings/notif'.$wesid.'P.htm';
 					for ($compteur = 0; $compteur < 6; $compteur++) {
 						log::add(__CLASS__,'debug','Url '.$url);
-						$data = array('num' => $compteur + ($wesid -1)*6,
-						'act' => $compteur+3,
-						'serv' => config::byKey('internalAddr'),
-						'port' => 80,
-						'url' => '/jeedom/core/api/jeeApi.php?api='.jeedom::getApiKey('wes').'&type=wes&id='.substr($this->getLogicalId(), 0, strpos($this->getLogicalId(),"_")).'&message=data_change');
-						//					'url' => '/jeedom/core/api/jeeApi.php?api='.jeedom::getApiKey('wes').'&type=wes_teleinfo&id='.$this->getId().'&message=data_change');
+						$data = array('num'=>$compteur + ($wesid -1)*6,
+						'act'=>$compteur+3,
+						'serv'=>config::byKey('internalAddr'),
+						'port'=>80,
+						'url'=>'/jeedom/core/api/jeeApi.php?api='.jeedom::getApiKey('wes').'&type=wes&id='.substr($this->getLogicalId(), 0, strpos($this->getLogicalId(),"_")).'&message=data_change');
+						//					'url'=>'/jeedom/core/api/jeeApi.php?api='.jeedom::getApiKey('wes').'&type=wes_teleinfo&id='.$this->getId().'&message=data_change');
 
 						$options = array(
-							'http' => array(
-								'header'  => "Content-type: application/x-www-form-urlencoded\r\n",
-								'method'  => 'POST',
-								'content' => http_build_query($data),
+							'http'=>array(
+								'header'=>"Content-type: application/x-www-form-urlencoded\r\n",
+								'method'=>'POST',
+								'content'=>http_build_query($data),
 							),
 						);
 						$context  = stream_context_create($options);
@@ -539,7 +539,7 @@ class wes extends eqLogic {
 			foreach (self::byType('wes') as $eqLogic) {
 				if ($eqLogic->getIsEnable() && ($eqLogic->getId() == $this->getId() || substr($eqLogic->getLogicalId(), 0, strpos($eqLogic->getLogicalId(),"_")) == $this->getId() )) {
 					$wesid = substr($eqLogic->getLogicalId(), strpos($eqLogic->getLogicalId(),"_")+2);
-					foreach (self::getListeCommandes()[$eqLogic->getConfiguration('type','')] as $logical => $details) {
+					foreach (self::getListeCommandes()[$eqLogic->getConfiguration('type','')] as $logical=>$details) {
 						if (isset($details['xpath']) && $details['xpath'] != ''){
 							$xpath = $details['xpath'];
 							if (isset($details['cond'])) {

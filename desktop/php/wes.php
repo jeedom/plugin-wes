@@ -36,13 +36,13 @@ if (count($eqLogics) == 0) {
 	echo '<div class="input-group" style="margin-bottom:5px;">';
 	echo '<input class="form-control roundedLeft" placeholder="{{Rechercher}}" id="in_searchWes"/>';
 	echo '<div class="input-group-btn">';
-	echo '<a id="bt_resetWesSearch" class="btn" style="width:30px"><i class="fas fa-times"></i> </a>';
+	echo '<a id="bt_resetWesSearch" class="btn tooltips" style="width:30px" title="{{Annuler la recherche}}"><i class="fas fa-times"></i></a>';
 	echo '</div>';
 	echo '<div class="input-group-btn">';
-	echo '<a class="btn" id="bt_openAllWes"><i class="fas fa-folder-open"></i></a>';
+	echo '<a class="btn tooltips" id="bt_openAllWes" title="{{Tout déplier}}"><i class="fas fa-folder-open"></i></a>';
 	echo '</div>';
 	echo '<div class="input-group-btn">';
-	echo '<a class="btn roundedRight" id="bt_closeAllWes"><i class="fas fa-folder"></i></a>';
+	echo '<a class="btn tooltips roundedRight" id="bt_closeAllWes" title="{{Tout plier}}"><i class="fas fa-folder"></i></a>';
 	echo '</div>';
 	echo '</div>';
 	echo '<div class="panel-group">';
@@ -74,18 +74,19 @@ if (count($eqLogics) == 0) {
 
 		echo '<div class="col-sm-12" style="margin-bottom:20px;">';
 		foreach ($childEqLogics[$generalEqLogic->getId()] as $type => $childEqLogic) {
+			$countChildEqLogics = count($childEqLogic);
 			echo '<div class="panel panel-default" style="margin-bottom:0!important;">';
-			// echo '<div class="panel-heading">';
+			echo '<div class="panel-heading">';
 			echo '<div class="panel-title">';
 			echo '<a class="accordion-toggle wesTab" data-toggle="collapse" data-parent="" aria-expanded="false" href="#wes_'.$type.$generalEqLogic->getId().'">';
 			if (file_exists(dirname(__FILE__) . '/../../core/config/'.$type.'.png')) {
 				$img = 'plugins/wes/core/config/'.$type.'.png';
 			}
-			echo '<img src="'.$img.'" width="30px"/> ' . $typeArray[$type]['name'];
+			echo '<img src="'.$img.'" width="30px"/> ' . $typeArray[$type]['name'] . ' <sub>('.$countChildEqLogics.')</sub>';
 			echo '</div>';
-			// echo '</div>';
+			echo '</div>';
 			echo '<div id="wes_'.$type.$generalEqLogic->getId().'" class="panel-collapse collapse">';
-			echo '<div class="panel-body">';
+			echo '<div class="panel-body" style="padding:0 0 0 5px!important;">';
 			echo '<div class="eqLogicThumbnailContainer packery">';
 			foreach ($childEqLogic as $eqLogic) {
 				$opacity = ($eqLogic->getIsEnable()) ? '' : 'disableCard';
