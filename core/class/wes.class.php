@@ -293,7 +293,6 @@ class wes extends eqLogic {
 
 	public function postSave() {
 		$type = $this->getConfiguration('type');
-
 		foreach($this->getListeCommandes()[$type] as $logicalId=>$details) {
 			if (isset($details['filter'])) {
 				$continue = false;
@@ -354,26 +353,30 @@ class wes extends eqLogic {
 				$cmd->save();
 			}
 		}
-
-		if ($this->getIsEnable() && $type == "general" && $this->getConfiguration('ip','') != '' && $this->getConfiguration('username','') != '' && $this->getConfiguration('password','') != '') {
-			log::add(__CLASS__, 'debug', $this->getHumanName() . __(' Démarrage du démon', __FILE__));
-			self::deamon_start();
+		
+		if ($type == "general") {
+			if ($this->getIsEnable()) {
+				if ($this->getConfiguration('ip','') != '' && $this->getConfiguration('username','') != '' && $this->getConfiguration('password','') != '') {
+					log::add(__CLASS__, 'debug', $this->getHumanName() . __(' Démarrage du démon', __FILE__));
+					self::deamon_start();
+				}
+			} else {
+				foreach (self::byType('wes') as $eqLogic) {
+					if ($eqLogic->getConfiguration('type') != "general" && substr($eqLogic->getLogicalId(), 0, strpos($eqLogic->getLogicalId(),"_")) == $this->getId() ) {
+						$eqLogic->setIsEnable(0);
+						$eqLogic->save();
+					}
+				}
+			}
 		}
 	}
 
 	public function postUpdate() {
-		if ($this->getIsEnable() && $this->getConfiguration('type') == "general" && $this->getConfiguration('ip','') != '' && $this->getConfiguration('username','') != '' && $this->getConfiguration('password','') != '') {
-			$file = 'data.cgx';
-			if ($this->getConfiguration('usecustomcgx', 0) == 1) {
-				$file = 'data_jeedom.cgx';
-			}
-			$this->xmlstatus = simplexml_load_string($this->getUrl($file));
+		if ($this->getIsEnable() && $this->getConfiguration('type') == "general") {
 			foreach (self::getTypes() as $type=>$data){
 				if (!isset($data['ignoreCreation'])) {
 					$id = 1;
-					$xpathModele = str_replace('#id#',$id,$data['xpath']);
-					$status = $this->xmlstatus->xpath($xpathModele);
-					while (count($status) != 0) {
+					while ($id <= $data['maxnumber']) {
 						if (!is_object(self::byLogicalId($this->getId().$data['logical'].$id, 'wes')) && $this->getConfiguration($type.$id, 1) == 1) {
 							log::add(__CLASS__,'debug', $this->getHumanName() . __(' Création de l\'équipement ', __FILE__) . $data['type'] . ' ' . $id . ' : ' . $this->getId() . $data['logical'] . $id);
 							$eqLogic = new wes();
@@ -391,8 +394,6 @@ class wes extends eqLogic {
 							$toRemove->remove();
 						}
 						$id ++;
-						$xpathModele = str_replace('#id#',$id,$data['xpath']);
-						$status = $this->xmlstatus->xpath($xpathModele);
 					}
 				}
 			}
@@ -401,89 +402,9 @@ class wes extends eqLogic {
 
 	public function preRemove() {
 		foreach (self::byType('wes') as $eqLogic) {
-			if (substr($eqLogic->getLogicalId(), 0, strpos($eqLogic->getLogicalId(),"_")) == $this->getId() ) {
+			if ($eqLogic->getConfiguration('type') != "general" && substr($eqLogic->getLogicalId(), 0, strpos($eqLogic->getLogicalId(),"_")) == $this->getId() ) {
 				log::add(__CLASS__,'debug', $this->getHumanName() . __(' Suppression des équipements liés ', __FILE__) . $eqLogic->getConfiguration('type') . ' : ' . $eqLogic->getName());
 				$eqLogic->remove();
-			}
-		}
-	}
-
-	public function getLinkToConfiguration() {
-		return 'index.php?v=d&p=wes&m=wes&id=' . $this->getId();
-	}
-
-	public function configPush() {
-		if (config::byKey("internalAddr") == "" || config::byKey("internalPort") == "")	{
-			throw new Exception(__('L\'adresse IP ou le port local de jeedom ne sont pas définis (Administration=>Configuration réseaux=>Accès interne).', __FILE__));
-		}
-		$pathjeedom = config::byKey("internalComplement");
-		if ( substr($pathjeedom, 0, 1) != "/" ) {
-			$pathjeedom = "/".$pathjeedom;
-		}
-		if ( substr($pathjeedom, -1) != "/" ) {
-			$pathjeedom = $pathjeedom."/";
-		}
-		if ( $this->getIsEnable() ) {
-			$this->getUrl('rqthttp.cgi', 'RQd5='.config::byKey("internalAddr").'&RQp5='.config::byKey("internalPort"));
-			$compteurId=0;
-			foreach (explode(',', init('eqLogicPush_id')) as $_eqLogic_id) {
-				$eqLogic = eqLogic::byId($_eqLogic_id);
-				if (!is_object($eqLogic)) {
-					throw new Exception(__('Impossible de trouver l\'équipement : ', __FILE__) . $_eqLogic_id);
-				}
-				$wesid = substr($eqLogic->getLogicalId(), strpos($eqLogic->getLogicalId(),"_")+2);
-				if ( $eqLogic->getConfiguration('type') == 'bouton' ) {
-					$cmd = $eqLogic->getCmd(null, 'state');
-					log::add(__CLASS__,'debug','Url program.cgi?PRG='.$compteurId.','.($wesid+30).',0,0,1,0,1,2,0,1,4,0000,0000,9,0');
-					$this->getUrl('program.cgi?PRG='.$compteurId.','.($wesid+30).',0,0,1,0,1,2,0,1,4,0000,0000,9,0');
-					$this->getUrl('program.cgi?RQT'.$compteurId.'='.$pathjeedom.'core/api/jeeApi.php?api='.jeedom::getApiKey('wes').'%26type=wes%26id='.$cmd->getId().'%26value=$I'.$wesid.'00');
-					log::add(__CLASS__,'debug','Url program.cgi?RQT'.$compteurId.'='.$pathjeedom.'core/api/jeeApi.php?api='.jeedom::getApiKey('wes').'%26type=wes%26id='.$cmd->getId().'%26value=$I'.$wesid.'00');
-					$compteurId++;
-					$this->getUrl('program.cgi?PRG='.$compteurId.','.($wesid+30).',0,0,0,0,1,2,0,1,4,0000,0000,9,0');
-					$this->getUrl('program.cgi?RQT'.$compteurId.'='.$pathjeedom.'core/api/jeeApi.php?api='.jeedom::getApiKey('wes').'%26type=wes%26id='.$cmd->getId().'%26value=$I'.$wesid.'00');
-					$compteurId++;
-				}elseif ($eqLogic->getConfiguration('type') == 'relai') {
-					$cmd = $eqLogic->getCmd(null, 'state');
-					$this->getUrl('program.cgi?PRG='.$compteurId.','.($wesid+100).',0,0,1,0,1,2,0,1,4,0000,0000,9,0');
-					$wesid = sprintf("%03d", $wesid);
-					$this->getUrl('program.cgi?RQT'.$compteurId.'='.$pathjeedom.'core/api/jeeApi.php?api='.jeedom::getApiKey('wes').'%26type=wes%26id='.$cmd->getId().'%26value=$R'.$wesid);
-					$compteurId++;
-					$this->getUrl('program.cgi?PRG='.$compteurId.','.($wesid+100).',0,0,0,0,1,2,0,1,4,0000,0000,9,0');
-					$wesid = sprintf("%03d", $wesid);
-					$this->getUrl('program.cgi?RQT'.$compteurId.'='.$pathjeedom.'core/api/jeeApi.php?api='.jeedom::getApiKey('wes').'%26type=wes%26id='.$cmd->getId().'%26value=$R'.$wesid);
-					$compteurId++;
-				}elseif ($eqLogic->getConfiguration('type') == 'switch') {
-					$cmd = $eqLogic->getCmd(null, 'state');
-					$this->getUrl('program.cgi?PRG='.$compteurId.','.($wesid+500).',0,0,1,0,1,2,0,1,4,0000,0000,9,0');
-					$wesid = sprintf("%03d", $wesid);
-					$this->getUrl('program.cgi?RQT'.$compteurId.'='.$pathjeedom.'core/api/jeeApi.php?api='.jeedom::getApiKey('wes').'%26type=wes%26id='.$cmd->getId().'%26value=$V'.$wesid);
-					$compteurId++;
-					$this->getUrl('program.cgi?PRG='.$compteurId.','.($wesid+500).',0,0,0,0,1,2,0,1,4,0000,0000,9,0');
-					$wesid = sprintf("%03d", $wesid);
-					$this->getUrl('program.cgi?RQT'.$compteurId.'='.$pathjeedom.'core/api/jeeApi.php?api='.jeedom::getApiKey('wes').'%26type=wes%26id='.$cmd->getId().'%26value=$V'.$wesid);
-					$compteurId++;
-				}elseif ($eqLogic->getConfiguration('type') == 'teleinfo') {
-					$url .= 'protect/settings/notif'.$wesid.'P.htm';
-					for ($compteur = 0; $compteur < 6; $compteur++) {
-						log::add(__CLASS__,'debug','Url '.$url);
-						$data = array('num'=>$compteur + ($wesid -1)*6,
-						'act'=>$compteur+3,
-						'serv'=>config::byKey('internalAddr'),
-						'port'=>80,
-						'url'=>'/jeedom/core/api/jeeApi.php?api='.jeedom::getApiKey('wes').'&type=wes&id='.substr($this->getLogicalId(), 0, strpos($this->getLogicalId(),"_")).'&message=data_change');
-						//					'url'=>'/jeedom/core/api/jeeApi.php?api='.jeedom::getApiKey('wes').'&type=wes_teleinfo&id='.$this->getId().'&message=data_change');
-
-						$options = array(
-							'http'=>array(
-								'header'=>"Content-type: application/x-www-form-urlencoded\r\n",
-								'method'=>'POST',
-								'content'=>http_build_query($data),
-							),
-						);
-						$context  = stream_context_create($options);
-						$result = @file_get_contents($url, false, $context);
-					}
-				}
 			}
 		}
 	}
@@ -586,7 +507,6 @@ class wesCmd extends cmd {
 				}
 			}
 			$this->setConfiguration('calcul', $calcul);
-
 			$this->setValue($value);
 		}
 	}
