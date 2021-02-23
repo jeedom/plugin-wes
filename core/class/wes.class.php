@@ -267,15 +267,12 @@ class wes extends eqLogic {
 					if ($param == 'usecustomcgx' && $type != 'general') {
 						$generalId = explode('_', $this->getLogicalId());
 						if (eqLogic::byId($generalId[0])->getConfiguration($param) != $value) {
-							$continue = true;
+							continue 2;
 						}
 					}
 					else if ($this->getConfiguration($param) != $value) {
-						$continue = true;
+						continue 2;
 					}
-				}
-				if ($continue) {
-					continue;
 				}
 			}
 			$cmd = $this->getCmd(null, $logicalId);
