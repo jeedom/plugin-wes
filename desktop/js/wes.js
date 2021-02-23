@@ -37,7 +37,7 @@ $(".wesTab").on('click',function(){
 
 $('.eqLogicAttr[data-l2key=usecustomcgx]').on('click', function(){
   if ($(this).is(':checked')) {
-    alert('{{N\'oubliez pas de cliquer sur le bouton "Envoyer fichier CGX" pour utiliser le fichier CGX personnalisé Jeedom et ainsi avoir accès à davantage de données.}}')
+    $('#div_alert').showAlert({message: '{{N\'oubliez pas de cliquer sur le bouton "Envoyer fichier CGX" pour utiliser le fichier CGX personnalisé Jeedom et ainsi avoir accès à davantage de données.}}', level: 'warning'});
   }
 })
 
@@ -65,6 +65,7 @@ $('.eqLogicAction[data-action=sendCGX]').on('click', function (){
 })
 
 $('#bt_goCarte').on('click', function() {
+  $.hideAlert()
   let ip = $('.eqLogicAttr[data-l2key=ip]').value()
   let username = $('.eqLogicAttr[data-l2key=username]').value()
   let password = $('.eqLogicAttr[data-l2key=password]').value()
