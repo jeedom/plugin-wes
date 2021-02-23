@@ -39,6 +39,9 @@ $('.eqLogicAttr[data-l2key=usecustomcgx]').on('click', function(){
   if ($(this).is(':checked')) {
     $('#div_alert').showAlert({message: '{{N\'oubliez pas de cliquer sur le bouton "Envoyer fichier CGX" pour utiliser le fichier CGX personnalisé Jeedom et ainsi avoir accès à davantage de données.}}', level: 'warning'});
   }
+  else {
+    $.hideAlert()
+  }
 })
 
 $('.eqLogicAction[data-action=sendCGX]').on('click', function (){
@@ -82,7 +85,6 @@ $('#bt_goCarte').on('click', function() {
 $('#in_searchWes').keyup(function() {
   var search = $(this).value()
   if (search == '') {
-    $("div.panel-title > .accordion-toggle[aria-expanded='true']").click()
     $('.eqLogicDisplayCard').show()
     return;
   }
