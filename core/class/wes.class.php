@@ -277,12 +277,12 @@ class wes extends eqLogic {
 			$cmd = $this->getCmd(null, $logicalId);
 			if (!is_object($cmd)) {
 				log::add(__CLASS__,'debug', $this->getHumanName() . __(' Création de la commande ', __FILE__) . $details['name'] . ' : ' .$logicalId);
-				$cmd = new wesCmd();
-				$cmd->setName($details['name']);
-				$cmd->setEqLogic_id($this->getId());
-				$cmd->setType($details['type']);
-				$cmd->setSubType($details['subtype']);
-				$cmd->setLogicalId($logicalId);
+				$cmd = (new wesCmd)
+				->setName($details['name'])
+				->setEqLogic_id($this->getId())
+				->setType($details['type'])
+				->setSubType($details['subtype'])
+				->setLogicalId($logicalId);
 				if (isset($details['visible'])){
 					$cmd->setIsVisible($details['visible']);
 				}
@@ -326,8 +326,7 @@ class wes extends eqLogic {
 			} else {
 				foreach (self::byType('wes') as $eqLogic) {
 					if ($eqLogic->getConfiguration('type') != "general" && substr($eqLogic->getLogicalId(), 0, strpos($eqLogic->getLogicalId(),"_")) == $this->getId() ) {
-						$eqLogic->setIsEnable(0);
-						$eqLogic->save();
+						$eqLogic->setIsEnable(0)->save();
 					}
 				}
 			}
@@ -337,7 +336,7 @@ class wes extends eqLogic {
 	public function postUpdate() {
 		if ($this->getConfiguration('type') == "general") {
 			if ($this->getConfiguration('ip', '') == '' || $this->getConfiguration('username', '') == '' || $this->getConfiguration('password', '') == '') {
-					throw new Exception(__('Veuillez renseigner les informations de connexion HTTP pour accéder au serveur Wes.',__FILE__));
+				throw new Exception(__('Veuillez renseigner les informations de connexion HTTP pour accéder au serveur Wes.',__FILE__));
 			}
 			foreach (self::getTypes() as $type=>$data){
 				if (!isset($data['ignoreCreation'])) {
@@ -345,16 +344,16 @@ class wes extends eqLogic {
 					while ($id <= $data['maxnumber']) {
 						if (!is_object(self::byLogicalId($this->getId().$data['logical'].$id, 'wes')) && $this->getConfiguration($type.$id, 1) == 1) {
 							log::add(__CLASS__,'debug', $this->getHumanName() . __(' Création de l\'équipement ', __FILE__) . $data['type'] . ' ' . $id . ' : ' . $this->getId() . $data['logical'] . $id);
-							$eqLogic = new wes();
-							$eqLogic->setEqType_name('wes');
-							$eqLogic->setLogicalId($this->getId().$data['logical'].$id);
-							$eqLogic->setName($data['type'] . ' ' . $id . ' (' . $this->getName() . ')');
-							$eqLogic->setConfiguration('type', $type);
-							$eqLogic->setConfiguration('ip', $this->getConfiguration('ip', ''));
-							$eqLogic->setConfiguration('username', $this->getConfiguration('username', ''));
-							$eqLogic->setConfiguration('password', $this->getConfiguration('password', ''));
-							$eqLogic->setConfiguration('port', $this->getConfiguration('port', ''));
-							$eqLogic->setCategory($data['category'], 1);
+							$eqLogic = (new wes)
+							->setEqType_name('wes')
+							->setLogicalId($this->getId().$data['logical'].$id)
+							->setName($data['type'] . ' ' . $id . ' (' . $this->getName() . ')')
+							->setConfiguration('type', $type)
+							->setConfiguration('ip', $this->getConfiguration('ip'))
+							->setConfiguration('username', $this->getConfiguration('username'))
+							->setConfiguration('password', $this->getConfiguration('password'))
+							->setConfiguration('port', $this->getConfiguration('port', ''))
+							->setCategory($data['category'], 1);
 							$eqLogic->setDisplay('width', $data['width']);
 							$eqLogic->setDisplay('height', $data['height']);
 							$eqLogic->save();
