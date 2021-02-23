@@ -147,6 +147,39 @@ class wes extends eqLogic {
 		);
 		return $types;
 	}
+	
+	public static function deamon_info() {
+		$return = array();
+		$return['log'] = '';
+		$return['state'] = 'nok';
+		$cron = cron::byClassAndFunction('wes', 'daemon');
+		if (is_object($cron) && $cron->running()) {
+			$return['state'] = 'ok';
+		}
+		$return['launchable'] = 'ok';
+		return $return;
+	}
+
+	public static function deamon_start() {
+		self::deamon_stop();
+		$deamon_info = self::deamon_info();
+		if ($deamon_info['launchable'] != 'ok') {
+			throw new Exception(__('Veuillez vérifier la configuration', __FILE__));
+		}
+		$cron = cron::byClassAndFunction('wes', 'daemon');
+		if (!is_object($cron)) {
+			throw new Exception(__('Tache cron introuvable', __FILE__));
+		}
+		$cron->run();
+	}
+
+	public static function deamon_stop() {
+		$cron = cron::byClassAndFunction('wes', 'daemon');
+		if (!is_object($cron)) {
+			throw new Exception(__('Tache cron introuvable', __FILE__));
+		}
+		$cron->halt();
+	}
 
 	public static function daemon() {
 		$starttime = microtime (true);
@@ -161,50 +194,6 @@ class wes extends eqLogic {
 		if ($endtime - $starttime < config::byKey('temporisation_lecture', 'wes', 60, true)) {
 			usleep(floor((config::byKey('temporisation_lecture', 'wes') + $starttime - $endtime)*1000000));
 		}
-	}
-
-	public static function deamon_info() {
-		$return = array();
-		$return['log'] = '';
-		$return['state'] = 'nok';
-		$cron = cron::byClassAndFunction('wes', 'daemon');
-		if (is_object($cron) && $cron->running()) {
-			$return['state'] = 'ok';
-		}
-		$return['launchable'] = 'ok';
-		return $return;
-	}
-
-	public static function deamon_start($_debug = false) {
-		self::deamon_stop();
-		$deamon_info = self::deamon_info();
-		if ($deamon_info['launchable'] != 'ok') {
-			throw new Exception(__('Veuillez vérifier la configuration', __FILE__));
-		}
-		$cron = cron::byClassAndFunction('wes', 'daemon');
-		if (!is_object($cron)) {
-			throw new Exception(__('Tâche cron introuvable', __FILE__));
-		}
-		log::add(__CLASS__,'debug','Launching Daemon');
-		$cron->run();
-	}
-
-	public static function deamon_stop() {
-		$cron = cron::byClassAndFunction('wes', 'daemon');
-		if (!is_object($cron)) {
-			throw new Exception(__('Tâche cron introuvable', __FILE__));
-		}
-		log::add(__CLASS__,'debug','Stopping Daemon');
-		$cron->halt();
-	}
-
-	public static function deamon_changeAutoMode($_mode) {
-		$cron = cron::byClassAndFunction('wes', 'daemon');
-		if (!is_object($cron)) {
-			throw new Exception(__('Tâche cron introuvable', __FILE__));
-		}
-		$cron->setEnable($_mode);
-		$cron->save();
 	}
 
 	public function sendFtp() {
@@ -268,17 +257,6 @@ class wes extends eqLogic {
 			}
 			else {
 				throw new Exception(__('Veuillez renseigner les informations de connexion FTP pour utiliser le fichier CGX personnalisé.',__FILE__));
-			}
-		}
-		if ($this->getIsEnable() && $this->getConfiguration('type') == "general" && $this->getConfiguration('ip') != '' && $this->getConfiguration('username') != '' && $this->getConfiguration('password') != '') {
-			log::add(__CLASS__,'debug', $this->getHumanName() . __(' Vérification de la communication avec le serveur Wes', __FILE__));
-			$file = 'data.cgx';
-			if ($this->getConfiguration('usecustomcgx',0) == 1) {
-				$file = 'data_jeedom.cgx';
-			}
-			$this->xmlstatus = simplexml_load_string($this->getUrl($file));
-			if ($this->xmlstatus === false){
-				throw new Exception(__('Le serveur Wes n\'est pas joignable.',__FILE__));
 			}
 		}
 	}
