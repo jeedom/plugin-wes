@@ -8,7 +8,7 @@ $eqLogics = eqLogic::byType($plugin->getId());
 $typeArray = wes::getTypes();
 $typeid = array();
 foreach ($typeArray as $type => $data) {
-	$typeid[] = $type;
+	$typeid[$type] = $data['HTM'];
 }
 sendVarToJS('typeid', $typeid);
 ?>
@@ -88,7 +88,7 @@ if (count($eqLogics) == 0) {
 			if (file_exists(dirname(__FILE__) . '/../../core/config/'.$type.'.png')) {
 				$img = 'plugins/wes/core/config/'.$type.'.png';
 			}
-			echo '<img src="'.$img.'" width="30px"/> ' . $typeArray[$type]['name'] . ' <sub>('.count($activeChildEqLogics[$generalEqLogic->getId()][$type]).'{{/}}'.count($childEqLogic).')</sub>';
+			echo '<img src="'.$img.'" width="30px"/> ' . $typeArray[$type]['name'] . ' <sub>('.count($activeChildEqLogics[$generalEqLogic->getId()][$type]).'/'.count($childEqLogic).')</sub>';
 			echo '</div>';
 			echo '</div>';
 			echo '<div id="wes_'.$type.$generalEqLogic->getId().'" class="panel-collapse collapse">';
@@ -117,9 +117,9 @@ if (count($eqLogics) == 0) {
 <div class="col-lg-12 eqLogic" style="display: none;">
 	<div class="input-group pull-right" style="display:inline-flex">
 		<span class="input-group-btn">
-			<a class="btn btn-default btn-sm eqLogicAction roundedLeft" data-action="configure"><i class="fa fa-cogs"></i> {{Configuration avancée}}
-			<a class="btn btn-default btn-sm eqLogicAction" data-action="copy"><i class="fas fa-copy"></i> {{Dupliquer}}
-			</a></a><a class="btn btn-primary btn-sm eqLogicAction showgeneral" id="bt_goCarte"><i class="far fa-window-restore"></i> {{Interface Wes}}
+			<a class="btn btn-primary btn-sm eqLogicAction roundedLeft" id="bt_goCarte"><i class="far fa-window-restore"></i> {{Interface Wes}}
+			</a><a class="btn btn-default btn-sm eqLogicAction" data-action="configure"><i class="fa fa-cogs"></i> {{Configuration avancée}}
+			</a><a class="btn btn-default btn-sm eqLogicAction" data-action="copy"><i class="fas fa-copy"></i> {{Dupliquer}}
 			</a><a class="btn btn-sm btn-success eqLogicAction" data-action="save"><i class="fas fa-check-circle"></i> {{Sauvegarder}}
 			</a><a class="btn btn-danger btn-sm eqLogicAction roundedRight" data-action="remove"><i class="fas fa-minus-circle"></i> {{Supprimer}}</a>
 		</span>
@@ -199,7 +199,7 @@ if (count($eqLogics) == 0) {
 						</div>
 						<div class="form-group showgeneral" style="display: none;" data-cmd_id="username">
 							<label class="col-sm-3 control-label">{{Identifiant HTTP}}
-								<sup><i class="fas fa-question-circle tooltips" title="{{Renseigner l'identifiant du compte pour l'accès HTTP. Permet de communiquer avec le Wes}}"></i></sup>
+								<sup><i class="fas fa-question-circle tooltips" title="{{Renseigner l'identifiant du compte pour l'accès HTTP. Permet de communiquer avec le serveur Wes}}"></i></sup>
 							</label>
 							<div class="col-sm-7">
 								<input type="text" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="username" data-cmd_id="username"/>
@@ -207,7 +207,7 @@ if (count($eqLogics) == 0) {
 						</div>
 						<div class="form-group showgeneral" style="display: none;" data-cmd_id="password">
 							<label class="col-sm-3 control-label">{{Mot de passe HTTP}}
-								<sup><i class="fas fa-question-circle tooltips" title="{{Renseigner le mot de passe du compte pour l'accès HTTP. Permet de communiquer avec le Wes}}"></i></sup>
+								<sup><i class="fas fa-question-circle tooltips" title="{{Renseigner le mot de passe du compte pour l'accès HTTP. Permet de communiquer avec le serveur Wes}}"></i></sup>
 							</label>
 							<div class="col-sm-7">
 								<input type="password" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="password" data-cmd_id="password"/>
@@ -215,7 +215,7 @@ if (count($eqLogics) == 0) {
 						</div>
 						<div class="form-group showgeneral" style="display: none;" data-cmd_id="ftpusername">
 							<label class="col-sm-3 control-label">{{Identifiant FTP}}
-								<sup><i class="fas fa-question-circle tooltips" title="{{Renseigner l'identifiant du compte pour l'accès FTP. Permet l'envoi du fichier CGX sur le Wes}}"></i></sup>
+								<sup><i class="fas fa-question-circle tooltips" title="{{Renseigner l'identifiant du compte pour l'accès FTP. Permet l'envoi du fichier CGX sur le serveur Wes}}"></i></sup>
 							</label>
 							<div class="col-sm-7">
 								<input type="text" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="ftpusername" data-cmd_id="ftpusername"/>
@@ -223,7 +223,7 @@ if (count($eqLogics) == 0) {
 						</div>
 						<div class="form-group showgeneral" style="display: none;" data-cmd_id="ftppassword">
 							<label class="col-sm-3 control-label">{{Mot de passe FTP}}
-								<sup><i class="fas fa-question-circle tooltips" title="{{Renseigner le mot de passe du compte pour l'accès FTP. Permet l'envoi du fichier CGX sur le Wes}}"></i></sup>
+								<sup><i class="fas fa-question-circle tooltips" title="{{Renseigner le mot de passe du compte pour l'accès FTP. Permet l'envoi du fichier CGX sur le serveur Wes}}"></i></sup>
 							</label>
 							<div class="col-sm-7">
 								<input type="password" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="ftppassword" data-cmd_id="ftppassword"/>

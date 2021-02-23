@@ -134,20 +134,20 @@ class wes extends eqLogic {
 
 	public function getTypes() {
 		$types = array(
-			"general"=>array("name"=>__("Serveur Wes", __FILE__), "category"=>"energy", "width"=>"192px", "height"=>"212px", "ignoreCreation"=>1),
-			"analogique"=>array("name"=>__("Capteurs", __FILE__), "logical"=>"_N", "category"=>"automatism", "width"=>"112px", "height"=>"152px", "xpath"=>"//analogique/AD#id#", "maxnumber"=>4, "type"=>__("Tension", __FILE__)),
-			"compteur"=>array("name"=>__("Compteurs impulsions", __FILE__), "logical"=>"_C", "width"=>"272px", "height"=>"332px", "category"=>"energy", "xpath"=>"//impulsion/INDEX#id#", "maxnumber"=>6, "type"=>__("Compteur", __FILE__)),
-			"bouton"=>array("name"=>__("Entrées", __FILE__), "logical"=>"_B", "category"=>"automatism", "width"=>"112px", "height"=>"152px", "xpath"=>"//entree/ENTREE#id#", "maxnumber"=>2, "type"=>__("Entrée", __FILE__)),
-			"pince"=>array("name"=>__("Pinces ampèremétriques", __FILE__), "logical"=>"_P", "width"=>"392px", "height"=>"272px", "category"=>"energy", "xpath"=>"//pince/I#id#","maxnumber"=>4, "type"=>__("Pince", __FILE__)),
-			"relai"=>array("name"=>__("Relais", __FILE__), "logical"=>"_R", "category"=>"automatism", "width"=>"112px", "height"=>"152px", "xpath"=>"//relais/RELAIS#id#","maxnumber"=>2, "type"=>__("Relais", __FILE__)),
-			"switch"=>array("name"=>__("Switchs virtuels", __FILE__), "logical"=>"_S", "category"=>"automatism", "width"=>"112px", "height"=>"152px", "xpath"=>"//switch_virtuel/SWITCH#id#", "maxnumber"=>24, "type"=>__("Switch", __FILE__)),
-			"teleinfo"=>array("name"=>__("Téléinfo", __FILE__), "logical"=>"_T", "width"=>"272px", "height"=>"492px", "category"=>"energy", "xpath"=>"//tic#id#/ADCO", "maxnumber"=>3, "type"=>__("TIC", __FILE__)),
-			"temperature"=>array("name"=>__("Températures", __FILE__), "logical"=>"_A", "category"=>"heating", "width"=>"112px", "height"=>"152px", "xpath"=>"//temp/SONDE#id#", "maxnumber"=>30, "type"=>__("Sonde", __FILE__)),
-			"variable"=>array("name"=>__("Variables", __FILE__), "logical"=>"_V", "category"=>"automatism", "width"=>"112px", "height"=>"152px", "xpath"=>"//variables/VARIABLE#id#", "maxnumber"=>8, "type"=>__("Variable", __FILE__)),
+			"general"=>array("name"=>__("Serveur Wes", __FILE__), "category"=>"energy", "width"=>"192px", "height"=>"212px", "HTM"=>"", "ignoreCreation"=>1),
+			"analogique"=>array("name"=>__("Capteurs", __FILE__), "logical"=>"_N", "HTM"=>"RELAIS.HTM", "category"=>"automatism", "width"=>"112px", "height"=>"152px", "xpath"=>"//analogique/AD#id#", "maxnumber"=>4, "type"=>__("Tension", __FILE__)),
+			"compteur"=>array("name"=>__("Compteurs impulsions", __FILE__), "logical"=>"_C", "HTM"=>"PULSES.HTM", "width"=>"272px", "height"=>"332px", "category"=>"energy", "xpath"=>"//impulsion/INDEX#id#", "maxnumber"=>6, "type"=>__("Compteur", __FILE__)),
+			"bouton"=>array("name"=>__("Entrées", __FILE__), "logical"=>"_B", "HTM"=>"RELAIS.HTM", "category"=>"automatism", "width"=>"112px", "height"=>"152px", "xpath"=>"//entree/ENTREE#id#", "maxnumber"=>2, "type"=>__("Entrée", __FILE__)),
+			"pince"=>array("name"=>__("Pinces ampèremétriques", __FILE__), "logical"=>"_P", "HTM"=>"PCEVAL.HTM", "width"=>"392px", "height"=>"272px", "category"=>"energy", "xpath"=>"//pince/I#id#","maxnumber"=>4, "type"=>__("Pince", __FILE__)),
+			"relai"=>array("name"=>__("Relais", __FILE__), "logical"=>"_R", "HTM"=>"RELAIS.HTM", "category"=>"automatism", "width"=>"112px", "height"=>"152px", "xpath"=>"//relais/RELAIS#id#","maxnumber"=>2, "type"=>__("Relais", __FILE__)),
+			"switch"=>array("name"=>__("Switchs virtuels", __FILE__), "logical"=>"_S", "HTM"=>"RELAIS.HTM", "category"=>"automatism", "width"=>"112px", "height"=>"152px", "xpath"=>"//switch_virtuel/SWITCH#id#", "maxnumber"=>24, "type"=>__("Switch", __FILE__)),
+			"teleinfo"=>array("name"=>__("Téléinfo", __FILE__), "logical"=>"_T", "HTM"=>"TICVAL.HTM", "width"=>"272px", "height"=>"492px", "category"=>"energy", "xpath"=>"//tic#id#/ADCO", "maxnumber"=>3, "type"=>__("TIC", __FILE__)),
+			"temperature"=>array("name"=>__("Températures", __FILE__), "logical"=>"_A", "HTM"=>"TMP.HTM", "category"=>"heating", "width"=>"112px", "height"=>"152px", "xpath"=>"//temp/SONDE#id#", "maxnumber"=>30, "type"=>__("Sonde", __FILE__)),
+			"variable"=>array("name"=>__("Variables", __FILE__), "logical"=>"_V", "HTM"=>"", "category"=>"automatism", "width"=>"112px", "height"=>"152px", "xpath"=>"//variables/VARIABLE#id#", "maxnumber"=>8, "type"=>__("Variable", __FILE__)),
 		);
 		return $types;
 	}
-	
+
 	public static function deamon_info() {
 		$return = array();
 		$return['log'] = '';
@@ -331,7 +331,7 @@ class wes extends eqLogic {
 				$cmd->save();
 			}
 		}
-		
+
 		if ($type == "general") {
 			if ($this->getIsEnable()) {
 				if ($this->getConfiguration('ip','') != '' && $this->getConfiguration('username','') != '' && $this->getConfiguration('password','') != '') {
@@ -350,7 +350,7 @@ class wes extends eqLogic {
 	}
 
 	public function postUpdate() {
-		if ($this->getIsEnable() && $this->getConfiguration('type') == "general") {
+		if ($this->getConfiguration('type') == "general") {
 			foreach (self::getTypes() as $type=>$data){
 				if (!isset($data['ignoreCreation'])) {
 					$id = 1;
@@ -362,6 +362,10 @@ class wes extends eqLogic {
 							$eqLogic->setLogicalId($this->getId().$data['logical'].$id);
 							$eqLogic->setName($data['type'] . ' ' . $id . ' (' . $this->getName() . ')');
 							$eqLogic->setConfiguration('type', $type);
+							$eqLogic->setConfiguration('ip', $this->getConfiguration('ip', ''));
+							$eqLogic->setConfiguration('username', $this->getConfiguration('username', ''));
+							$eqLogic->setConfiguration('password', $this->getConfiguration('password', ''));
+							$eqLogic->setConfiguration('port', $this->getConfiguration('port', ''));
 							$eqLogic->setCategory($data['category'], 1);
 							$eqLogic->setDisplay('width', $data['width']);
 							$eqLogic->setDisplay('height', $data['height']);

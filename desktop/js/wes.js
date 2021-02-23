@@ -14,6 +14,70 @@
 * along with Jeedom. If not, see <http://www.gnu.org/licenses/>.
 */
 
+$('.eqLogicAttr[data-l1key=configuration][data-l2key=type]').on('change',function(){
+  type = $(this).value()
+  if (type != '') {
+    for (var i in typeid) {
+      if (type == i){
+        $('.show'+i).show();
+      } else {
+        $('.show'+i).hide();
+      }
+    }
+  }
+});
+
+$(".wesTab").on('click',function(){
+  setTimeout(function(){
+    $('.packery').packery({
+      itemSelector: ".eqLogicDisplayCard"
+    });
+  },50);
+});
+
+$('.eqLogicAttr[data-l2key=usecustomcgx]').on('click', function(){
+  if ($(this).is(':checked')) {
+    alert('{{N\'oubliez pas de cliquer sur le bouton "Envoyer fichier CGX" pour utiliser le fichier CGX personnalisé Jeedom et ainsi avoir accès à davantage de données.}}')
+  }
+})
+
+$('.eqLogicAction[data-action=sendCGX]').on('click', function (){
+  $.ajax({
+    type: "POST",
+    url: "plugins/wes/core/ajax/wes.ajax.php",
+    data: {
+      eqLogicId: $('.eqLogicAttr[data-l1key=id]').value(),
+      action: "sendCGX",
+    },
+    dataType: 'json',
+    global: false,
+    error: function (request, status, error) {
+      handleAjaxError(request, status, error);
+    },
+    success: function (data) {
+      if (data.state != 'ok') {
+        $('#div_alert').showAlert({message: data.result, level: 'danger'});
+        return;
+      }
+      $('#div_alert').showAlert({message: '{{Fichier CGX envoyé avec succès.}}', level: 'success'});
+    }
+  });
+})
+
+$('#bt_goCarte').on('click', function() {
+  let ip = $('.eqLogicAttr[data-l2key=ip]').value()
+  let username = $('.eqLogicAttr[data-l2key=username]').value()
+  let password = $('.eqLogicAttr[data-l2key=password]').value()
+  let port = ($('.eqLogicAttr[data-l2key=port]').value() != '') ? ':'+$('.eqLogicAttr[data-l2key=port]').value() : ''
+
+  if (ip != '' && username != '' && password != '') {
+    window.open('http://'+username+':'+password+'@'+ip+port+'/'+typeid[$('.eqLogicAttr[data-l1key=configuration][data-l2key=type]').value()])
+  }
+  else {
+    $('#div_alert').showAlert({message: '{{Veuillez renseigner les informations de connexion HTTP pour accéder à l\'interface du serveur Wes.}}', level: 'danger'});
+  }
+});
+
 $('#in_searchWes').keyup(function() {
   var search = $(this).value()
   if (search == '') {
@@ -46,53 +110,6 @@ $('#bt_closeAllWes').off('click').on('click', function() {
 $('#bt_resetWesSearch').off('click').on('click', function() {
   $('#in_searchWes').val('').keyup()
 })
-
-$('.eqLogicAction[data-action=sendCGX]').on('click', function (){
-    $.ajax({
-    type: "POST",
-    url: "plugins/wes/core/ajax/wes.ajax.php",
-    data: {
-      eqLogicId: $('.eqLogicAttr[data-l1key=id]').value(),
-      action: "sendCGX",
-    },
-    dataType: 'json',
-    global: false,
-    error: function (request, status, error) {
-      handleAjaxError(request, status, error);
-    },
-    success: function (data) {
-      if (data.state != 'ok') {
-        $('#div_alert').showAlert({message: data.result, level: 'danger'});
-        return;
-      }
-      $('#div_alert').showAlert({message: '{{Fichier CGX envoyé avec succès.}}', level: 'success'});
-    }
-  });
-})
-
-$(".wesTab").on('click',function(){
-  setTimeout(function(){
-    $('.packery').packery({
-      itemSelector: ".eqLogicDisplayCard"
-    });
-  },50);
-});
-
-$('#bt_goCarte').on('click', function() {
-  window.open('http://'+$('.eqLogicAttr[data-l2key=username]').value()+':'+$('.eqLogicAttr[data-l2key=password]').value()+'@'+$('.eqLogicAttr[data-l2key=ip]').value()+':'+$('.eqLogicAttr[data-l2key=port]').value()+'/');
-});
-
-$('.eqLogicAttr[data-l1key=configuration][data-l2key=type]').on('change',function(){
-  type = $(this).value()
-  for (var i in typeid) {
-    if (type == typeid[i]){
-      $('.show'+typeid[i]).show();
-    } else {
-      $('.show'+typeid[i]).hide();
-    }
-  }
-  $('#img_device').attr("src", 'plugins/wes/core/config/'+type+'.png')
-});
 
 $("#table_cmd").sortable({axis: "y", cursor: "move", items: ".cmd", placeholder: "ui-state-highlight", tolerance: "intersect", forcePlaceholderSize: true});
 
