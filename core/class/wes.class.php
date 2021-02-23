@@ -262,7 +262,6 @@ class wes extends eqLogic {
 		$type = $this->getConfiguration('type');
 		foreach($this->getListeCommandes()[$type] as $logicalId=>$details) {
 			if (isset($details['filter'])) {
-				$continue = false;
 				foreach ($details['filter'] as $param=>$value) {
 					if ($param == 'usecustomcgx' && $type != 'general') {
 						$generalId = explode('_', $this->getLogicalId());
