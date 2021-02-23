@@ -115,9 +115,8 @@ if (count($eqLogics) == 0) {
 	<div class="input-group pull-right" style="display:inline-flex">
 		<span class="input-group-btn">
 			<a class="btn btn-default btn-sm eqLogicAction roundedLeft" data-action="configure"><i class="fa fa-cogs"></i> {{Configuration avancée}}
-			</a><a class="btn btn-primary btn-sm eqLogicAction showgeneral" id="bt_goCarte"><i class="far fa-window-restore"></i> {{Interface Wes}}
-			</a><a class="btn btn-info btn-sm eqLogicAction showgeneral" id="bt_configPush"><i class="fa fa-wrench"></i> {{Configuration Push}}
-			</a><a class="btn btn-default btn-sm eqLogicAction" data-action="copy"><i class="fas fa-copy"></i> {{Dupliquer}}
+			<a class="btn btn-default btn-sm eqLogicAction" data-action="copy"><i class="fas fa-copy"></i> {{Dupliquer}}
+			</a></a><a class="btn btn-primary btn-sm eqLogicAction showgeneral" id="bt_goCarte"><i class="far fa-window-restore"></i> {{Interface Wes}}
 			</a><a class="btn btn-sm btn-success eqLogicAction" data-action="save"><i class="fas fa-check-circle"></i> {{Sauvegarder}}
 			</a><a class="btn btn-danger btn-sm eqLogicAction roundedRight" data-action="remove"><i class="fas fa-minus-circle"></i> {{Supprimer}}</a>
 		</span>
@@ -229,10 +228,11 @@ if (count($eqLogics) == 0) {
 						</div>
 						<div class="form-group showgeneral" style="display: none;" data-cmd_id="usecustomcgx">
 							<label class="col-sm-3 control-label" >{{Fichier CGX Jeedom}}
-								<sup><i class="fas fa-question-circle tooltips" title="{{Cocher la case pour autoriser l'envoi du fichier CGX spécialement conçu pour le plugin afin de récupérer davantage de données}}"></i></sup>
+								<sup><i class="fas fa-question-circle tooltips" title="{{Cocher la case pour utiliser le fichier CGX spécialement conçu pour le plugin afin de récupérer davantage de données}}"></i></sup>
 							</label>
 							<div class="col-sm-7">
 								<input type="checkbox" class="eqLogicAttr" data-label-text="{{Activer}}" data-l1key="configuration" data-l2key="usecustomcgx"/>
+								<a class="btn btn-primary btn-sm eqLogicAction tooltips" data-action="sendCGX" title="{{Cliquer sur le bouton pour envoyer le fichier CGX sur le serveur Wes}}"><i class="fas fa-file-export"></i> {{Envoyer fichier CGX}}</a>
 							</div>
 						</div>
 						<div class="form-group showteleinfo" style="display: none;" data-cmd_id="tarification">

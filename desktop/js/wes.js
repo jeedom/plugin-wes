@@ -47,6 +47,56 @@ $('#bt_resetWesSearch').off('click').on('click', function() {
   $('#in_searchWes').val('').keyup()
 })
 
+$('.eqLogicAction[data-action=sendCGX]').on('click', function (){
+    $.ajax({
+    type: "POST",
+    url: "plugins/wes/core/ajax/wes.ajax.php",
+    data: {
+      eqLogicId: $('.eqLogicAttr[data-l1key=id]').value(),
+      action: "sendCGX",
+    },
+    dataType: 'json',
+    global: false,
+    error: function (request, status, error) {
+      handleAjaxError(request, status, error);
+    },
+    success: function (data) {
+      console.log(data)
+      if (data.state != 'ok') {
+        $('#div_alert').showAlert({message: data.result, level: 'danger'});
+        return;
+      }
+      $('#div_alert').showAlert({message: '{{Fichier CGX envoyé avec succès.}}', level: 'success'});
+    }
+  });
+})
+
+$(".wesTab").on('click',function(){
+  setTimeout(function(){
+    $('.packery').packery({
+      itemSelector: ".eqLogicDisplayCard"
+    });
+  },50);
+});
+
+$('#bt_goCarte').on('click', function() {
+  window.open('http://'+$('.eqLogicAttr[data-l2key=username]').value()+':'+$('.eqLogicAttr[data-l2key=password]').value()+'@'+$('.eqLogicAttr[data-l2key=ip]').value()+':'+$('.eqLogicAttr[data-l2key=port]').value()+'/');
+});
+
+$('.eqLogicAttr[data-l1key=configuration][data-l2key=type]').on('change',function(){
+  type = $(this).value()
+  for (var i in typeid) {
+    if (type == typeid[i]){
+      $('.show'+typeid[i]).show();
+    } else {
+      $('.show'+typeid[i]).hide();
+    }
+  }
+  $('#img_device').attr("src", 'plugins/wes/core/config/'+type+'.png')
+});
+
+$("#table_cmd").sortable({axis: "y", cursor: "move", items: ".cmd", placeholder: "ui-state-highlight", tolerance: "intersect", forcePlaceholderSize: true});
+
 function addCmdToTable(_cmd) {
   if (!isset(_cmd)) {
     var _cmd = {configuration: {}};
@@ -108,119 +158,3 @@ function addCmdToTable(_cmd) {
     }
   });
 }
-
-$(".wesTab").on('click',function(){
-  setTimeout(function(){
-    $('.packery').packery({
-      itemSelector: ".eqLogicDisplayCard"
-    });
-  },50);
-});
-
-$('#bt_configPush').on('click', function() {
-  $('#md_modal').dialog({title: "{{Configurer la Wes pour avoir le retour des etats}}"});
-  $('#md_modal').load('index.php?v=d&plugin=wes&modal=wes.configpush&id=' + $('.eqLogicAttr[data-l1key=id]').value()).dialog('open');
-});
-
-$('#bt_goCarte').on('click', function() {
-  // $('#md_modal').dialog({title: "{{Accèder à l'interface de la Wes}}"});
-  window.open('http://'+$('.eqLogicAttr[data-l2key=username]').value()+':'+$('.eqLogicAttr[data-l2key=password]').value()+'@'+$('.eqLogicAttr[data-l2key=ip]').value()+':'+$('.eqLogicAttr[data-l2key=port]').value()+'/');
-});
-
-// $('.eqLogicAction[data-action=hide]').on('click', function () {
-//   var eqLogic_id = $(this).attr('data-eqLogic_id');
-//   $('.sub-nav-list').each(function () {
-//     if ( $(this).attr('data-eqLogic_id') == eqLogic_id ) {
-//       $(this).toggle();
-//     }
-//   });
-//   return false;
-// });
-
-function prePrintEqLogic() {
-  $('.eqLogic').hide();
-}
-
-$('.eqLogicAttr[data-l1key=configuration][data-l2key=type]').on('change',function(){
-  type = $(this).value()
-  for (var i in typeid) {
-    if (type == typeid[i]){
-      $('.show'+typeid[i]).show();
-    } else {
-      $('.show'+typeid[i]).hide();
-    }
-  }
-  $('#img_device').attr("src", 'plugins/wes/core/config/'+type+'.png')
-});
-
-$('body').delegate('.cmd .cmdAction[data-action=urlpush]', 'click', function (event) {
-  $.hideAlert();
-  var id = $(this).closest('.cmd').attr('data-cmd_id');
-  $.ajax({// fonction permettant de faire de l'ajax
-    type: "POST", // methode de transmission des données au fichier php
-    url: "plugins/wes/core/ajax/wes.ajax.php", // url du fichier php
-    data: {
-      action: "getUrlPush",
-      id:  $(this).closest('.cmd').attr('data-cmd_id'),
-    },
-    dataType: 'json',
-    error: function(request, status, error) {
-      handleAjaxError(request, status, $('#div_alert'));
-    },
-    success: function(data) { // si l'appel a bien fonctionné
-      if (data.state != 'ok') {
-        $('#div_alert').showAlert({message: data.result, level: 'danger'});
-      } else {
-        $('#div_alert').showAlert({message: data.result, level: 'success'});
-      }
-      return;
-    }
-  });});
-
-  $('#bt_CheckAll').on('click', function() {
-    $('.configPusheqLogic').not(':checked').each(function() {
-      $(this).prop('checked', true);
-    }
-  );
-});
-
-$('#bt_UnCheckAll').on('click', function() {
-  $('.configPusheqLogic:checked').each(function() {
-    $(this).prop('checked', false);
-  }
-);
-});
-
-$('#bt_ApplyconfigPush').on('click', function() {
-  var list_object = [];
-  $('.configPusheqLogic:checked').each(function() {
-    list_object.push($(this).attr('data-configPusheqLogic_id'));
-  }
-);
-console.log('EQ > '+JSON.stringify(list_object));
-console.log('ID > '+eqLogicIdGlobal);
-
-$.ajax({// fonction permettant de faire de l'ajax
-  type: "POST", // methode de transmission des données au fichier php
-  url: "plugins/wes/core/ajax/wes.ajax.php", // url du fichier php
-  data: {
-    action: "configPush",
-    id: eqLogicIdGlobal,
-    eqLogicPush_id: list_object.join(",")
-  },
-  dataType: 'json',
-  error: function(request, status, error) {
-    handleAjaxError(request, status, $('#div_configurePush'));
-  },
-  success: function(data) { // si l'appel a bien fonctionné
-    if (data.state != 'ok') {
-      $('#div_configurePush').showAlert({message: data.result, level: 'danger'});
-    } else {
-      $('#div_configurePush').showAlert({message: '{{Application de la configuration Push correcte}}', level: 'success'});
-    }
-    return;
-  }
-});
-});
-
-$("#table_cmd").sortable({axis: "y", cursor: "move", items: ".cmd", placeholder: "ui-state-highlight", tolerance: "intersect", forcePlaceholderSize: true});
