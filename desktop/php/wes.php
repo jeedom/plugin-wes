@@ -46,9 +46,10 @@ if (count($eqLogics) == 0) {
 	echo '</div>';
 	echo '</div>';
 	echo '<div class="panel-group">';
-	$img = $plugin->getPathImgIcon();
 	$generalEqLogics = array();
 	$childEqLogics = array();
+	$activeChildEqLogics = array();
+
 	foreach ($eqLogics as $eqLogic) {
 		if ($eqLogic->getConfiguration('type') == 'general') {
 			array_push($generalEqLogics, $eqLogic);
@@ -56,6 +57,10 @@ if (count($eqLogics) == 0) {
 		else {
 			$generalId = explode('_', $eqLogic->getLogicalId());
 			$childEqLogics[$generalId[0]][$eqLogic->getConfiguration('type')][] = $eqLogic;
+
+			if ($eqLogic->getIsEnable()) {
+				$activeChildEqLogics[$generalId[0]][$eqLogic->getConfiguration('type')][] = '';
+			}
 		}
 	}
 
@@ -64,6 +69,7 @@ if (count($eqLogics) == 0) {
 		echo '<div class="eqLogicThumbnailContainer" style="width:130px;">';
 		$opacity = ($generalEqLogic->getIsEnable()) ? '' : 'disableCard';
 		echo '<div class="eqLogicDisplayCard cursor '.$opacity.'" data-eqLogic_id="' . $generalEqLogic->getId() . '">';
+		$img = $plugin->getPathImgIcon();
 		if (file_exists(dirname(__FILE__) . '/../../core/config/general.png')) {
 			$img = 'plugins/wes/core/config/general.png';
 		}
@@ -74,15 +80,15 @@ if (count($eqLogics) == 0) {
 
 		echo '<div class="col-sm-12" style="margin-bottom:20px;">';
 		foreach ($childEqLogics[$generalEqLogic->getId()] as $type => $childEqLogic) {
-			$countChildEqLogics = count($childEqLogic);
 			echo '<div class="panel panel-default" style="margin-bottom:0!important;">';
 			echo '<div class="panel-heading">';
 			echo '<div class="panel-title">';
 			echo '<a class="accordion-toggle wesTab" data-toggle="collapse" data-parent="" aria-expanded="false" href="#wes_'.$type.$generalEqLogic->getId().'">';
+			$img = $plugin->getPathImgIcon();
 			if (file_exists(dirname(__FILE__) . '/../../core/config/'.$type.'.png')) {
 				$img = 'plugins/wes/core/config/'.$type.'.png';
 			}
-			echo '<img src="'.$img.'" width="30px"/> ' . $typeArray[$type]['name'] . ' <sub>('.$countChildEqLogics.')</sub>';
+			echo '<img src="'.$img.'" width="30px"/> ' . $typeArray[$type]['name'] . ' <sub>('.count($activeChildEqLogics[$generalEqLogic->getId()][$type]).'{{/}}'.count($childEqLogic).')</sub>';
 			echo '</div>';
 			echo '</div>';
 			echo '<div id="wes_'.$type.$generalEqLogic->getId().'" class="panel-collapse collapse">';
@@ -91,9 +97,6 @@ if (count($eqLogics) == 0) {
 			foreach ($childEqLogic as $eqLogic) {
 				$opacity = ($eqLogic->getIsEnable()) ? '' : 'disableCard';
 				echo '<div class="eqLogicDisplayCard cursor '.$opacity.'" data-eqLogic_id="' . $eqLogic->getId() . '">';
-				if (file_exists(dirname(__FILE__) . '/../../core/config/'.$type.'.png')) {
-					$img = 'plugins/wes/core/config/'.$type.'.png';
-				}
 				echo '<img src="' . $img . '"/>';
 				echo '<span class="name">' . $eqLogic->getHumanName(true, true) . '</span>';
 				echo '</div>';
