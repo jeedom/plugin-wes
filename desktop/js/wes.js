@@ -44,12 +44,15 @@ $('.eqLogicAttr[data-l2key=usecustomcgx]').on('click', function(){
   }
 })
 
-$('.eqLogicAction[data-action=sendCGX]').on('click', function (){
+$('.eqLogicAction[data-action=sendCGX]').off().on('click', function (){
   $.ajax({
     type: "POST",
     url: "plugins/wes/core/ajax/wes.ajax.php",
     data: {
       eqLogicId: $('.eqLogicAttr[data-l1key=id]').value(),
+      ftpIp: $('.eqLogicAttr[data-l2key=ip]').value(),
+      ftpUser: $('.eqLogicAttr[data-l2key=ftpusername]').value(),
+      ftpPass: $('.eqLogicAttr[data-l2key=ftppassword]').value(),
       action: "sendCGX",
     },
     dataType: 'json',

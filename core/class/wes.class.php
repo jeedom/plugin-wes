@@ -134,7 +134,7 @@ class wes extends eqLogic {
 
 	public function getTypes() {
 		$types = array(
-			"general"=>array("name"=>__("Serveur Wes", __FILE__), "category"=>"energy", "width"=>"192px", "height"=>"212px", "HTM"=>"", "ignoreCreation"=>1),
+			"general"=>array("name"=>__("Serveur Wes", __FILE__), "width"=>"192px", "height"=>"212px", "HTM"=>"", "ignoreCreation"=>1),
 			"analogique"=>array("name"=>__("Capteurs", __FILE__), "logical"=>"_N", "HTM"=>"RELAIS.HTM", "category"=>"automatism", "width"=>"112px", "height"=>"152px", "xpath"=>"//analogique/AD#id#", "maxnumber"=>4, "type"=>__("Tension", __FILE__)),
 			"compteur"=>array("name"=>__("Compteurs impulsions", __FILE__), "logical"=>"_C", "HTM"=>"PULSES.HTM", "width"=>"272px", "height"=>"332px", "category"=>"energy", "xpath"=>"//impulsion/INDEX#id#", "maxnumber"=>6, "type"=>__("Compteur", __FILE__)),
 			"bouton"=>array("name"=>__("Entrées", __FILE__), "logical"=>"_B", "HTM"=>"RELAIS.HTM", "category"=>"automatism", "width"=>"112px", "height"=>"152px", "xpath"=>"//entree/ENTREE#id#", "maxnumber"=>2, "type"=>__("Entrée", __FILE__)),
@@ -184,7 +184,7 @@ class wes extends eqLogic {
 	public static function daemon() {
 		$starttime = microtime (true);
 		log::add(__CLASS__,'debug','cron start');
-		foreach (self::byType('wes', true) as $eqLogic) {
+		foreach (self::byType(__CLASS__, true) as $eqLogic) {
 			if($eqLogic->getConfiguration('type') == "general"){
 				$eqLogic->pull();
 			}
@@ -196,27 +196,24 @@ class wes extends eqLogic {
 		}
 	}
 
-	public function sendFtp() {
-		log::add(__CLASS__,'debug', $this->getHumanName() . __(' Envoi du fichier CGX personnalisé au serveur Wes', __FILE__));
-		$ftpIp = $this->getConfiguration('ip');
-		$ftpUser = $this->getConfiguration('ftpusername');
-		$ftpPass = $this->getConfiguration('ftppassword');
+	public function sendFtp($ftpIp, $ftpUser, $ftpPass) {
+		log::add(__CLASS__, 'debug', $this->getHumanName() . __(' Envoi du fichier CGX personnalisé au serveur Wes', __FILE__));
 		$local_file = dirname(__FILE__) . '/../../resources/DATA_JEEDOM.CGX';
 		$connection = ftp_connect($ftpIp);
 		if (@ftp_login($connection, $ftpUser, $ftpPass)){
-			log::add(__CLASS__,'debug', $this->getHumanName() . __(' Connecté au serveur Wes en FTP', __FILE__));
+			log::add(__CLASS__, 'debug', $this->getHumanName() . __(' Connecté au serveur Wes en FTP', __FILE__));
 		}
 		else{
 			ftp_close($connection);
-			log::add(__CLASS__,'error', $this->getHumanName() . __(' Erreur lors de la connexion au serveur Wes en FTP', __FILE__));
+			log::add(__CLASS__, 'error', $this->getHumanName() . __(' Échec de la connexion au serveur Wes en FTP', __FILE__));
 			return false;
 		}
 		ftp_pasv($connection, true);
 		if (ftp_put($connection, '/DATA_JEEDOM.CGX',  $local_file, FTP_BINARY)) {
-			log::add(__CLASS__,'debug', $this->getHumanName() . __(' Fichier CGX correctement transmis au serveur Wes', __FILE__));
+			log::add(__CLASS__, 'debug', $this->getHumanName() . __(' Fichier CGX correctement transmis au serveur Wes', __FILE__));
 		}
 		else {
-			log::add(__CLASS__,'error', $this->getHumanName() . __(' Erreur lors de la transmission du fichier CGX au serveur Wes', __FILE__));
+			log::add(__CLASS__, 'error', $this->getHumanName() . __(' Erreur lors de la transmission du fichier CGX au serveur Wes', __FILE__));
 			ftp_close($connection);
 			return false;
 		}
@@ -236,7 +233,7 @@ class wes extends eqLogic {
 		curl_setopt($process, CURLOPT_USERPWD, $this->getConfiguration('username') . ":" . $this->getConfiguration('password'));
 		curl_setopt($process, CURLOPT_TIMEOUT, 30);
 		curl_setopt($process, CURLOPT_RETURNTRANSFER, TRUE);
-		log::add(__CLASS__,'debug', $this->getHumanName() . __(' Appel de l\'url : ', __FILE__).$url.'/'.$file);
+		log::add(__CLASS__, 'debug', $this->getHumanName() . __(' Appel de l\'url : ', __FILE__).$url.'/'.$file);
 		if ( $postarg != "" ) {
 			log::add(__CLASS__,'debug','Post '.$postarg);
 			curl_setopt($process, CURLOPT_POST, 1);
@@ -254,7 +251,7 @@ class wes extends eqLogic {
 		$this->setIsEnable(0);
 		$this->setIsVisible(0);
 		if ($this->getConfiguration('type', '') == '') {
-			$this->setConfiguration('type', 'general');
+			$this->setCategory('energy', 1)->setConfiguration('type', 'general');
 		}
 	}
 
@@ -324,7 +321,7 @@ class wes extends eqLogic {
 					self::deamon_start();
 				}
 			} else {
-				foreach (self::byType('wes') as $eqLogic) {
+				foreach (self::byType(__CLASS__) as $eqLogic) {
 					if ($eqLogic->getConfiguration('type') != "general" && substr($eqLogic->getLogicalId(), 0, strpos($eqLogic->getLogicalId(),"_")) == $this->getId() ) {
 						$eqLogic->setIsEnable(0)->save();
 					}
@@ -357,10 +354,16 @@ class wes extends eqLogic {
 							$eqLogic->setDisplay('width', $data['width']);
 							$eqLogic->setDisplay('height', $data['height']);
 							$eqLogic->save();
-						} else if (is_object(self::byLogicalId($this->getId().$data['logical'].$id, 'wes')) && $this->getConfiguration($type.$id,1)==0) {
-							$toRemove = self::byLogicalId($this->getId().$data['logical'].$id, 'wes');
-							log::add(__CLASS__,'debug', $this->getHumanName() . __(' Suppression de l\'équipement ', __FILE__) . $toRemove->getName() . ' : ' . $toRemove->getLogicalId());
-							$toRemove->remove();
+						}
+						else if (is_object(self::byLogicalId($this->getId().$data['logical'].$id, 'wes'))) {
+							if ($this->getConfiguration($type.$id, 1) == 0) {
+								$toRemove = self::byLogicalId($this->getId().$data['logical'].$id, 'wes');
+								log::add(__CLASS__,'debug', $this->getHumanName() . __(' Suppression automatique de l\'équipement : ', __FILE__) . $toRemove->getName() . ' ' . $toRemove->getLogicalId());
+								$toRemove->remove();
+							}
+							else {
+								self::byLogicalId($this->getId().$data['logical'].$id, 'wes')->save();
+							}
 						}
 						$id ++;
 					}
@@ -370,39 +373,19 @@ class wes extends eqLogic {
 	}
 
 	public function preRemove() {
-		foreach (self::byType('wes') as $eqLogic) {
-			if ($eqLogic->getConfiguration('type') != "general" && substr($eqLogic->getLogicalId(), 0, strpos($eqLogic->getLogicalId(),"_")) == $this->getId() ) {
-				log::add(__CLASS__,'debug', $this->getHumanName() . __(' Suppression des équipements liés ', __FILE__) . $eqLogic->getConfiguration('type') . ' : ' . $eqLogic->getName());
-				$eqLogic->remove();
+		if ($this->getConfiguration('type') == "general") {
+			log::add(__CLASS__,'debug', $this->getHumanName() . __(' Suppression du serveur Wes', __FILE__));
+			foreach (self::byType(__CLASS__) as $eqLogic) {
+				if ($eqLogic->getConfiguration('type') != "general" && substr($eqLogic->getLogicalId(), 0, strpos($eqLogic->getLogicalId(),"_")) == $this->getId() ) {
+					log::add(__CLASS__,'debug', $this->getHumanName() . __(' Suppression automatique de l\'équipement : ', __FILE__) . $eqLogic->getName() . ' '  . $eqLogic->getLogicalId());
+					$eqLogic->remove();
+				}
 			}
 		}
-	}
-
-	public function event() {
-		foreach (eqLogic::byType('wes') as $eqLogic) {
-			if($eqLogic->getConfiguration('type') == "general"){
-				if ( $eqLogic->getId() == init('id')) {
-					$eqLogic->pull();
-				}
-			}else {
-				$cmd = wesCmd::byId(init('id'));
-				if (!is_object($cmd)) {
-					throw new Exception('Commande ID virtuel inconnu : ' . init('id'));
-				}
-				if($cmd->getConfiguration('type') == "analogique"){
-					$value=init('voltage');
-				}elseif ($cmd->getConfiguration('type') == "bouton") {
-					$value=init('state');
-				}elseif ($cmd->getConfiguration('type') == "temperature") {
-					$value=init('reel');
-				}else {
-					$value=init('value');
-				}
-				if ($cmd->execCmd() != $cmd->formatValue($value)) {
-					$cmd->setCollectDate('');
-					$cmd->event($value);
-				}
-			}
+		else {
+			$generalEqLogic = eqLogic::byId(substr($this->getLogicalId(), 0, strpos($this->getLogicalId(),"_")));
+			$typeId = substr($this->getLogicalId(), strpos($this->getLogicalId(),"_")+2);
+			$generalEqLogic->setConfiguration($this->getConfiguration('type').$typeId, 0)->save(true);
 		}
 	}
 
@@ -412,34 +395,34 @@ class wes extends eqLogic {
 			if ($this->getConfiguration('usecustomcgx',0) == 1) {
 				$file = 'data_jeedom.cgx';
 			}
-			log::add(__CLASS__,'debug', $this->getHumanName() . __(' Interrogation du serveur Wes', __FILE__));
+			log::add(__CLASS__, 'debug', $this->getHumanName() . __(' Interrogation du serveur Wes', __FILE__));
 			$this->xmlstatus = simplexml_load_string($this->getUrl($file));
 			$count = 0;
 			while ( $this->xmlstatus === false && $count < 3) {
-				log::add(__CLASS__,'debug', $this->getHumanName() . __(' Tentative échouée, nouvelle interrogation du serveur Wes', __FILE__));
+				log::add(__CLASS__, 'warning', $this->getHumanName() . __(' Tentative échouée, nouvelle interrogation du serveur Wes', __FILE__));
 				$this->xmlstatus = simplexml_load_string($this->getUrl($file));
 				$count++;
 			}
 			if ( $this->xmlstatus === false ) {
 				$this->checkAndUpdateCmd('status', 0);
-				log::add(__CLASS__,'error', $this->getHumanName() . __('Le serveur Wes n\'est pas joignable sur ',__FILE__) . $file);
+				log::add(__CLASS__, 'error', $this->getHumanName() . __('Le serveur Wes n\'est pas joignable sur ', __FILE__) . $file);
 				return false;
 			}
 			$this->checkAndUpdateCmd('status', 1);
-			foreach (self::byType('wes') as $eqLogic) {
+			foreach (self::byType(__CLASS__) as $eqLogic) {
 				if ($eqLogic->getIsEnable() && ($eqLogic->getId() == $this->getId() || substr($eqLogic->getLogicalId(), 0, strpos($eqLogic->getLogicalId(),"_")) == $this->getId() )) {
-					$wesid = substr($eqLogic->getLogicalId(), strpos($eqLogic->getLogicalId(),"_")+2);
+					$typeId = substr($eqLogic->getLogicalId(), strpos($eqLogic->getLogicalId(),"_")+2);
 					foreach (self::getListeCommandes()[$eqLogic->getConfiguration('type','')] as $logical=>$details) {
 						if (isset($details['xpath']) && $details['xpath'] != ''){
 							$xpath = $details['xpath'];
 							if (isset($details['cond'])) {
-								$cond = str_replace('#id#',$wesid,$details['cond']);
+								$cond = str_replace('#id#',$typeId,$details['cond']);
 								$test = eval("return " . $cond .";");
 								if ($test){
 									$xpath = $details['xpathcond'];
 								}
 							}
-							$xpathModele = str_replace('#id#',$wesid,$xpath);
+							$xpathModele = str_replace('#id#',$typeId,$xpath);
 							$status = $this->xmlstatus->xpath($xpathModele);
 							$value = (string) $status[0];
 							if (count($status) != 0){
@@ -455,40 +438,20 @@ class wes extends eqLogic {
 			log::add(__CLASS__,'debug', $this->getHumanName() . __(' Fin d\'interrogation du serveur Wes', __FILE__));
 		}
 	}
-	/*     * **********************Getteur Setteur*************************** */
+
 }
 
 class wesCmd extends cmd {
 
-	public function preSave() {
-		if ( $this->getLogicalId() == 'reel' && $this->getConfiguration('type') == 'analogique') {
-			$this->setValue('');
-			$calcul = $this->getConfiguration('calcul');
-			preg_match_all("/#([0-9]*)#/", $calcul, $matches);
-			$value = '';
-			foreach ($matches[1] as $cmd_id) {
-				if (is_numeric($cmd_id)) {
-					$cmd = self::byId($cmd_id);
-					if (is_object($cmd) && $cmd->getType() == 'info') {
-						$value .= '#' . $cmd_id . '#';
-						break;
-					}
-				}
-			}
-			$this->setConfiguration('calcul', $calcul);
-			$this->setValue($value);
-		}
-	}
-
 	public function execute($_options = null) {
-		log::add(__CLASS__,'debug','execute '.$_options);
 		$eqLogic = $this->getEqLogic();
 		if (!is_object($eqLogic) || $eqLogic->getIsEnable() != 1) {
-			throw new Exception(__('Équipement desactivé impossible d\'exécuter la commande : ' . $this->getHumanName(), __FILE__));
+			throw new Exception(__('Équipement désactivé, impossible d\'exécuter la commande : ', __FILE__) . $this->getHumaName());
 		}
-		$weseqLogic = eqLogic::byId(substr ($eqLogic->getLogicalId(), 0, strpos($eqLogic->getLogicalId(),"_")));
-		$wesid = substr($eqLogic->getLogicalId(), strpos($eqLogic->getLogicalId(),"_")+2);
-		if($eqLogic->getConfiguration('type') == 'general'){
+		log::add('wes', 'debug', $eqLogic->getHumanName() . __(' Exécution de la commande ', __FILE) . $this->getName() . ' : ' . print_r($_options, true));
+		$wesEqLogic = eqLogic::byId(substr ($eqLogic->getLogicalId(), 0, strpos($eqLogic->getLogicalId(),"_")));
+		$typeId = substr($eqLogic->getLogicalId(), strpos($eqLogic->getLogicalId(), "_")+2);
+		if ($eqLogic->getConfiguration('type') == 'general') {
 			if ( $this->getLogicalId() == 'alarmeon') {
 				$file = 'AJAX.cgx?alarme=ON';
 				$alarm = 1;
@@ -501,45 +464,47 @@ class wesCmd extends cmd {
 			$eqLogic->getUrl($file);
 			$eqLogic->checkAndUpdateCmd('alarme', $alarm);
 			return;
-		} else if ($eqLogic->getConfiguration('type') == "relai") {
+		}
+		else if ($eqLogic->getConfiguration('type') == "relai") {
 			if ( $this->getLogicalId() == 'btn_on' ){
-				$file .= 'RL.cgi?rl'.$wesid.'=ON';
+				$file .= 'RL.cgi?rl'.$typeId.'=ON';
 				$state = 1;
 			} else if ( $this->getLogicalId() == 'btn_off' ){
-				$file .= 'RL.cgi?rl'.$wesid.'=OFF';
+				$file .= 'RL.cgi?rl'.$typeId.'=OFF';
 				$state = 0;
 			} else if ( $this->getLogicalId() == 'commute' ){
-				$file .= 'RL.cgi?frl='.$wesid;
+				$file .= 'RL.cgi?frl='.$typeId;
 				$state = ($eqLogic->getCmd('info', 'state')->execCmd() == 1) ? 0 : 1;
 			} else {
 				return false;
 			}
-			$weseqLogic->getUrl($file);
+			$wesEqLogic->getUrl($file);
 			$eqLogic->checkAndUpdateCmd('state', $state);
 			return;
-		} elseif ($eqLogic->getConfiguration('type') == "switch") {
+		}
+		else if ($eqLogic->getConfiguration('type') == "switch") {
 			if ( $this->getLogicalId() == 'btn_on' ){
-				$file .= 'AJAX.cgx?vs'.$wesid.'=ON';
+				$file .= 'AJAX.cgx?vs'.$typeId.'=ON';
 				$state = 1;
 			} else if ( $this->getLogicalId() == 'btn_off' ){
-				$file .= 'AJAX.cgx?vs'.$wesid.'=OFF';
+				$file .= 'AJAX.cgx?vs'.$typeId.'=OFF';
 				$state = 0;
 			}else if ( $this->getLogicalId() == 'commute' ){
-				$file .= 'AJAX.cgx?fvs='.$wesid;
+				$file .= 'AJAX.cgx?fvs='.$typeId;
 				$state = ($eqLogic->getCmd('info', 'state')->execCmd() == 1) ? 0 : 1;
 			} else {
 				return false;
 			}
-			$weseqLogic->getUrl($file);
+			$wesEqLogic->getUrl($file);
 			$eqLogic->checkAndUpdateCmd('state', $state);
 			return;
-		} elseif ($eqLogic->getConfiguration('type') == "analogique") {
+		}
+		else if ($eqLogic->getConfiguration('type') == "analogique") {
 			if ($this->getLogicalId() == 'reel') {
 				try {
 					$calcul = $this->getConfiguration('calcul');
 					if ( preg_match("/#brut#/", $calcul) ) {
-						$EqLogic = $this->getEqLogic();
-						$brut = $EqLogic->getCmd(null, 'brut');
+						$brut = $eqLogic->getCmd(null, 'brut');
 						$calcul = preg_replace("/#brut#/", "#".$brut->getId()."#", $calcul);
 					}
 					$calcul = scenarioExpression::setTags($calcul);
@@ -558,38 +523,32 @@ class wesCmd extends cmd {
 					}
 					return $result;
 				} catch (Exception $e) {
-					$EqLogic = $this->getEqLogic();
-					log::add(__CLASS__, 'error', $EqLogic->getName()." error in ".$this->getConfiguration('calcul')." : ".$e->getMessage());
+					log::add('wes', 'error', $eqLogic->getName()." error in ".$this->getConfiguration('calcul')." : ".$e->getMessage());
 					return scenarioExpression::setTags(str_replace('"', '', cmd::cmdToValue($this->getConfiguration('calcul'))));
 				}
-			} else {
+			}
+			else {
 				return $this->getConfiguration('value');
 			}
-		}elseif ($eqLogic->getConfiguration('type') == "bouton") {
-			log::add(__CLASS__,'debug','execute '.$_options);
-			$eqLogic = $this->getEqLogic();
-			if (!is_object($eqLogic) || $eqLogic->getIsEnable() != 1) {
-				throw new Exception(__('Equipement désactivé impossible d\éxecuter la commande : ' . $this->getHumanName(), __FILE__));
-			}
-			$weseqLogic = eqLogic::byId(substr ($eqLogic->getLogicalId(), 0, strpos($eqLogic->getLogicalId(),"_")));
-			$wesid = substr($eqLogic->getLogicalId(), strpos($eqLogic->getLogicalId(),"_")+2);
-			$url = $weseqLogic->getUrl();
+		}
+		else if ($eqLogic->getConfiguration('type') == "bouton") {
+			$url = $wesEqLogic->getUrl();
 			if ( $this->getLogicalId() == 'btn_on' )
-			$url .= 'leds.cgi?set='.$wesid;
+			$url .= 'leds.cgi?set='.$typeId;
 			else if ( $this->getLogicalId() == 'btn_off' )
-			$url .= 'leds.cgi?clear='.$wesid;
+			$url .= 'leds.cgi?clear='.$typeId;
 			else
 			return false;
 
 			$result = @file_get_contents($url);
-			log::add(__CLASS__,'debug',"get ".preg_replace("/:[^:]*@/", ":XXXX@", $url));
+			log::add('wes','debug',"get ".preg_replace("/:[^:]*@/", ":XXXX@", $url));
 			$count = 0;
 			while ( $result === false && $count < 3 ) {
 				$result = @file_get_contents($url);
 				$count++;
 			}
 			if ( $result === false ) {
-				throw new Exception(__('Le serveur Wes n\'est pas joignable.',__FILE__)." ".$weseqLogic->getName());
+				throw new Exception(__('Le serveur Wes n\'est pas joignable.', __FILE__)." ".$wesEqLogic->getName());
 			}
 			return false;
 		}

@@ -28,8 +28,11 @@ try {
 
   if (init('action') == 'sendCGX') {
     $generalEqLogic = eqLogic::byId(init('eqLogicId'));
-		if ($generalEqLogic->getConfiguration('ip','') != '' && $generalEqLogic->getConfiguration('ftpusername','') != '' && $generalEqLogic->getConfiguration('ftppassword','') != '') {
-			if (!$generalEqLogic->sendFtp()) {
+    $ftpIp = $generalEqLogic->getConfiguration('ip', init('ftpIp'));
+    $ftpUser = $generalEqLogic->getConfiguration('ftpusername', init('ftpUser'));
+    $ftpPass = $generalEqLogic->getConfiguration('ftppassword', init('ftpPass'));
+		if ($ftpIp != '' && $ftpUser != '' && $ftpPass != '') {
+			if (!$generalEqLogic->sendFtp($ftpIp, $ftpUser, $ftpPass)) {
       	throw new Exception(__('Échec d\'envoi du fichier CGX personnalisé.',__FILE__));
   		}
 		}
